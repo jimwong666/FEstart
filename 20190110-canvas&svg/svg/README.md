@@ -35,7 +35,7 @@
 
 效果：
 <p align="center">
-<img src="https://github.com/jimwong666/GithubFile/blob/master/shareWork/20190110-canvas%26svg/svg/images/img_1.png" alt="img_1">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/img_1.png" alt="img_1">
 </p>
 <br/>
 
@@ -86,7 +86,7 @@
 
 示意图：
 <p align="center">
-<img src="https://github.com/jimwong666/GithubFile/blob/master/shareWork/20190110-canvas%26svg/svg/images/img_2.png" alt="img_2">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/img_2.png" alt="img_2">
 </p>
 <br/>
 
