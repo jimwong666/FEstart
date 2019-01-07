@@ -414,13 +414,15 @@ ry：椭圆的y半径
 ```
 > 属性fill-opacity控制填充色的不透明度，属性stroke-opacity控制描边的不透明度。
 
+##
+
 <!-- [1-2-2] 描边 ---------------------------------------------------------------------------->
 #### 描边
 > 除了颜色属性，还有其他一些属性用来控制绘制描边的方式。。
 
 ##
 
-示意图：
+示意图 1：
 <p align="center">
 <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/stroke_linecap.png" alt="描边方式_1">
 </p>
@@ -441,7 +443,7 @@ ry：椭圆的y半径
 
 ##
 
-示意图：
+示意图 2：
 <p align="center">
 <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/stroke_linejoin.png" alt="描边方式_2">
 </p>
@@ -464,7 +466,7 @@ ry：椭圆的y半径
 
 ##
 
-示意图：
+示意图 3：
 <p align="center">
 <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/stroke_dasharray.png" alt="描边方式_3">
 </p>
@@ -472,8 +474,8 @@ ry：椭圆的y半径
 
 ```html
     <svg width="200" height="150" xmlns="http://www.w3.org/2000/svg" version="1.1">
-    <path d="M 10 75 Q 50 10 100 75 T 190 75" stroke="black" stroke-linecap="round" stroke-dasharray="5,10,5" fill="none"/>
-    <path d="M 10 75 L 190 75" stroke="red" stroke-linecap="round" stroke-width="1" stroke-dasharray="5,5" fill="none"/>
+        <path d="M 10 75 Q 50 10 100 75 T 190 75" stroke="black" stroke-linecap="round" stroke-dasharray="5,10,5" fill="none"/>
+        <path d="M 10 75 L 190 75" stroke="red" stroke-linecap="round" stroke-width="1" stroke-dasharray="5,5" fill="none"/>
     </svg>
 ```
 > stroke-dasharray属性的参数，是一组用逗号分割的数字组成的数列。注意，和path不一样，这里的数字必须用逗号分割（空格会被忽略）。<br/>
@@ -504,3 +506,110 @@ ry：椭圆的y半径
     <rect x="10" height="180" y="10" width="180" id="MyRect"/>
     </svg>
 ```
+还可以用伪类
+```html
+    #MyRect:hover {
+        stroke: black;
+        fill: blue;
+    }
+```
+还可以在XML文件中引入css
+```xml
+    <?xml version="1.0" standalone="no"?>
+    <?xml-stylesheet type="text/css" href="style.css"?>
+
+    <svg width="200" height="150" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <rect height="10" width="10" id="MyRect"/>
+    </svg>
+```
+
+-------------------------------------------------------------------
+<!-- [1-3] 渐变 ---------------------------------------------------------------------------->
+### 渐变
+<!-- [1-3-1] 线性渐变 ---------------------------------------------------------------------------->
+#### 线性渐变
+> 线性渐变沿着直线改变颜色，要插入一个线性渐变，你需要在SVG文件的defs元素内部，创建一个<linearGradient> 节点。
+
+示意图：
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/linear_gradient.png" alt="线性渐变">
+</p>
+<br/>
+
+```html
+    <svg width="120" height="240" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="Gradient1">
+                <stop class="stop1" offset="0%"/>
+                <stop class="stop2" offset="50%"/>
+                <stop class="stop3" offset="100%"/>
+            </linearGradient>
+            <linearGradient id="Gradient2" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="red"/>
+                <stop offset="50%" stop-color="black" stop-opacity="0"/>
+                <stop offset="100%" stop-color="blue"/>
+            </linearGradient>
+            <style type="text/css"><![CDATA[
+                #rect1 { fill: url(#Gradient1); }
+                .stop1 { stop-color: red; }
+                .stop2 { stop-color: black; stop-opacity: 0; }
+                .stop3 { stop-color: blue; }
+            ]]></style>
+        </defs>
+        
+        <rect id="rect1" x="10" y="10" rx="15" ry="15" width="100" height="100"/>
+        <rect x="10" y="120" rx="15" ry="15" width="100" height="100" fill="url(#Gradient2)"/>
+    
+    </svg>
+```
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------
+<!-- [1-3] 图案 ---------------------------------------------------------------------------->
+### 图案
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------
+<!-- [1-3] 文字 ---------------------------------------------------------------------------->
+### 文字
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------
+<!-- [1-3] 基本变形 ---------------------------------------------------------------------------->
+### 基本变形
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------
+<!-- [1-3] 剪切与遮罩 ---------------------------------------------------------------------------->
+### 剪切与遮罩
