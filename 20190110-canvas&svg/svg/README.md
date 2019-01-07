@@ -61,6 +61,11 @@
 </p>
 <br/>
 
+> baseProfile 特性描述了作者认为正确渲染内容所需要的最小的 SVG 语言概述。这个特性不会说明任何处理限制，可以把它看作是元数据。 比如，这个特性的值可以被编辑工具用来在用户的修改超出所指定的基准概述范围时发出警告。<br/>
+> none：代表了最小的 SVG 语言配置，没有描述作者关于正确渲染内容的观点。<br/>
+full：代表一个正常的概述，适用于 PC。<br/>
+basic：代表一个轻量级的概述，适用于 PDA。<br/>
+tiny：代表更轻量的概述，适用于手机。<br/>
 
 **注意：**<br/>
 &emsp;&emsp; **1.** SVG的元素和属性必须按标准格式书写，因为XML是区分大小写的（这一点和html不同）<br/>
@@ -83,7 +88,6 @@
 而此时“image.svg”是什么文件呢？其实和原来的文件很像~
 ```xml
     <?xml version="1.0" standalone="no"?>
-    <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
     <svg version="1.1"
          baseProfile="full"
          width="300" height="200"
@@ -168,3 +172,124 @@ ry：圆角的y方位的半径<br/>
 
 ##
 #### 圆形
+```html
+    <svg version="1.1"
+         baseProfile="full"
+         width="300" height="200"
+         xmlns="http://www.w3.org/2000/svg">
+
+        <circle cx="25" cy="75" r="20"/>
+
+    </svg>
+```
+> r：圆的半径
+
+##
+#### 椭圆
+```html
+    <svg version="1.1"
+         baseProfile="full"
+         width="300" height="200"
+         xmlns="http://www.w3.org/2000/svg">
+
+        <ellipse cx="75" cy="75" rx="20" ry="5"/>
+
+    </svg>
+```
+> Ellipse 是circle元素更通用的形式，你可以分别缩放圆的x半径和y半径（通常数学家称之为长轴半径和短轴半径）
+
+> rx：椭圆的x半径<br/>
+ry：椭圆的y半径
+
+##
+#### 线条
+```html
+    <svg version="1.1"
+         baseProfile="full"
+         width="300" height="200"
+         xmlns="http://www.w3.org/2000/svg">
+
+        <line x1="10" x2="50" y1="110" y2="150"/>
+
+    </svg>
+```
+> Line 绘制线段。它取两个点的位置作为属性，指定这条线的起点和终点位置。
+
+> x1：起点的x位置<br/>
+> y1：起点的y位置<br/>
+> x2：终点的x位置<br/>
+> y2：终点的y位置<br/>
+
+##
+#### 折线
+```html
+    <svg version="1.1"
+         baseProfile="full"
+         width="300" height="200"
+         xmlns="http://www.w3.org/2000/svg">
+
+        <polyline points="60 110, 65 120, 70 115, 75 130, 80 125, 85 140, 90 135, 95 150, 100 145"/>
+
+    </svg>
+```
+> Polyline是一组点连接在一起的直线。因为它可以有很多的折点，所有折点位置都放在一个points属性中<br/>
+> points：点集数列。每个数字用空白、逗号、终止命令符或者换行符分隔开。每个点必须包含2个数字，一个是x坐标，一个是y坐标。所以点列表 (0,0), (1,1) 和(2,2)可以写成这样：“0 0, 1 1, 2 2”。
+
+##
+#### 多边形
+```html
+    <svg version="1.1"
+         baseProfile="full"
+         width="300" height="200"
+         xmlns="http://www.w3.org/2000/svg">
+
+        <polyline points="60 110, 65 120, 70 115, 75 130, 80 125, 85 140, 90 135, 95 150, 100 145"/>
+
+    </svg>
+```
+>polygon和折线很像，它们都是由连接一组点集的直线构成。不同的是，polygon的路径在最后一个点处自动回到第一个点。
+
+##
+#### 路径
+```html
+    <svg version="1.1"
+         baseProfile="full"
+         width="300" height="200"
+         xmlns="http://www.w3.org/2000/svg">
+
+        <path d="M 20 230 Q 40 205, 50 230 T 90230"/>
+
+    </svg>
+```
+> path可能是SVG中最常见的形状。你可以用path元素绘制矩形（直角矩形或者圆角矩形）、圆形、椭圆、折线形、多边形，以及一些其他的形状，例如贝塞尔曲线、2次曲线等曲线。<br/>
+> d：一个点集数列以及其它关于如何绘制路径的信息（形如“命令+参数”形式的命令）。
+
+具体命令：
+
+> 移点命令：M x y 或者 m dx dy<br/>
+> M或者m意思是：move命令，将点移到什么地方。
+
+这里需要注意几点：
+1、这只会移动点，并不会画点，也不会在移动的路径上划线！
+2、大写的M和小写的m不一样。大写的M坐标采用绝对定位，小写的m坐标采用相对定位（就是相对于上一个点的坐标）。
+
+> 直线命令-1：L x y 或者 l dx dy<br/>
+> L或者l意思是：line命令，在当前位置和新位置之间画一条直线。
+
+> 直线命令-2：H x 或者 h dx<br/>
+> H或者h意思是：绘制平行线命令，所以只有X轴的参数。
+
+> 直线命令-2：V y 或者 v dy<br/>
+> V或者v意思是：绘制垂直线命令，所以只有Y轴的参数。
+
+现在，我们用path画一个矩形。
+```html
+    <svg version="1.1"
+         baseProfile="full"
+         width="300" height="200"
+         xmlns="http://www.w3.org/2000/svg">
+
+        <path d="M 20 230 Q 40 205, 50 230 T 90230"/>
+
+    </svg>
+```
