@@ -161,15 +161,15 @@
 
 > x
 矩形左上角的x位置
-y
+>y
 矩形左上角的y位置
-width
+>width
 矩形的宽度
-height
+>height
 矩形的高度
-rx
+>rx
 圆角的x方位的半径
-ry
+>ry
 圆角的y方位的半径
 
 ##
