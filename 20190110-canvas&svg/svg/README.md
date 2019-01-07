@@ -402,5 +402,105 @@ ry：椭圆的y半径
 <br/>
 
 -------------------------------------------------------------------
-<!-- [1-1-7-3] 曲线命令 ---------------------------------------------------------------------------->
+<!-- [1-2] 填充与边框 ---------------------------------------------------------------------------->
 ### 填充与边框
+<!-- [1-2-1] 上色 ---------------------------------------------------------------------------->
+#### 上色
+> fill属性和stroke属性。fill属性设置对象内部的颜色，stroke属性设置绘制对象的线条的颜色。你可以使用在HTML中的CSS颜色命名方案定义它们的颜色，比如说颜色名（像red这种）、rgb值（像rgb(255,0,0)这种）、十六进制值、rgba值，等等。
+
+```html
+    <rect x="10" y="10" width="100" height="100" stroke="blue" fill="purple"
+        fill-opacity="0.5" stroke-opacity="0.8"/>
+```
+> 属性fill-opacity控制填充色的不透明度，属性stroke-opacity控制描边的不透明度。
+
+<!-- [1-2-2] 描边 ---------------------------------------------------------------------------->
+#### 描边
+> 除了颜色属性，还有其他一些属性用来控制绘制描边的方式。。
+
+##
+
+示意图：
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/stroke_linecap.png" alt="描边方式_1">
+</p>
+<br/>
+
+```html
+    <svg width="160" height="140" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <line x1="40" x2="120" y1="20" y2="20" stroke="black" stroke-width="20" stroke-linecap="butt"/>
+        <line x1="40" x2="120" y1="60" y2="60" stroke="black" stroke-width="20" stroke-linecap="square"/>
+        <line x1="40" x2="120" y1="100" y2="100" stroke="black" stroke-width="20" stroke-linecap="round"/>
+    </svg>
+```
+> stroke-width 属性定义了描边的宽度。<br/>
+> stroke-linecap属性，它控制边框终点的形状，有三个值：<br/>
+> &emsp;&emsp; butt 用直边结束线段，它是常规做法，线段边界90度垂直于描边的方向、贯穿它的终点。<br/>
+> &emsp;&emsp; square 的效果差不多，但是会稍微超出实际路径的范围，超出的大小由stroke-width控制。<br/>
+> &emsp;&emsp; round 表示边框的终点是圆角，圆角的半径也是由stroke-width控制的。<br/>
+
+##
+
+示意图：
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/stroke_linejoin.png" alt="描边方式_2">
+</p>
+<br/>
+
+```html
+    <svg width="160" height="280" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <polyline points="40 60 80 20 120 60" stroke="black" stroke-width="20" stroke-linecap="butt" fill="none" stroke-linejoin="miter"/>
+
+        <polyline points="40 140 80 100 120 140" stroke="black" stroke-width="20" stroke-linecap="round" fill="none" stroke-linejoin="round"/>
+
+        <polyline points="40 220 80 180 120 220" stroke="black" stroke-width="20" stroke-linecap="square" fill="none" stroke-linejoin="bevel"/>
+    </svg>
+```
+> 每条折线都是由两个线段连接起来的，连接处的样式由stroke-linejoin属性控制。<br/>
+> stroke-linejoin属性，它有三个值：<br/>
+> &emsp;&emsp; miter 是默认值，表示用方形画笔在连接处形成尖角。<br/>
+> &emsp;&emsp; round 表示用圆角连接，实现平滑效果。<br/>
+> &emsp;&emsp; bevel 表示连接处会形成一个斜接。<br/>
+
+##
+
+示意图：
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/stroke_dasharray.png" alt="描边方式_3">
+</p>
+<br/>
+
+```html
+    <svg width="200" height="150" xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <path d="M 10 75 Q 50 10 100 75 T 190 75" stroke="black" stroke-linecap="round" stroke-dasharray="5,10,5" fill="none"/>
+    <path d="M 10 75 L 190 75" stroke="red" stroke-linecap="round" stroke-width="1" stroke-dasharray="5,5" fill="none"/>
+    </svg>
+```
+> stroke-dasharray属性的参数，是一组用逗号分割的数字组成的数列。注意，和path不一样，这里的数字必须用逗号分割（空格会被忽略）。<br/>
+> 每一组数字，第一个用来表示填色区域的长度，第二个用来表示非填色区域的长度。
+
+另外还有一些关于填充和边框的属性，包括fill-rule，用于定义如何给图形重叠的区域上色；stroke-miterlimit，定义什么情况下绘制或不绘制边框连接的miter效果；还有stroke-dashoffset，定义虚线开始的位置等等。
+
+##
+
+#### 使用css
+> 除了定义对象的属性外，你也可以通过CSS来样式化填充和描边。语法和在html里使用CSS一样，只不过你要把background-color、border改成fill和stroke。注意，不是所有的属性都能用CSS来设置。上色和填充的部分一般是可以用CSS来设置的，比如fill，stroke，stroke-dasharray等，但是不包括下面会提到的渐变和图案等功能。另外，width、height，以及路径的命令等等。
+
+像这样
+```html
+    <rect x="10" height="180" y="10" width="180" style="stroke: black; fill: red;"/>
+```
+或者
+```html
+    <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <defs>
+            <style type="text/css"><![CDATA[
+                #MyRect {
+                    stroke: black;
+                    fill: red;
+                }
+            ]]></style>
+        </defs>
+    <rect x="10" height="180" y="10" width="180" id="MyRect"/>
+    </svg>
+```
