@@ -24,8 +24,8 @@
     * [缩放](#缩放)
     * [matrix](#matrix())
   * [剪切与遮罩](#剪切与遮罩)
-  
-  
+
+
 <!-- SVG开始 ---------------------------------------------------------------------------->
 
 # SVG
@@ -42,9 +42,9 @@
 ```html
 
     <svg version="1.1"
-         baseProfile="full"
-         width="300" height="200"
-         xmlns="http://www.w3.org/2000/svg">
+        baseProfile="full"
+        width="300" height="200"
+        xmlns="http://www.w3.org/2000/svg">
 
         <rect width="100%" height="100%" fill="red" />
 
@@ -57,7 +57,7 @@
 
 效果：
 <p align="center">
-<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/img_1.png" alt="img_1">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/example.png" alt="示例">
 </p>
 <br/>
 
@@ -72,7 +72,7 @@
 &emsp;&emsp; **1.** SVG的元素和属性必须按标准格式书写，因为XML是区分大小写的（这一点和html不同）<br/>
 &emsp;&emsp; **2.** SVG里的属性值必须用引号引起来，就算是数值也必须这样做。
 <br/>
-  
+
 ##
 <!-- [0-2] HTML中引用 ---------------------------------------------------------------------------->
 
@@ -90,9 +90,9 @@
 ```xml
     <?xml version="1.0" standalone="no"?>
     <svg version="1.1"
-         baseProfile="full"
-         width="300" height="200"
-         xmlns="http://www.w3.org/2000/svg">
+        baseProfile="full"
+        width="300" height="200"
+        xmlns="http://www.w3.org/2000/svg">
 
         <rect width="100%" height="100%" fill="red" />
 
@@ -110,7 +110,7 @@
 
 示意图：
 <p align="center">
-<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/img_2.png" alt="img_2">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/coordinate.png" alt="坐标定位">
 </p>
 <br/>
 
@@ -127,10 +127,10 @@
 看个改过的例子：
 ```html
     <svg version="1.1"
-         baseProfile="full"
-         width="300" height="200"
-         xmlns="http://www.w3.org/2000/svg"
-         viewBox="0 0 150 100">
+        baseProfile="full"
+        width="300" height="200"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 150 100">
 
         <rect width="100%" height="100%" fill="red" />
 
@@ -153,9 +153,9 @@
 #### 矩形
 ```html
     <svg version="1.1"
-         baseProfile="full"
-         width="300" height="200"
-         xmlns="http://www.w3.org/2000/svg">
+        baseProfile="full"
+        width="300" height="200"
+        xmlns="http://www.w3.org/2000/svg">
 
         <rect x="10" y="10" width="30" height="30"/>
         <rect x="60" y="10" rx="10" ry="10" width="30" height="30"/>
@@ -175,9 +175,9 @@ ry：圆角的y方位的半径<br/>
 #### 圆形
 ```html
     <svg version="1.1"
-         baseProfile="full"
-         width="300" height="200"
-         xmlns="http://www.w3.org/2000/svg">
+        baseProfile="full"
+        width="300" height="200"
+        xmlns="http://www.w3.org/2000/svg">
 
         <circle cx="25" cy="75" r="20"/>
 
@@ -189,9 +189,9 @@ ry：圆角的y方位的半径<br/>
 #### 椭圆
 ```html
     <svg version="1.1"
-         baseProfile="full"
-         width="300" height="200"
-         xmlns="http://www.w3.org/2000/svg">
+        baseProfile="full"
+        width="300" height="200"
+        xmlns="http://www.w3.org/2000/svg">
 
         <ellipse cx="75" cy="75" rx="20" ry="5"/>
 
@@ -206,9 +206,9 @@ ry：椭圆的y半径
 #### 线条
 ```html
     <svg version="1.1"
-         baseProfile="full"
-         width="300" height="200"
-         xmlns="http://www.w3.org/2000/svg">
+        baseProfile="full"
+        width="300" height="200"
+        xmlns="http://www.w3.org/2000/svg">
 
         <line x1="10" x2="50" y1="110" y2="150"/>
 
@@ -225,9 +225,9 @@ ry：椭圆的y半径
 #### 折线
 ```html
     <svg version="1.1"
-         baseProfile="full"
-         width="300" height="200"
-         xmlns="http://www.w3.org/2000/svg">
+        baseProfile="full"
+        width="300" height="200"
+        xmlns="http://www.w3.org/2000/svg">
 
         <polyline points="60 110, 65 120, 70 115, 75 130, 80 125, 85 140, 90 135, 95 150, 100 145"/>
 
@@ -240,9 +240,9 @@ ry：椭圆的y半径
 #### 多边形
 ```html
     <svg version="1.1"
-         baseProfile="full"
-         width="300" height="200"
-         xmlns="http://www.w3.org/2000/svg">
+        baseProfile="full"
+        width="300" height="200"
+        xmlns="http://www.w3.org/2000/svg">
 
         <polyline points="60 110, 65 120, 70 115, 75 130, 80 125, 85 140, 90 135, 95 150, 100 145"/>
 
@@ -254,9 +254,9 @@ ry：椭圆的y半径
 #### 路径
 ```html
     <svg version="1.1"
-         baseProfile="full"
-         width="300" height="200"
-         xmlns="http://www.w3.org/2000/svg">
+        baseProfile="full"
+        width="300" height="200"
+        xmlns="http://www.w3.org/2000/svg">
 
         <path d="M 20 230 Q 40 205, 50 230 T 90230"/>
 
@@ -288,14 +288,20 @@ ry：椭圆的y半径
 现在，我们用path画一个矩形。
 ```html
     <svg version="1.1"
-         baseProfile="full"
-         width="300" height="200"
-         xmlns="http://www.w3.org/2000/svg">
+        baseProfile="full"
+        width="300" height="200"
+        xmlns="http://www.w3.org/2000/svg">
 
         <path d="M10 10 H 90 V 90 H 10 L 10 10"/>
 
     </svg>
 ```
+示意图：
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/path_line.png" alt="path画矩形">
+</p>
+<br/>
+
 也可以简化成这样：
 ```html
 	<path d="M10 10 H 90 V 90 H 10 Z"/>
@@ -313,7 +319,7 @@ ry：椭圆的y半径
 
 ```html
     <svg width="190px" height="160px" version="1.1"
-         xmlns="http://www.w3.org/2000/svg">
+        xmlns="http://www.w3.org/2000/svg">
 
         <path d="M10 10 C 20 20, 40 20, 50 10"/>
         <path d="M70 10 C 70 20, 120 20, 120 10"/>
@@ -327,6 +333,12 @@ ry：椭圆的y半径
 
     </svg>
 ```
+示意图：
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/path_beziers.png" alt="三次贝塞尔曲线示例">
+</p>
+<br/>
+
 ##
 曲线命令S/s（copy三型贝塞尔曲线）：S x2 y2, x y 或者 s dx2 dy2, dx dy<br/>
 > S命令可以用来创建与之前那些曲线（三次贝塞尔曲线）一样的贝塞尔曲线，但是，如果S命令跟在一个C命令或者另一个S命令的后面，它的第一个控制点，就会被假设成前一个控制点的对称点。如果S命令单独使用，前面没有C命令或者另一个S命令，那么它的两个控制点就会被假设为同一个点。下面是S命令的语法示例，右图中的某个控制点用红色标示，与它对称的控制点用蓝色标示。
@@ -334,6 +346,12 @@ ry：椭圆的y半径
 ```html
     <path d="M10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80"/>
 ```
+示意图：
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/path_bezier3.png" alt="复制三次贝塞尔曲线">
+</p>
+<br/>
+
 ##
 曲线命令Q/q（单控制点型贝塞尔曲线）：Q x1 y1, x y 或者 q dx1 dy1, dx dy<br/>
 > 另一种可用的贝塞尔曲线是二次贝塞尔曲线Q，它比三次贝塞尔曲线简单，只需要一个控制点，用来确定起点和终点的曲线斜率。因此它需要两组参数，控制点和终点坐标。
@@ -341,6 +359,12 @@ ry：椭圆的y半径
 ```html
     <path d="M10 80 Q 95 10 180 80"/>
 ```
+示意图：
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/path_bezier2.png" alt="二次贝塞尔曲线">
+</p>
+<br/>
+
 ##
 曲线命令T/t（copy二型贝塞尔曲线）：T x y 或者 t dx dy<br/>
 > 三次贝塞尔曲线有一个S命令，二次贝塞尔曲线有一个差不多的T命令，可以通过更简短的参数，延长二次贝塞尔曲线。
@@ -348,8 +372,20 @@ ry：椭圆的y半径
 ```html
     <path d="M10 80 Q 52.5 10, 95 80 T 180 80"/>
 ```
+示意图：
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/path_double_bezier.png" alt="复制二次贝塞尔曲线">
+</p>
+<br/>
+
 ##
 曲线命令A/a（弧形曲线）
 > 这部分跳过，大家可以自行了解
+
+示意图：
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/path_oval.png" alt="弧形曲线">
+</p>
+<br/>
 
 ### 填充与边框
