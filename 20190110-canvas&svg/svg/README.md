@@ -5,6 +5,25 @@
   * [坐标定位](#坐标定位)
   * [SVG的缩放](#SVG的缩放)
 * [深入](#深入-相知)
+  * [基本形状](#基本形状)
+    * [矩形](#矩形)
+    * [圆形](#矩形)
+    * [椭圆](#矩形)
+    * [线条](#矩形)
+    * [折线](#矩形)
+    * [多边形](#矩形)
+    * [路径](#矩形)
+  * [填充与边框](#填充与边框)
+  * [渐变](#渐变)
+  * [图案](#图案)
+  * [文字](#文字)
+  * [基本变形](#基本变形)
+    * [平移](#平移)
+    * [旋转](#旋转)
+    * [斜切](#斜切)
+    * [缩放](#缩放)
+    * [matrix](#matrix())
+  * [剪切与遮罩](#剪切与遮罩)
   
   
 <!-- SVG开始 ---------------------------------------------------------------------------->
@@ -23,9 +42,9 @@
 ```html
 
     <svg version="1.1"
-        baseProfile="full"
-        width="300" height="200"
-        xmlns="http://www.w3.org/2000/svg">
+         baseProfile="full"
+         width="300" height="200"
+         xmlns="http://www.w3.org/2000/svg">
 
         <rect width="100%" height="100%" fill="red" />
 
@@ -66,15 +85,15 @@
     <?xml version="1.0" standalone="no"?>
     <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
     <svg version="1.1"
-	    baseProfile="full"
-	    width="300" height="200"
-	    xmlns="http://www.w3.org/2000/svg">
+         baseProfile="full"
+         width="300" height="200"
+         xmlns="http://www.w3.org/2000/svg">
 
-	    <rect width="100%" height="100%" fill="red" />
+        <rect width="100%" height="100%" fill="red" />
 
-	    <circle cx="150" cy="100" r="80" fill="green" />
+        <circle cx="150" cy="100" r="80" fill="green" />
 
-	    <text x="150" y="125" font-size="60" text-anchor="middle" fill="white">SVG</text>
+        <text x="150" y="125" font-size="60" text-anchor="middle" fill="white">SVG</text>
 
     </svg>
 ```
@@ -103,10 +122,10 @@
 看个改过的例子：
 ```html
     <svg version="1.1"
-        baseProfile="full"
-        width="300" height="200"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 150 100">
+         baseProfile="full"
+         width="300" height="200"
+         xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 150 100">
 
         <rect width="100%" height="100%" fill="red" />
 
@@ -127,3 +146,31 @@
 ## 深入-相知
 ### 基本形状
 #### 矩形
+```html
+    <svg version="1.1"
+         baseProfile="full"
+         width="300" height="200"
+         xmlns="http://www.w3.org/2000/svg">
+
+        <rect x="10" y="10" width="30" height="30"/>
+        <rect x="60" y="10" rx="10" ry="10" width="30" height="30"/>
+
+    </svg>
+```
+> &emsp;&emsp;rect元素会在屏幕上绘制一个矩形 。其实只要6个基本属性就可以控制它在屏幕上的位置和形状。下边的那个图形设置了rx和ry属性用来控制圆角。如果没有设置圆角，则默认为0。
+
+> x
+矩形左上角的x位置
+y
+矩形左上角的y位置
+width
+矩形的宽度
+height
+矩形的高度
+rx
+圆角的x方位的半径
+ry
+圆角的y方位的半径
+
+##
+#### 圆形
