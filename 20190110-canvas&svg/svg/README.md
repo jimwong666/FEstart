@@ -125,18 +125,24 @@
 
 ## 基本形状
 ### -矩形
+> rect元素会在屏幕上绘制一个矩形 。其实只要6个基本属性就可以控制它在屏幕上的位置和形状。下边的那个图形设置了rx和ry属性用来控制圆角。如果没有设置圆角，则默认为0。
 ```html
     <svg version="1.1"
         baseProfile="full"
-        width="300" height="200"
-        xmlns="http://www.w3.org/2000/svg">
+		width="300" height="200"
+		xmlns="http://www.w3.org/2000/svg">
 
-        <rect x="10" y="10" width="30" height="30"/>
-        <rect x="60" y="10" rx="10" ry="10" width="30" height="30"/>
+		<rect x="10" y="10" width="100" height="150"/>
+		<rect x="150" y="10" rx="10" ry="10" width="100" height="150"/>
 
-    </svg>
+	</svg>
 ```
-> &emsp;&emsp;rect元素会在屏幕上绘制一个矩形 。其实只要6个基本属性就可以控制它在屏幕上的位置和形状。下边的那个图形设置了rx和ry属性用来控制圆角。如果没有设置圆角，则默认为0。
+
+示意图：
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/rectangle.png" alt="矩形">
+</p>
+<br/>
 
 > x：矩形左上角的x位置<br/>
 y：矩形左上角的y位置<br/>
@@ -153,10 +159,17 @@ ry：圆角的y方位的半径<br/>
         width="300" height="200"
         xmlns="http://www.w3.org/2000/svg">
 
-        <circle cx="25" cy="75" r="20"/>
+        <circle cx="150" cy="100" r="80"/>
 
     </svg>
 ```
+
+示意图：
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/circle.png" alt="圆形">
+</p>
+<br/>
+
 > cx：圆心的x位置<br/>
 cy：圆心的y位置<br/>
 r：圆的半径
@@ -169,12 +182,19 @@ r：圆的半径
         width="300" height="200"
         xmlns="http://www.w3.org/2000/svg">
 
-        <ellipse cx="75" cy="75" rx="20" ry="5"/>
+        <ellipse cx="150" cy="100" rx="100" ry="70"/>
 
     </svg>
 ```
-> Ellipse 是circle元素更通用的形式，你可以分别缩放圆的x半径和y半径（通常数学家称之为长轴半径和短轴半径）
 
+示意图：
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/oval.png" alt="椭圆">
+</p>
+<br/>
+
+> Ellipse 是circle元素更通用的形式，你可以分别缩放圆的x半径和y半径（通常数学家称之为长轴半径和短轴半径）
+>
 > rx：椭圆的x半径<br/>
 ry：椭圆的y半径
 
@@ -186,12 +206,18 @@ ry：椭圆的y半径
         width="300" height="200"
         xmlns="http://www.w3.org/2000/svg">
 
-        <line x1="10" x2="50" y1="110" y2="150"/>
-
+        <line x1="50" y1="20" x2="200" y2="100" stroke="black" />
     </svg>
 ```
-> Line 绘制线段。它取两个点的位置作为属性，指定这条线的起点和终点位置。
 
+示意图：
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/line.png" alt="线条">
+</p>
+<br/>
+
+> Line 绘制线段。它取两个点的位置作为属性，指定这条线的起点和终点位置。
+>
 > x1：起点的x位置<br/>
 > y1：起点的y位置<br/>
 > x2：终点的x位置<br/>
@@ -205,11 +231,19 @@ ry：椭圆的y半径
         width="300" height="200"
         xmlns="http://www.w3.org/2000/svg">
 
-        <polyline points="60 110, 65 120, 70 115, 75 130, 80 125, 85 140, 90 135, 95 150, 100 145"/>
+        <polyline points="60 110, 65 120, 70 115, 75 130, 80 125, 85 140, 90 135, 95 150, 100 145" fill="transparent" stroke="black"/>
 
     </svg>
 ```
+
+示意图：
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/polyline.png" alt="折线">
+</p>
+<br/>
+
 > Polyline是一组点连接在一起的直线。因为它可以有很多的折点，所有折点位置都放在一个points属性中<br/>
+>
 > points：点集数列。每个数字用空白、逗号、终止命令符或者换行符分隔开。每个点必须包含2个数字，一个是x坐标，一个是y坐标。所以点列表 (0,0), (1,1) 和(2,2)可以写成这样：“0 0, 1 1, 2 2”。
 
 ##
@@ -220,11 +254,18 @@ ry：椭圆的y半径
         width="300" height="200"
         xmlns="http://www.w3.org/2000/svg">
 
-        <polyline points="60 110, 65 120, 70 115, 75 130, 80 125, 85 140, 90 135, 95 150, 100 145"/>
+        <polygon points="50 100, 55 120, 70 120, 60 130, 65 145, 50 135, 35 145, 40 130, 30 120, 45 120"/>
 
     </svg>
 ```
->polygon和折线很像，它们都是由连接一组点集的直线构成。不同的是，polygon的路径在最后一个点处自动回到第一个点。
+
+示意图：
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/polygon.png" alt="多边形">
+</p>
+<br/>
+
+> polygon和折线很像，它们都是由连接一组点集的直线构成。不同的是，polygon的路径在最后一个点处自动回到第一个点。
 
 ##
 ### -路径
@@ -234,7 +275,7 @@ ry：椭圆的y半径
         width="300" height="200"
         xmlns="http://www.w3.org/2000/svg">
 
-        <path d="M 20 230 Q 40 205, 50 230 T 90230"/>
+        <path d="M 20 230 Q 40 205, 50 230"/>
 
     </svg>
 ```
@@ -413,7 +454,9 @@ tspan元素有以下的自定义属性:
 -------------------------------------------------------------------
 ### 填充与边框
 #### 上色
-> fill属性和stroke属性。fill属性设置对象内部的颜色，stroke属性设置绘制对象的线条的颜色。你可以使用在HTML中的CSS颜色命名方案定义它们的颜色，比如说颜色名（像red这种）、rgb值（像rgb(255,0,0)这种）、十六进制值、rgba值，等等。
+> fill属性设置对象内部的颜色。<br\>
+> stroke属性设置绘制对象的线条的颜色。<br\>
+> 你可以使用在HTML中的CSS颜色命名方案定义它们的颜色，比如说颜色名（像red这种）、rgb值（像rgb(255,0,0)这种）、十六进制值、rgba值，等等。
 
 ```html
     <rect x="10" y="10" width="100" height="100" stroke="blue" fill="purple"
@@ -423,7 +466,7 @@ tspan元素有以下的自定义属性:
 
 ##
 #### 描边
-> 除了颜色属性，还有其他一些属性用来控制绘制描边的方式。。
+> 除了颜色属性，还有其他一些属性用来控制绘制描边的方式。
 
 ##
 
@@ -588,7 +631,7 @@ stroke-dasharray属性，将虚线类型应用在描边上：
 
 -------------------------------------------------------------------
 ### 图案
-> 在我看来patterns（图案）是SVG中用到的最让人混淆的填充类型之一。它的功能非常强大，所以我认为他们值得讨论一下并且我们应至少对他们有最基本的了解。跟渐变一样，<pattern>需要放在SVG文档的<defs>内部。
+> 在我看来patterns（图案）是SVG中用到的最让人混淆的填充类型之一。它的功能非常强大，所以我认为他们值得讨论一下并且我们应至少对他们有最基本的了解。跟渐变一样，pattern需要放在SVG文档的defs内部。
 
 ```html
 <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" version="1.1">
