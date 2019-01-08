@@ -419,7 +419,7 @@ tspan元素有以下的自定义属性:
 
 ##
 
-示意图 1：
+stroke-width 属性定义了描边的宽度：
 <p align="center">
 <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/stroke_linecap.png" alt="描边方式_1">
 </p>
@@ -432,7 +432,6 @@ tspan元素有以下的自定义属性:
         <line x1="40" x2="120" y1="100" y2="100" stroke="black" stroke-width="20" stroke-linecap="round"/>
     </svg>
 ```
-> stroke-width 属性定义了描边的宽度。<br/>
 > stroke-linecap属性，它控制边框终点的形状，有三个值：<br/>
 > &emsp;&emsp; butt 用直边结束线段，它是常规做法，线段边界90度垂直于描边的方向、贯穿它的终点。<br/>
 > &emsp;&emsp; square 的效果差不多，但是会稍微超出实际路径的范围，超出的大小由stroke-width控制。<br/>
@@ -440,7 +439,7 @@ tspan元素有以下的自定义属性:
 
 ##
 
-示意图 2：
+stroke-linejoin属性用来控制两条描边线段之间，用什么方式连接：
 <p align="center">
 <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/stroke_linejoin.png" alt="描边方式_2">
 </p>
@@ -455,7 +454,6 @@ tspan元素有以下的自定义属性:
         <polyline points="40 220 80 180 120 220" stroke="black" stroke-width="20" stroke-linecap="square" fill="none" stroke-linejoin="bevel"/>
     </svg>
 ```
-> 每条折线都是由两个线段连接起来的，连接处的样式由stroke-linejoin属性控制。<br/>
 > stroke-linejoin属性，它有三个值：<br/>
 > &emsp;&emsp; miter 是默认值，表示用方形画笔在连接处形成尖角。<br/>
 > &emsp;&emsp; round 表示用圆角连接，实现平滑效果。<br/>
@@ -463,7 +461,7 @@ tspan元素有以下的自定义属性:
 
 ##
 
-示意图 3：
+stroke-dasharray属性，将虚线类型应用在描边上：
 <p align="center">
 <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/stroke_dasharray.png" alt="描边方式_3">
 </p>
@@ -489,7 +487,7 @@ tspan元素有以下的自定义属性:
 ```html
     <rect x="10" height="180" y="10" width="180" style="stroke: black; fill: red;"/>
 ```
-或者
+或者这样
 ```html
     <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" version="1.1">
         <defs>
@@ -503,14 +501,14 @@ tspan元素有以下的自定义属性:
     <rect x="10" height="180" y="10" width="180" id="MyRect"/>
     </svg>
 ```
-还可以用伪类
-```html
+还可以这样（伪类）
+```css
     #MyRect:hover {
         stroke: black;
         fill: blue;
     }
 ```
-还可以在XML文件中引入css
+这样也可以（XML文件中引入css）
 ```xml
     <?xml version="1.0" standalone="no"?>
     <?xml-stylesheet type="text/css" href="style.css"?>
@@ -612,8 +610,6 @@ tspan元素有以下的自定义属性:
 
 -------------------------------------------------------------------
 ### 基本变形
-
-
 
 ##
 #### SVG的缩放
