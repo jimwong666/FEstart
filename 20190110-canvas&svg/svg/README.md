@@ -431,7 +431,7 @@ ry：椭圆的y半径
 
 ```html
 <text>
-  <tspan font-weight="bold" fill="red">This is bold and red</tspan>
+    <tspan font-weight="bold" fill="red">This is bold and red</tspan>
 </text>
 ```
 tspan元素有以下的自定义属性:
@@ -445,7 +445,7 @@ tspan元素有以下的自定义属性:
 ```html
 <path id="my_path" d="M 20,20 C 40,40 80,40 100,20" />
 <text>
-  <textPath xlink:href="#my_path">This text follows a curve.</textPath>
+    <textPath xlink:href="#my_path">This text follows a curve.</textPath>
 </text
 ```
 ### -SVG字体
@@ -628,10 +628,10 @@ stroke-dasharray属性，将虚线类型应用在描边上：
                 <stop offset="100%" stop-color="blue"/>
             </radialGradient>
         </defs>
- 
+
         <rect x="10" y="10" rx="15" ry="15" width="100" height="100" fill="url(#RadialGradient1)"/> 
         <rect x="10" y="120" rx="15" ry="15" width="100"   height="100" fill="url(#RadialGradient2)"/>
-  
+
     </svg>
 ```
 
@@ -641,25 +641,25 @@ stroke-dasharray属性，将虚线类型应用在描边上：
 
 ```html
 <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" version="1.1">
-  <defs>
-    <linearGradient id="Gradient1">
-      <stop offset="5%" stop-color="white"/>
-      <stop offset="95%" stop-color="blue"/>
-    </linearGradient>
-    <linearGradient id="Gradient2" x1="0" x2="0" y1="0" y2="1">
-      <stop offset="5%" stop-color="red"/>
-      <stop offset="95%" stop-color="orange"/>
-    </linearGradient>
+    <defs>
+        <linearGradient id="Gradient1">
+            <stop offset="5%" stop-color="white"/>
+            <stop offset="95%" stop-color="blue"/>
+        </linearGradient>
+        <linearGradient id="Gradient2" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="5%" stop-color="red"/>
+            <stop offset="95%" stop-color="orange"/>
+        </linearGradient>
 
-    <pattern id="Pattern" x="0" y="0" width=".25" height=".25">
-      <rect x="0" y="0" width="50" height="50" fill="skyblue"/>
-      <rect x="0" y="0" width="25" height="25" fill="url(#Gradient2)"/>
-      <circle cx="25" cy="25" r="20" fill="url(#Gradient1)" fill-opacity="0.5"/>
-    </pattern>
+        <pattern id="Pattern" x="0" y="0" width=".25" height=".25">
+            <rect x="0" y="0" width="50" height="50" fill="skyblue"/>
+            <rect x="0" y="0" width="25" height="25" fill="url(#Gradient2)"/>
+            <circle cx="25" cy="25" r="20" fill="url(#Gradient1)" fill-opacity="0.5"/>
+        </pattern>
 
-  </defs>
+    </defs>
 
-  <rect fill="url(#Pattern)" stroke="black" x="0" y="0" width="200" height="200"/>
+    <rect fill="url(#Pattern)" stroke="black" x="0" y="0" width="200" height="200"/>
 </svg>
 ```
 > 在pattern元素内部你可以包含任何之前包含过的其它基本形状，并且每个形状都可以使用之前学习过的任何样式样式化，包括渐变和半透明。这里我们在pattern中绘制两个矩形（两个矩形互相重叠，一个矩形是另一个矩形大小的二倍，且用于填充整个pattern）和一个圆。
