@@ -562,37 +562,103 @@ ry：椭圆的y半径
     
     </svg>
 ```
+##
+<!-- [1-3-2] 径向渐变 ---------------------------------------------------------------------------->
+#### 径向渐变
+> 径向渐变与线性渐变相似，只是它是从一个点开始发散绘制渐变。创建径向渐变需要在文档的defs中添加一个<radialGradient>元素
 
-
-
-
-
-
-
-
+```html
+    <svg width="120" height="240" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <radialGradient id="RadialGradient1">
+                <stop offset="0%" stop-color="red"/>
+                <stop offset="100%" stop-color="blue"/>
+            </radialGradient>
+            <radialGradient id="RadialGradient2" cx="0.25" cy="0.25" r="0.25">
+                <stop offset="0%" stop-color="red"/>
+                <stop offset="100%" stop-color="blue"/>
+            </radialGradient>
+        </defs>
+ 
+        <rect x="10" y="10" rx="15" ry="15" width="100" height="100" fill="url(#RadialGradient1)"/> 
+        <rect x="10" y="120" rx="15" ry="15" width="100"   height="100" fill="url(#RadialGradient2)"/>
+  
+    </svg>
+```
 
 -------------------------------------------------------------------
 <!-- [1-3] 图案 ---------------------------------------------------------------------------->
 ### 图案
+> 在我看来patterns（图案）是SVG中用到的最让人混淆的填充类型之一。它的功能非常强大，所以我认为他们值得讨论一下并且我们应至少对他们有最基本的了解。跟渐变一样，<pattern>需要放在SVG文档的<defs>内部。
 
+```html
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <defs>
+    <linearGradient id="Gradient1">
+      <stop offset="5%" stop-color="white"/>
+      <stop offset="95%" stop-color="blue"/>
+    </linearGradient>
+    <linearGradient id="Gradient2" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="5%" stop-color="red"/>
+      <stop offset="95%" stop-color="orange"/>
+    </linearGradient>
 
+    <pattern id="Pattern" x="0" y="0" width=".25" height=".25">
+      <rect x="0" y="0" width="50" height="50" fill="skyblue"/>
+      <rect x="0" y="0" width="25" height="25" fill="url(#Gradient2)"/>
+      <circle cx="25" cy="25" r="20" fill="url(#Gradient1)" fill-opacity="0.5"/>
+    </pattern>
 
+  </defs>
 
-
-
-
-
+  <rect fill="url(#Pattern)" stroke="black" x="0" y="0" width="200" height="200"/>
+</svg>
+```
+> 在pattern元素内部你可以包含任何之前包含过的其它基本形状，并且每个形状都可以使用之前学习过的任何样式样式化，包括渐变和半透明。这里我们在pattern中绘制两个矩形（两个矩形互相重叠，一个矩形是另一个矩形大小的二倍，且用于填充整个pattern）和一个圆。
 
 -------------------------------------------------------------------
 <!-- [1-3] 文字 ---------------------------------------------------------------------------->
 ### 文字
+> 在SVG中有两种截然不同的文本模式. 一种是写在图像中的文本，另一种是SVG字体。
 
+#### 文本
+> <text>元素内部可以放任何的文字。
 
+```html
+    <text x="10" y="10">Hello World!</text>
+```
 
+> 属性x和属性y性决定了文本在视口中显示的位置。属性text-anchor，可以有这些值：start、middle、end或inherit，允许决定从这一点开始的文本流的方向。<br\>
+> 下列每个属性可以被设置为一个SVG属性或者成为一个CSS声明：font-family、font-style、font-weight、font-variant、font-stretch、font-size、font-size-adjust、kerning、letter-spacing、word-spacing和text-decoration
 
+##
 
+> <tspan>，它必须是一个text元素或别的tspan元素的子元素。一个典型的用法是把句子中的一个词变成粗体红。
 
+```html
+<text>
+  <tspan font-weight="bold" fill="red">This is bold and red</tspan>
+</text>
+```
+tspan元素有以下的自定义属性:
+> x：为容器设置一个新绝对x坐标。它覆盖了默认的当前的文本位置。这个属性可以包含一个数列，它们将一个一个地应用到tspan元素内的每一个字符上。<br/>
+> dx：从当前位置，用一个水平偏移开始绘制文本。这里，你可以提供一个值数列，可以应用到连续的字体，因此每次累积一个偏移。<br/>
+> rotate：把所有的字符旋转一个角度。如果是一个数列，则使每个字符旋转分别旋转到那个值，剩下的字符根据最后一个值旋转。<br/>
+> textLength：这是一个很模糊的属性，给出字符串的计算长度。它意味着如果它自己的度量文字和长度不满足这个提供的值，则允许渲染引擎精细调整字型的位置。<br/>
+> tref：tref元素允许引用已经定义的文本，高效地把它复制到当前位置。你可以使用xlink:href属性，把它指向一个元素，取得其文本内容。你可以独立于源样式化它、修改它的外观。
 
+##
+
+> <textPath>，该元素利用它的xlink:href属性取得一个任意路径，把字符对齐到路径，于是字体会环绕路径、顺着路径走。
+```html
+<path id="my_path" d="M 20,20 C 40,40 80,40 100,20" />
+<text>
+  <textPath xlink:href="#my_path">This text follows a curve.</textPath>
+</text
+```
+#### SVG 字体
+> 当规定SVG时，在浏览器支持web字体并不流行。因为访问正确的字体文件对于正确呈现字体是有确定性的，SVG中添加了一个字体描述技术，以提供这个能力。它并不是为了和别的格式比如说PostScript或OTF兼容，而是为了将字形信息嵌入SVG呈现的一个简单的方法。<br/>
+> 大家如果有兴趣，课后自行查阅。
 
 
 
