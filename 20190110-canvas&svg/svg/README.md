@@ -821,3 +821,223 @@ stroke-dasharray属性，将虚线类型应用在描边上：
 
 -------------------------------------------------------------------
 ## 动画
+### animation元素
+> 基础动画元素，实现单属性的动画效果
+
+介绍 animation 动画之前，先看一个简单的元素标签 set ，它并没有动画效果
+```html
+    <rect
+        id="ant"
+        x="10" y="10"
+        width="50" height="50"
+        fill="blue">
+    </rect>
+    <set xlink:href="#ant"
+        attributeName="x" 
+        to="100"
+        begin="3s" />
+```
+> 上图会在3s之后将矩形从横坐标10位置移动到100位置
+##
+> animation 元素可以创建单属性动画过渡效果
+```html
+    <rect id="ant"
+        x="10" y="10"
+        width="50" height="50"
+        fill="blue">
+    </rect>
+    <animate
+        xlink:href="#ant"
+        attributeName="x" 
+        to="100"
+        dur="3s"
+        begin="0s"/>
+    <animate
+        xlink:href="#ant"
+        attributeName="x" 
+        values="10;100;50;120"
+        dur="3s"
+        begin="0s"/>
+```
+> 用3s的时间，矩形元素从x轴10处以动画方式移动到100处
+
+attributeName属性：
+> 它用来规定元素的哪个属性会产生动画效果。比如上面代码的x轴坐标，也可以是透明度等类似属性。
+
+from、to和by 属性：
+> from属性规定attributeName属性的起始值，如果起始值和默认值相同，from可以省略。<br/>
+> 
+> to属性规定attributeName属性的终止值。<br/>
+> 
+> by属性规定了一个相对于from的值（to是绝对值）。假如from值是10，by的值是50，那么最终值是60。
+特别说明：如果同时规定了to和by，那么to的优先级会更高。
+
+dur 属性：
+> 此属性规定动画持续的时间。
+
+values 属性：
+> 此属性功能与from和to类似。<br/>
+> 
+> 它也是规定attributeName的起点和终点，并且起点和终点之间也可以有关键帧。<br/>
+> 
+> 属性值是一个用分号分隔的一个或多个值。
+特别说明:如果规定了values属性，那么from, to和by都会被忽略。
+
+begin 属性：
+> 上面已经介绍过了，begin可以是开始时间。当然begin还可以是其他值：
+
+1. offset-value
+    > 相对于svg文档开始时间（可以简单理解为svg文档就绪）的一个偏移值。
+    ```
+        begin="5s"
+    ```
+2. syncbase-value
+    > 基于同步确定的时间点开始动画。也就是基于一个指定元素开始或者结束时间点的偏移值。
+    ```
+        [元素的id].begin +/- 时间值
+
+        begin="rect-anim.begin + 1s"
+    ```
+3. event-value
+    > 动画的开始与事件相关联。
+    ```
+        [元素的id].[事件类型] +/- 时间值
+
+        begin="click + 1s"
+    ```
+4. repeat-value
+    > 规定动画是在其他某个动画重复执行指定次数后开始。
+    ```
+        [元素的id].repeat(整数) +/- 时间值
+
+        begin="rect-anim.repeat(2)+2s"
+    ```
+5. accessKey-value
+    > 定义动画开始的快捷键
+    ```
+        accessKey("character") +/- 时间值
+
+        begin="accessKey(d)+1s"
+    ```
+6. wallclock-sync-value
+    > 以真实的世界时钟时间来规定动画的开始。
+    ```
+        wallclock("wallclock-value")
+
+        begin="wallclock('1997-07-16T19:20+01:00')"
+    ```
+7. 等等
+
+### animationTransform元素
+> animateTransform是animate+transform的组合，很明显是对svg元素transform变换的动画操作。
+```html
+    <rect id="ant"
+        x="20" y="20"
+        width="50" height="50"
+        fill="blue">
+    </rect>
+    <animateTransform
+        xlink:href="#ant"
+        attributeName="transform"
+        begin="0s"
+        dur="3s"
+        type="scale"
+        from="1" to="2"
+        repeatCount="indefinite" />
+```
+> 与animation不一样的就是attributeName和type，其他都是一样的。<br/>
+
+> attributeName的值就是transform。<br/>
+> type的值就是transform可选的值。
+
+这边再讲3个属性：
+1. fill属性，有2个值：
+    > freeze：动画结束以后，动画保持最后状态。
+
+    > remove：动画结束之后，恢复到初始状态。
+2. repeatCount属性：
+    > 此属性用来规定动画重复的次数。属性值可以是数字，也可以是"indefinite"，表示可以无限循环下去。
+    ```html
+        repeatCount="2"
+    ```
+3. repeatDur属性:
+    > 此属性用来限制动画重复的时间。优先级大于repeatCount属性。
+    ```html
+        repeatCount="4"
+    ```
+
+### animateMotion元素
+> 实现路径动画效果
+
+```html
+<path transform=""
+    d="M0,0 Q50,60 80,140 T340,100"
+    stroke="red"
+    stroke-width="6"
+    fill="none" />
+
+
+<animateMotion
+    xlink:href="#ant"
+    path="M0,0 Q50,60 80,140 T340,100"
+    dur="10s"
+    begin="click"
+    fill="freeze">
+</animateMotion> 
+<g id="ant">
+    <circle
+        fill="red"
+        fill-opacity="0.5"
+        cx="0" cy="0"
+        r="20"/>
+    <circle
+        fill="green"
+        cx="0" cy="0"
+        r="3"/>
+</g>
+```
+> 定义一条path路径，然后用xlink:href引入一个svg，这个svg图形就能随着路径动了。
+
+### SVG 文本路径动画
+> 实现文本沿路径动画效果
+
+```html
+    <path id="path"
+        d="M20,20 Q50,60 80,140 T340,100"
+        stroke="red"
+        fill="none" />
+<text>
+    <textPath id="textPath" xlink:href="#path">蚂蚁部落欢迎您</textPath>
+</text>
+<animate xlink:href="#textPath"
+    attributeName="startOffset"
+    from="0%" to="100%"
+    begin="0s"
+    dur="5s"
+    repeatCount="indefinite"
+    keyTimes="0;1"
+    calcMode="spline"
+    keySplines="0.1 0.2 .22 1"/>
+```
+
+### 渐变动画
+```html
+<radialGradient
+    id="gr-radial"
+    cx="50%" cy="50%"
+    r="70%">
+    <animate attributeName="r"
+        values="0%;150%;100%;0%"
+        dur="5s"
+        repeatCount="indefinite" />
+
+    <stop stop-color="#FFF" offset="0">
+        <animate attributeName="stop-color"
+            values=\"#333;#FFF;#FFF;#333"
+            dur="5s"
+            repeatCount="indefinite" />
+    </stop>
+    <stop stop-color="rgba(55,55,55,0)" offset="100%" />
+</radialGradient>
+<circle cx="50%" cy="50%" r="50%" fill="url(#gr-radial)"/>
+```
