@@ -2,7 +2,7 @@
 * [基础知识](#基础知识)
   * [SVG主要特点](#-SVG主要特点)
   * [SVG的使用](#-SVG的使用)
-  * [坐标定位](#-坐标定位)
+  * [SVG中的坐标定位](#-SVG中的坐标定位)
 * [基本形状](#基本形状)
   * [矩形](#-矩形)
   * [圆形](#-圆形)
@@ -39,9 +39,9 @@
 
 #### -SVG主要特点
 	1.SVG是可伸缩矢量图形。
-	4.SVG图像在放大或缩小（改变尺寸）的情况下，其图形质量不会受受损失。
+	2.SVG图像在放大或缩小（改变尺寸）的情况下，其图形质量不会受受损失。
 	3.SVG使用XML格式定义图形。
-	4.SVG与JPEG和GIF图像比起来，尺寸更小，且可压缩性更强。
+	4.SVG与JPEG和GIF图像比起来，尺寸更小，且可压缩性更强。且可被众多工具读取和修改（比如记事本）。
 ##
 #### -SVG的使用
 > 我们既可以直接内嵌在HTML代码之中，也可以将代码单独写入一个SVG文件（.svg格式文件）。
@@ -85,6 +85,7 @@
 
 ##
 ##### --引用SVG文件
+三种方式：
 ```html
     <object data="image.svg" type="image/svg+xml" />
 ```
@@ -110,10 +111,10 @@
 
     </svg>
 ```
-喏~! 就是这个(xml)~ 最上面多了两行奇怪的东西
+喏~! 就是这个(xml)~ 最上面多了一行奇怪的东西
 
 ##
-#### -坐标定位
+#### -SVG中的坐标定位
 > &emsp;&emsp;SVG使用的坐标系统或者说网格系统，和Canvas用的差不多（所有计算机绘图都差不多）。这种坐标系统是：以页面的左上角为(0,0)坐标原点，坐标以像素（默认，可以是其他）为单位，x轴正方向是向右，y轴正方向是向下。【注意】这和我们小时候所学的坐标系是不一样的。但是在HTML文档中，元素都是用这种方式定位的。
 
 示意图：
@@ -132,7 +133,7 @@
 
 ## 基本形状
 ### -矩形
-> rect元素会在屏幕上绘制一个矩形 。其实只要6个基本属性就可以控制它在屏幕上的位置和形状。下边的那个图形设置了rx和ry属性用来控制圆角。如果没有设置圆角，则默认为0。
+> rect元素会在屏幕上绘制一个矩形 。其实只要6个基本属性就可以控制它在屏幕上的位置和形状。下边的那个多了rx和ry属性用来控制圆角。如果没有设置圆角，则默认为0。
 ```html
     <svg version="1.1"
         baseProfile="full"
@@ -286,17 +287,20 @@ ry：椭圆的y半径
 
     </svg>
 ```
-> path可能是SVG中最常见的形状。你可以用path元素绘制矩形（直角矩形或者圆角矩形）、圆形、椭圆、折线形、多边形，以及一些其他的形状，例如贝塞尔曲线、2次曲线等曲线。<br/>
+> path可能是SVG中最常见的形状。<br/>
+> 你可以用path元素绘制矩形（直角矩形或者圆角矩形）、圆形、椭圆、折线形、多边形，以及一些其他的形状，例如贝塞尔曲线、2次曲线等曲线。<br/>
+> 
 > d：一个点集数列以及其它关于如何绘制路径的信息（形如“命令+参数”形式的命令）。
 ##
 #### --移点命令:
 
 > 移点命令：M x y 或者 m dx dy<br/>
+> 
 > M或者m意思是：move命令，将点移到什么地方。
 
 这里需要注意几点：<br/>
     1、这只会移动点，并不会画点，也不会在移动的路径上划线！<br/>
-    2、大写的M和小写的m不一样。大写的M坐标采用绝对定位，小写的m坐标采用相对定位（就是相对于上一个点的坐标）。
+    2、大写的M和小写的m不一样。大写的M坐标采用绝对定位，小写的m坐标采用相对定位（就是相对于上一个点的坐标），后面的小写也是相对应的意思。
 ##
 #### --直线命令:
 
@@ -404,7 +408,7 @@ ry：椭圆的y半径
 
 ##
 曲线命令A/a（弧形曲线）
-> 这部分跳过，大家可以自行了解
+> 弧形可以视为圆形或椭圆形的一部分。大家有兴趣课后可以自行了解。
 
 示意图：
 <p align="center">
@@ -418,21 +422,22 @@ ry：椭圆的y半径
 > 在SVG中有两种截然不同的文本模式. 一种是写在图像中的文本，另一种是SVG字体。
 
 ### -文本
+text元素
 > text元素内部可以放任何的文字。可以理解为p元素。
 
 ```html
-    <text x="10" y="10">Hello World!</text>
+    <text x="10" y="10" text-anchor="start">Hello World!</text>
 ```
 
-> 属性x和属性y性决定了文本在视口中显示的位置。<br\>
+> 属性x和属性y性决定了文本在视口中显示的位置。<br/>
 >
-> 属性text-anchor，可以有这些值：start、middle、end或inherit，允许决定从这一点开始的文本流的方向。<br\>
+> 属性text-anchor，可以有这些值：start、middle、end或inherit，允许决定从这一点开始的文本流的方向。<br/>
 >
 > 下列每个属性可以被设置为一个SVG属性或者成为一个CSS声明：font-family、font-style、font-weight、font-variant、font-stretch、font-size、font-size-adjust、kerning、letter-spacing、word-spacing和text-decoration
 
 ##
-
-> tspan标签它必须是一个text元素或别的tspan元素的子元素。<br\>
+tspan标签
+> tspan标签它必须是一个text元素或别的tspan元素的子元素。<br/>
 >
 > text标签绘制功能过于简单，很多常见的功能实现起来都比较困难，比如内部文本换行。再比如单独设置文本某一部分的样式，也很困难，使用tspan可以有效的解决类似问题。可以理解为span元素。
 
@@ -461,15 +466,15 @@ tspan元素有以下的自定义属性:
 -------------------------------------------------------------------
 ## 填充与边框
 ### -上色
-> fill属性设置对象内部的颜色。<br\>
-> stroke属性设置绘制对象的线条的颜色。<br\>
+> fill属性设置对象内部的颜色。<br/>
+> stroke属性设置绘制对象的线条的颜色。<br/>
 > 你可以使用在HTML中的CSS颜色命名方案定义它们的颜色，比如说颜色名（像red这种）、rgb值（像rgb(255,0,0)这种）、十六进制值、rgba值，等等。
 
 ```html
-    <rect x="10" y="10" width="100" height="100" stroke="blue" fill="purple"
-        fill-opacity="0.5" stroke-opacity="0.8"/>
+    <rect x="10" y="10" width="100" height="100" stroke="blue" fill="purple" fill-opacity="0.5" stroke-opacity="0.8"/>
 ```
-> 属性fill-opacity控制填充色的不透明度，属性stroke-opacity控制描边的不透明度。
+> 属性fill-opacity控制填充色的不透明度。<br/>
+> 属性stroke-opacity控制描边的不透明度。
 
 ##
 ### -描边
@@ -637,7 +642,7 @@ stroke-dasharray属性，将虚线类型应用在描边上：
         </defs>
 
         <rect x="10" y="10" rx="15" ry="15" width="100" height="100" fill="url(#RadialGradient1)"/> 
-        <rect x="10" y="120" rx="15" ry="15" width="100"   height="100" fill="url(#RadialGradient2)"/>
+        <rect x="10" y="120" rx="15" ry="15" width="100" height="100" fill="url(#RadialGradient2)"/>
 
     </svg>
 ```
@@ -654,10 +659,9 @@ stroke-dasharray属性，将虚线类型应用在描边上：
 
 ##
 ### -SVG的缩放
-> SVG中viewport就是视口的意思。通俗一点就是观察SVG的窗口。<br\>
-> SVG中画布，就是width、height。<br\>
+> SVG中viewport就是视口的意思。通俗一点就是观察SVG的窗口。就是width和height。<br/>
 >
-> SVG 文档中的1个像素对应输出设备（比如显示屏）上的1个像素（默认）。但是这种情况是可以改变的，否则 SVG 的名字里也不至于会有“Scalable”（可缩放）这个词。如同CSS可以定义字体的绝对大小和相对大小，SVG也可以定义绝对大小同时SVG也能使用相对大小，只需给出数字，不标明单位，输出时就会采用用户的单位。
+> SVG 文档中的1个像素对应输出设备（比如显示屏）上的1个像素（默认）。但是这种情况是可以改变的，否则 SVG 的名字里也不至于会有“Scalable”（可缩放）这个词。
 
 看个改过的例子：
 ```html
@@ -679,11 +683,17 @@ stroke-dasharray属性，将虚线类型应用在描边上：
 这里定义的画布尺寸是300px * 200px。但是，viewBox属性定义了画布上可以显示的区域：从(0,0)点开始，150宽(x) * 100高(y)的区域。这个150 * 100的区域，会放到300 * 200的画布上显示。于是就形成了放大两倍的效果。
 
 用户单位和屏幕单位的映射关系被称为<用户坐标系统>。除了缩放之外，坐标系统还可以旋转、倾斜、翻转。默认的用户坐标系统1用户像素等于设备上的1像素（但是设备上可能会自己定义1像素到底是多大）。
+
 ##
 ### -transform
 ##
 #### --位移
-> transform="translate(x,y)",x：方向位移x，y：方向位移y。与css的translate(x,y)类似。
+
+> transform="translate(x,y)"<br/>
+> x：方向位移x<br/>
+> y：方向位移y<br/>
+> 这与css的translate(x,y)类似<br/>
+
 ```html
     <rect id="ant"
         x="60" y="60"
@@ -695,10 +705,15 @@ stroke-dasharray属性，将虚线类型应用在描边上：
 
 ##
 #### --旋转
-> transform="rotate(angle x y)",angle是顺时针旋转的角度，x：中心点的横坐标，y：中心点的纵坐标。如果不写，则默认是(0,0)。
+> transform="rotate(angle x y)"<br/>
+> angle是顺时针旋转的角度<br/>
+> x：中心点的横坐标<br/>
+> y：中心点的纵坐标<br/>
+> 如果x和|y不写，则默认是(0,0)，急远点
+
 ```html
-	<rect id="ant"
-		x="60" y="60"
+    <rect id="ant"
+        x="60" y="60"
         width="100"
         height="100"
         transform="rotate(45 110 110)"
@@ -707,10 +722,19 @@ stroke-dasharray属性，将虚线类型应用在描边上：
 
 ##
 #### --缩放
-> scale()变形改变了元素的尺寸。它需要两个数字，作为比率计算如何缩放。0.5表示收缩到50%。如果第二个数字被忽略了，它默认等于第一个值。注意：坐标也产生了缩放哦~
+> scale()变形改变了元素的尺寸<br/>
+> 它需要两个数字，作为比率计算如何缩放。0.5表示收缩到50%。如果第二个数字被忽略了，它默认等于第一个值<br/>
+> 注意：坐标也会产生了缩放哦~
+
+示意图：
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/zoom.png" alt="缩放">
+</p>
+<br/>
+
 ```html
-	<rect id="ant"
-		x="60" y="60"
+    <rect id="ant"
+        x="60" y="60"
         width="100"
         height="100"
         transform="scale(0.5)"
@@ -719,14 +743,21 @@ stroke-dasharray属性，将虚线类型应用在描边上：
 
 ##
 #### --斜切
-> 斜切，skewX()变形和skewY()变形。每个都需要角度以确定元素斜切到多远。x和y分开写，不能写成skew()。
+> 斜切，分为skewX(angle)变形和skewY(angle)变形。每个都需要角度以确定元素斜切到多远。x和y分开写，不能写成skew(angleX,angleY)。
+
+示意图：
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/beveled.png" alt="斜切">
+</p>
+<br/>
+
 ```html
-<rect id="ant"
-	x="100" y="100"
-	width="100"
-	height="100"
-	transform="skewX(-45)"
-	fill="blue"/>
+    <rect id="ant"
+        x="100" y="100"
+        width="100"
+        height="100"
+        transform="skewX(-45)"
+        fill="blue"/>
 ```
 
 ##
@@ -738,46 +769,53 @@ stroke-dasharray属性，将虚线类型应用在描边上：
 </p>
 <br/>
 
+> 这个跳过，感兴趣的可以课后了解一下。
 -------------------------------------------------------------------
 ## 剪切与遮罩
 ### 剪切
 
-> 我们在一个圆形的基础上创建一个半圆形：
+> 如果我们想用矩形截出圆的一部分，怎么办呢？
+
+示意图：
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/cut.png" alt="剪切">
+</p>
+<br/>
 
 ```html
 <svg version="1.1"
-	xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <clipPath id="cut-off-bottom">
-      <rect x="0" y="0" width="200" height="100" />
-    </clipPath>
-  </defs>
+    xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <clipPath id="cut-off-bottom">
+            <rect x="0" y="30" width="500" height="250" />
+        </clipPath>
+    </defs>
 
-  <circle cx="100" cy="100" r="100" clip-path="url(#cut-off-bottom)" />
+    <circle cx="250" cy="250" r="100" clip-path="url(#cut-off-bottom)" />
 </svg>
 ```
-> 在(100,100)创建一个圆形，半径是100。属性clip-path引用了一个带单个rect元素的<clipPath>元素。它内部的这个矩形将把画布的上半部分涂黑。注意，clipPath元素经常放在一个defs元素内，而且该rect不会被绘制。它的象素数据将用来确定：圆形的哪些像素需要最终呈现出来。因为矩形只覆盖了圆形的上半部分，所以下半部分将消失了。<br\>
+> 属性clip-path引用了一个带单个rect元素的clipPath元素。它内部的这个矩形将把画布的上半部分截取下来。<br/>
+> 注意，clipPath元素经常放在一个defs元素内，而且该rect不会被绘制。它的象素数据将用来确定：圆形的哪些像素需要最终呈现出来。因为矩形只覆盖了圆形的上半部分，所以下半部分将消失了。<br/>
 > 当然这里的clipPath可以是任意svg形状。
 
 ##
 ### 遮罩
-> 遮罩的效果最令人印象深刻的是表现为一个渐变。如果你想要让一个元素渐渐消失，你可以利用遮罩效果实现这一点。
+> 遮罩的效果最令人印象深刻的是表现为一个渐变。如果你想用半透明的东西遮住一个元素的一部分，你可以利用遮罩效果实现这一点。
 
 ```html
-<svg version="1.1"
-xmlns="http://www.w3.org/2000/svg">
-    <defs>
-		<linearGradient id="Gradient">
-			<stop offset="0" stop-color="white" stop-opacity="0" />
-			<stop offset="1" stop-color="white" stop-opacity="1" />
-		</linearGradient>
-		<mask id="Mask">
-			<rect x="0" y="0" width="200" height="200" fill="url(#Gradient)"  />
-		</mask>
-	</defs>
-	<rect x="0" y="0" width="200" height="200" fill="red" mask="url(#Mask)" />
-	<rect x="200" y="200" width="200" height="200" fill="url(#Gradient)" />
-</svg>
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="Gradient">
+                <stop offset="0" stop-color="white" stop-opacity="0" />
+                <stop offset="1" stop-color="white" stop-opacity="1" />
+            </linearGradient>
+            <mask id="Mask">
+                <rect x="0" y="0" width="200" height="200" fill="url(#Gradient)" />
+            </mask>
+        </defs>
+        <rect x="0" y="0" width="200" height="200" fill="red" mask="url(#Mask)" />
+        <rect x="200" y="200" width="200" height="200" fill="url(#Gradient)" />
+    </svg>
 ```
 > 例子中，你会看到红色渐渐消失露出背景
 
