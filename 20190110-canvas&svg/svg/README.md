@@ -23,9 +23,11 @@
   * [径向渐变](#-径向渐变)
 * [SVG变形](#SVG变形)
   * [SVG变SVG的缩放形](#SVG的缩放)
-  * [transform](#transform)
-    * [斜切](#斜切)
-    * [缩放](#缩放)
+  * [transform](#-transform)
+    * [位移](#--位移)
+    * [旋转](#--旋转)
+    * [缩放](#--缩放)
+    * [斜切](#--斜切)
     * [matrix()](#matrix())
 * [剪切与遮罩](#剪切与遮罩)
 * [动画](#动画)
@@ -677,20 +679,107 @@ stroke-dasharray属性，将虚线类型应用在描边上：
 这里定义的画布尺寸是300px * 200px。但是，viewBox属性定义了画布上可以显示的区域：从(0,0)点开始，150宽(x) * 100高(y)的区域。这个150 * 100的区域，会放到300 * 200的画布上显示。于是就形成了放大两倍的效果。
 
 用户单位和屏幕单位的映射关系被称为<用户坐标系统>。除了缩放之外，坐标系统还可以旋转、倾斜、翻转。默认的用户坐标系统1用户像素等于设备上的1像素（但是设备上可能会自己定义1像素到底是多大）。
-
+##
 ### -transform
-#### --平移
+##
+#### --位移
+> transform="translate(x,y)",x：方向位移x，y：方向位移y。与css的translate(x,y)类似。
+```html
+    <rect id="ant"
+        x="60" y="60"
+        width="100"
+        height="100"
+        transform="translate(50,50)"
+        fill="blue"/>
+```
+
+##
 #### --旋转
-#### --斜切
-#### --旋转
+> transform="rotate(angle x y)",angle是顺时针旋转的角度，x：中心点的横坐标，y：中心点的纵坐标。如果不写，则默认是(0,0)。
+```html
+	<rect id="ant"
+		x="60" y="60"
+        width="100"
+        height="100"
+        transform="rotate(45 110 110)"
+        fill="blue"/>
+```
+
+##
 #### --缩放
+> scale()变形改变了元素的尺寸。它需要两个数字，作为比率计算如何缩放。0.5表示收缩到50%。如果第二个数字被忽略了，它默认等于第一个值。注意：坐标也产生了缩放哦~
+```html
+	<rect id="ant"
+		x="60" y="60"
+        width="100"
+        height="100"
+        transform="scale(0.5)"
+        fill="blue"/>
+```
+
+##
+#### --斜切
+> 斜切，skewX()变形和skewY()变形。每个都需要角度以确定元素斜切到多远。x和y分开写，不能写成skew()。
+```html
+<rect id="ant"
+	x="100" y="100"
+	width="100"
+	height="100"
+	transform="skewX(-45)"
+	fill="blue"/>
+```
+
+##
 #### --matrix()
+> 所有上面的变形可以表达为一个2x3的变形矩阵。组合一些变形，可以直接用matrix(a, b, c, d, e, f)变形设置结果矩阵，利用下面的矩阵，它把来自上一个坐标系统的坐标映射到新的坐标系统：
+
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/matrix.png" alt="矩阵">
+</p>
+<br/>
 
 -------------------------------------------------------------------
 ## 剪切与遮罩
+### 剪切
 
+> 我们在一个圆形的基础上创建一个半圆形：
 
+```html
+<svg version="1.1"
+	xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="cut-off-bottom">
+      <rect x="0" y="0" width="200" height="100" />
+    </clipPath>
+  </defs>
 
+  <circle cx="100" cy="100" r="100" clip-path="url(#cut-off-bottom)" />
+</svg>
+```
+> 在(100,100)创建一个圆形，半径是100。属性clip-path引用了一个带单个rect元素的<clipPath>元素。它内部的这个矩形将把画布的上半部分涂黑。注意，clipPath元素经常放在一个defs元素内，而且该rect不会被绘制。它的象素数据将用来确定：圆形的哪些像素需要最终呈现出来。因为矩形只覆盖了圆形的上半部分，所以下半部分将消失了。<br\>
+> 当然这里的clipPath可以是任意svg形状。
+
+##
+### 遮罩
+> 遮罩的效果最令人印象深刻的是表现为一个渐变。如果你想要让一个元素渐渐消失，你可以利用遮罩效果实现这一点。
+
+```html
+<svg version="1.1"
+xmlns="http://www.w3.org/2000/svg">
+    <defs>
+		<linearGradient id="Gradient">
+			<stop offset="0" stop-color="white" stop-opacity="0" />
+			<stop offset="1" stop-color="white" stop-opacity="1" />
+		</linearGradient>
+		<mask id="Mask">
+			<rect x="0" y="0" width="200" height="200" fill="url(#Gradient)"  />
+		</mask>
+	</defs>
+	<rect x="0" y="0" width="200" height="200" fill="red" mask="url(#Mask)" />
+	<rect x="200" y="200" width="200" height="200" fill="url(#Gradient)" />
+</svg>
+```
+> 例子中，你会看到红色渐渐消失露出背景
 
 -------------------------------------------------------------------
 ## 动画
