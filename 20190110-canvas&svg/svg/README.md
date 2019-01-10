@@ -28,9 +28,16 @@
     * [旋转](#--旋转)
     * [缩放](#--缩放)
     * [斜切](#--斜切)
-    * [matrix()](#matrix)
+    * [matrix()](#--matrix())
 * [剪切与遮罩](#剪切与遮罩)
+  * [剪切](#-剪切)
+  * [遮罩](#-遮罩)
 * [动画](#动画)
+  * [animation元素](#-animation元素)
+  * [animationTransform元素](#-animationTransform元素)
+  * [animateMotion元素](#-animateMotion元素)
+  * [SVG文本路径动画](#-SVG文本路径动画)
+  * [渐变动画](#-渐变动画)
 
 # SVG
 > &emsp;&emsp;SVG 是一种基于 XML 语法的图像格式，全称是可缩放矢量图（Scalable Vector Graphics）。jpg、png、gif等图像格式都是基于像素处理的，SVG 则是属于对图像的形状描述，所以它本质上是文本文件，体积较小，且不管放大多少倍都不会失真。<br/>
@@ -761,7 +768,7 @@ stroke-dasharray属性，将虚线类型应用在描边上：
 ```
 
 ##
-#### --matrix
+#### --matrix()
 > 所有上面的变形可以表达为一个2x3的变形矩阵。组合一些变形，可以直接用matrix(a, b, c, d, e, f)变形设置结果矩阵，利用下面的矩阵，它把来自上一个坐标系统的坐标映射到新的坐标系统：
 
 <p align="center">
@@ -772,7 +779,7 @@ stroke-dasharray属性，将虚线类型应用在描边上：
 > 这个跳过，感兴趣的可以课后了解一下。
 -------------------------------------------------------------------
 ## 剪切与遮罩
-### 剪切
+### -剪切
 
 > 如果我们想用矩形截出圆的一部分，怎么办呢？
 
@@ -799,7 +806,7 @@ stroke-dasharray属性，将虚线类型应用在描边上：
 > 当然这里的clipPath可以是任意svg形状。
 
 ##
-### 遮罩
+### -遮罩
 > 遮罩的效果最令人印象深刻的是表现为一个渐变。如果你想用半透明的东西遮住一个元素的一部分，你可以利用遮罩效果实现这一点。
 
 ```html
@@ -821,7 +828,7 @@ stroke-dasharray属性，将虚线类型应用在描边上：
 
 -------------------------------------------------------------------
 ## 动画
-### animation元素
+### -animation元素
 > 基础动画元素，实现单属性的动画效果
 
 介绍 animation 动画之前，先看一个简单的元素标签 set ，它并没有动画效果
@@ -928,7 +935,7 @@ begin 属性：
     ```
 7. 等等
 
-### animationTransform元素
+### -animationTransform元素
 > animateTransform是animate+transform的组合，很明显是对svg元素transform变换的动画操作。
 ```html
     <rect id="ant"
@@ -966,7 +973,7 @@ begin 属性：
         repeatCount="4"
     ```
 
-### animateMotion元素
+### -animateMotion元素
 > 实现路径动画效果
 
 ```html
@@ -998,7 +1005,7 @@ begin 属性：
 ```
 > 定义一条path路径，然后用xlink:href引入一个svg，这个svg图形就能随着路径动了。
 
-### SVG 文本路径动画
+### -SVG文本路径动画
 > 实现文本沿路径动画效果
 
 ```html
@@ -1020,7 +1027,7 @@ begin 属性：
     keySplines="0.1 0.2 .22 1"/>
 ```
 
-### 渐变动画
+### -渐变动画
 ```html
 <radialGradient
     id="gr-radial"
