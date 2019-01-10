@@ -423,6 +423,17 @@ ry：椭圆的y半径
 </p>
 <br/>
 
+```html
+    <svg width="320px" height="320px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 315
+            L 110 215
+            A 30 50 0 0 1 162.55 162.45
+            L 172.55 152.45
+            A 30 50 -45 0 1 215.1 109.9
+            L 315 10" stroke="black" fill="green" stroke-width="2" fill-opacity="0.5"/>
+    </svg>
+```
+
 ```
     A rx ry x-axis-rotation large-arc-flag sweep-flag x y
     a rx ry x-axis-rotation large-arc-flag sweep-flag dx dy
@@ -483,6 +494,11 @@ tspan元素有以下的自定义属性:
     <textPath xlink:href="#my_path">This text follows a curve.</textPath>
 </text
 ```
+
+##
+
+> tref元素用来指定的包含文本内容的引用元素。
+
 ### -SVG字体
 > 当规定SVG时，在浏览器支持web字体并不流行。因为访问正确的字体文件对于正确呈现字体是有确定性的，SVG中添加了一个字体描述技术，以提供这个能力。它并不是为了和别的格式比如说PostScript或OTF兼容，而是为了将字形信息嵌入SVG呈现的一个简单的方法。<br/>
 > 大家如果有兴趣，课后自行查阅。
@@ -1066,5 +1082,4 @@ begin 属性：
 ```
 -------------------------------------------------------------------
 -------------------------------------------------------------------
--------------------------------------------------------------------
-> 思考？那么svg，到底能做什么？
+> 思考：那么svg，到底能做什么？
