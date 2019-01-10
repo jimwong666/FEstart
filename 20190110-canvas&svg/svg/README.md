@@ -28,7 +28,7 @@
     * [旋转](#--旋转)
     * [缩放](#--缩放)
     * [斜切](#--斜切)
-    * [matrix()](#matrix())
+    * [matrix()](#matrix)
 * [剪切与遮罩](#剪切与遮罩)
 * [动画](#动画)
 
@@ -761,7 +761,7 @@ stroke-dasharray属性，将虚线类型应用在描边上：
 ```
 
 ##
-#### --matrix()
+#### --matrix
 > 所有上面的变形可以表达为一个2x3的变形矩阵。组合一些变形，可以直接用matrix(a, b, c, d, e, f)变形设置结果矩阵，利用下面的矩阵，它把来自上一个坐标系统的坐标映射到新的坐标系统：
 
 <p align="center">
@@ -1033,7 +1033,7 @@ begin 属性：
 
     <stop stop-color="#FFF" offset="0">
         <animate attributeName="stop-color"
-            values=\"#333;#FFF;#FFF;#333"
+            values="#333;#FFF;#FFF;#333"
             dur="5s"
             repeatCount="indefinite" />
     </stop>
