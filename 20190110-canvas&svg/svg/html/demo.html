@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>例子</title>
+	<style>
+		*, html {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			background: #e74c3c;
+  			text-align: center;
+		}
+		
+		svg {
+			margin: 20px;
+			display: inline-block;
+		}
+	</style>
+</head>
+<body>
+	<svg version="1.1" 
+		x="0" y="0" 
+		width="100" height="100"
+		viewBox="0 0 100 100"
+		xmlns="http://www.w3.org/2000/svg">
+
+		<path fill="#fff" d="M73,50 c0-12.7-10.3-23-23-23 S27,37.3,27,50 M30.9,50 c0-10.5,8.5-19.1,19.1-19.1 S69.1,39.5,69.1,50">
+
+		<animateTransform 
+			attributeName="transform"
+			type="rotate"
+			dur="1s" 
+			from="0 50 50"
+			to="360 50 50" 
+			repeatCount="indefinite" />
+	</path>
+	</svg>
+	  
+	<svg version="1.1"
+		width="100" height="100"
+		xmlns="http://www.w3.org/2000/svg">
+		
+		<defs>
+			<rect x="50" y="25" width="4" height="15" fill="white" id="rect"></rect>
+		</defs>
+
+		<g id="group">
+			<use xlink:href="#rect"></use>
+			<use xlink:href="#rect" transform="rotate(40 50 50)"></use>
+			<use xlink:href="#rect" transform="rotate(80 50 50)"></use>
+			<use xlink:href="#rect" transform="rotate(120 50 50)"></use>
+			<use xlink:href="#rect" transform="rotate(160 50 50)"></use>
+			<use xlink:href="#rect" transform="rotate(200 50 50)"></use>
+			<use xlink:href="#rect" transform="rotate(240 50 50)"></use>
+			<use xlink:href="#rect" transform="rotate(280 50 50)"></use>
+			<use xlink:href="#rect" transform="rotate(320 50 50)"></use>
+		</g>
+		<animateTransform
+			xlink:href="#group"
+			attributeName="transform"
+			type="rotate"
+			begin="0s"
+			dur="3s"
+			from="0 50 50" 
+			to="360 50 50"
+			repeatCount="indefinite"/>
+	</svg>
+
+	<svg 
+		version="1.1"
+		width="320" height="320"  
+		xmlns="http://www.w3.org/2000/svg">
+
+		<path d="M10 315
+			L 110 215
+			A 70 50 0 0 1 162.55 162.45
+			L 172.55 152.45
+			A 30 50 -45 0 1 215.1 109.9
+			L 315 10" stroke="black" fill="green" stroke-width="2" fill-opacity="0.5"/>
+	</svg>
+
+
+	<div>
+		<img src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cGF0aCBmaWxsPSIjMjQ4NmZmIiBkPSJNMTQ1LjY1OSw2OC45NDljLTUuMTAxLTUuMjA4LTEzLjM3Mi01LjIwOC0xOC40NzMsMEw5OS40NzksOTcuMjMzIEw3MS43NzIsNjguOTQ5Yy01LjEtNS4yMDgtMTMuMzcxLTUuMjA4LTE4LjQ3MywwYy01LjA5OSw1LjIwOC01LjA5OSwxMy42NDgsMCwxOC44NTdsNDYuMTgsNDcuMTRsNDYuMTgxLTQ3LjE0IEMxNTAuNzU5LDgyLjU5OCwxNTAuNzU5LDc0LjE1NywxNDUuNjU5LDY4Ljk0OXoiLz48L3N2Zz4NCg==" alt="">
+		<img src='data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><path fill="#fff" d="M145.659,68.949c-5.101-5.208-13.372-5.208-18.473,0L99.479,97.233 L71.772,68.949c-5.1-5.208-13.371-5.208-18.473,0c-5.099,5.208-5.099,13.648,0,18.857l46.18,47.14l46.181-47.14 C150.759,82.598,150.759,74.157,145.659,68.949z"/></svg>' alt="">
+	</div>
+</body>
+</html>

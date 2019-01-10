@@ -415,11 +415,27 @@ ry：椭圆的y半径
 
 ##
 曲线命令A/a（弧形曲线）
-> 弧形可以视为圆形或椭圆形的一部分。大家有兴趣课后可以自行了解。
+> 用来生成弧形，即椭圆形的一部分。
 
 示意图：
 <p align="center">
 <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/path_oval.png" alt="弧形曲线">
+</p>
+<br/>
+
+```
+    A rx ry x-axis-rotation large-arc-flag sweep-flag x y
+    a rx ry x-axis-rotation large-arc-flag sweep-flag dx dy
+```
+
+> rx和ry 表示需要截取的弧度所在椭圆的x方向半轴长度与y方向半轴长度。<br/>
+> x-axis-rotation 表示这个椭圆的旋转角度，正值表示顺时针方向旋转，负值表示逆时针方向。<br/>
+> large-arc-flag 决定弧线是大于还是小于180度，0表示小角度弧，1表示大角度弧。就是选长弧还是短弧。
+> sweep-flag 表示弧线的方向，0表示从起点到终点沿逆时针画弧，1表示从起点到终点沿顺时针画弧。
+
+示意图：
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/path_oval_2.png" alt="large-arc-flag与sweep-flag">
 </p>
 <br/>
 
@@ -1048,3 +1064,7 @@ begin 属性：
 </radialGradient>
 <circle cx="50%" cy="50%" r="50%" fill="url(#gr-radial)"/>
 ```
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+> 思考？那么svg，到底能做什么？
