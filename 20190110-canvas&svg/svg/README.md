@@ -505,12 +505,7 @@ tspan元素有以下的自定义属性:
 > 除了颜色属性，还有其他一些属性用来控制绘制描边的方式。
 
 ##
-
-stroke-width 属性定义了描边的宽度：
-<p align="center">
-<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/stroke_linecap.png" alt="描边方式_1">
-</p>
-<br/>
+stroke-linejoin属性，stroke-linecap属性：
 
 ```html
     <svg width="160" height="140" xmlns="http://www.w3.org/2000/svg" version="1.1">
@@ -519,6 +514,14 @@ stroke-width 属性定义了描边的宽度：
         <line x1="40" x2="120" y1="100" y2="100" stroke="black" stroke-width="20" stroke-linecap="round"/>
     </svg>
 ```
+
+<p align="center">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/svg/images/stroke_linecap.png" alt="描边方式_1">
+</p>
+<br/>
+
+>stroke-width 属性定义了描边的宽度。
+>
 > stroke-linecap属性，它控制边框终点的形状，有三个值：<br/>
 > &emsp;&emsp; butt 用直边结束线段，它是常规做法，线段边界90度垂直于描边的方向、贯穿它的终点。<br/>
 > &emsp;&emsp; square 的效果差不多，但是会稍微超出实际路径的范围，超出的大小由stroke-width控制。<br/>
