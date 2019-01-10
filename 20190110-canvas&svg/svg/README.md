@@ -57,7 +57,6 @@
 ```html
 
     <svg version="1.1"
-        baseProfile="full"
         width="300" height="200"
         xmlns="http://www.w3.org/2000/svg">
 
@@ -76,19 +75,11 @@
 </p>
 <br/>
 
-> xmlns是XML命名空间的声明，不要省略。<br/>
->
-> baseProfile：特性描述了作者认为正确渲染内容所需要的最小的 SVG 语言概述。这个特性不会说明任何处理限制，可以把它看作是元数据。 比如，这个特性的值可以被编辑工具用来在用户的修改超出所指定的基准概述范围时发出警告。<br/>
-> 可选值：<br/>
-> &emsp;&emsp; none：代表了最小的 SVG 语言配置，没有描述作者关于正确渲染内容的观点。<br/>
-> &emsp;&emsp; full：代表一个正常的概述，适用于 PC。<br/>
-> &emsp;&emsp; basic：代表一个轻量级的概述，适用于 PDA。<br/>
-> &emsp;&emsp; tiny：代表更轻量的概述，适用于手机。<br/>
+> xmlns是XML命名空间的声明，不要省略。
 
 **注意：**<br/>
 &emsp;&emsp; **1.** SVG的元素和属性必须按标准格式书写，因为XML是区分大小写的（这一点和html不同）<br/>
 &emsp;&emsp; **2.** SVG里的属性值必须用引号引起来，就算是数值也必须这样做。
-<br/>
 
 ##
 ##### --引用SVG文件
@@ -106,7 +97,6 @@
 ```xml
     <?xml version="1.0" standalone="no"?>
     <svg version="1.1"
-        baseProfile="full"
         width="300" height="200"
         xmlns="http://www.w3.org/2000/svg">
 
@@ -130,10 +120,12 @@
 </p>
 <br/>
 
-所以我们定义一个矩形
+所以我们定义一个矩形:
+
 ```html
     <rect x="0" y="0" width="100" height="100" />
 ```
+
 上面的元素定义了一个100*100px的SVG画布，这里1用户单位等同于1屏幕单位。
 
 -------------------------------------------------------------------
@@ -141,16 +133,16 @@
 ## 基本形状
 ### -矩形
 > rect元素会在屏幕上绘制一个矩形 。其实只要6个基本属性就可以控制它在屏幕上的位置和形状。下边的那个多了rx和ry属性用来控制圆角。如果没有设置圆角，则默认为0。
+
 ```html
     <svg version="1.1"
-        baseProfile="full"
-		width="300" height="200"
-		xmlns="http://www.w3.org/2000/svg">
+        width="300" height="200"
+        xmlns="http://www.w3.org/2000/svg">
 
-		<rect x="10" y="10" width="100" height="150"/>
-		<rect x="150" y="10" rx="10" ry="10" width="100" height="150"/>
+        <rect x="10" y="10" width="100" height="150"/>
+        <rect x="150" y="10" rx="10" ry="10" width="100" height="150"/>
 
-	</svg>
+    </svg>
 ```
 
 示意图：
@@ -164,13 +156,12 @@ y：矩形左上角的y位置<br/>
 width：矩形的宽度<br/>
 height：矩形的高度<br/>
 rx：圆角的x方位的半径<br/>
-ry：圆角的y方位的半径<br/>
+ry：圆角的y方位的半径
 
 ##
 ### -圆形
 ```html
     <svg version="1.1"
-        baseProfile="full"
         width="300" height="200"
         xmlns="http://www.w3.org/2000/svg">
 
@@ -193,7 +184,6 @@ r：圆的半径
 ### -椭圆
 ```html
     <svg version="1.1"
-        baseProfile="full"
         width="300" height="200"
         xmlns="http://www.w3.org/2000/svg">
 
@@ -217,7 +207,6 @@ ry：椭圆的y半径
 ### -线条
 ```html
     <svg version="1.1"
-        baseProfile="full"
         width="300" height="200"
         xmlns="http://www.w3.org/2000/svg">
 
@@ -242,7 +231,6 @@ ry：椭圆的y半径
 ### -折线
 ```html
     <svg version="1.1"
-        baseProfile="full"
         width="300" height="200"
         xmlns="http://www.w3.org/2000/svg">
 
@@ -265,7 +253,6 @@ ry：椭圆的y半径
 ### -多边形
 ```html
     <svg version="1.1"
-        baseProfile="full"
         width="300" height="200"
         xmlns="http://www.w3.org/2000/svg">
 
@@ -286,7 +273,6 @@ ry：椭圆的y半径
 ### -路径
 ```html
     <svg version="1.1"
-        baseProfile="full"
         width="300" height="200"
         xmlns="http://www.w3.org/2000/svg">
 
@@ -323,7 +309,6 @@ ry：椭圆的y半径
 现在，我们用path画一个矩形。
 ```html
     <svg version="1.1"
-        baseProfile="full"
         width="300" height="200"
         xmlns="http://www.w3.org/2000/svg">
 
@@ -705,7 +690,6 @@ stroke-dasharray属性，将虚线类型应用在描边上：
 看个改过的例子：
 ```html
     <svg version="1.1"
-        baseProfile="full"
         width="300" height="200"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 150 100">
