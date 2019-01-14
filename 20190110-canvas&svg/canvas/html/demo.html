@@ -9,21 +9,32 @@
 <body>
     <div>
 
-        <canvas id="canvas"></canvas>
-
+		<canvas id="canvas" width="300" height="300" style="background: #dbdbdb;"></canvas>
+		<div id="color" style="width: 20px; height: 20px;"></div>
     </div>
 
     <script>
-       var ctx = document.getElementById('canvas').getContext('2d');
-  for (var i = 0; i < 3; i++) {
-    for (var j = 0; j < 3; j++) {
-      ctx.save();
-      ctx.fillStyle = 'rgb(' + (51 * i) + ', ' + (255 - 51 * i) + ', 255)';
-      ctx.translate(10 + j * 50, 10 + i * 50);
-      ctx.fillRect(0, 0, 25, 25);
-      ctx.restore();
-    }
-  }
+       	var img = new Image();
+		img.src = '../images/rhino.jpg';
+		// img.setAttribute("crossOrigin",'Anonymous');
+		var canvas = document.getElementById('canvas');
+		var ctx = canvas.getContext('2d');
+		img.onload = function() {
+		ctx.drawImage(img, 0, 0);
+		img.style.display = 'none';
+		};
+		var color = document.getElementById('color');
+		function pick(event) {
+		var x = event.layerX;
+		var y = event.layerY;
+		var pixel = ctx.getImageData(x, y, 1, 1);
+		var data = pixel.data;
+		var rgba = 'rgba(' + data[0] + ',' + data[1] +
+					',' + data[2] + ',' + (data[3] / 255) + ')';
+		color.style.background =  rgba;
+		color.textContent = rgba;
+}
+canvas.addEventListener('mousemove', pick);
     </script>
 </body>
 </html>
