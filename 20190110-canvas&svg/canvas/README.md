@@ -35,7 +35,7 @@
 然后就可以绘制啦：
 
 ```javascript
-    var canvas = document.querySelector('#canvas');
+    var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
     context.fillRect(0, 0, 100, 100);
 ```
@@ -45,6 +45,54 @@
 坐标系统：
 
 <p align="center">
-<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/default_grid.png" alt="坐标系统">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/default_grid.png" alt="坐标系统">
 </p>
 <br/>
+
+### -绘制矩形
+
+**fillRect(x, y, width, height)**
+> 绘制一个填充的矩形，x、y是矩形的左上角坐标。
+
+**strokeRect(x, y, width, height)**
+> 绘制一个矩形的边框
+
+**clearRect(x, y, width, height)**
+> 清除指定矩形区域，让清除部分完全透明。
+
+### -绘制路径
+
+> 首先，canvas内置的傻瓜式画图形只有一个矩形（上面提到的那个），**其他形状全部都需要路径来绘制**。<br/>
+> 图形的基本元素是路径。路径是通过不同颜色和宽度的线段或曲线相连形成的不同形状的点的集合。一个路径，甚至一个子路径，都是闭合的。使用路径绘制图形需要一些额外的步骤。
+
+1. 首先，你要命令式的告诉canvas “我要开始啦~！”。 **beginPath()**
+2. 然后，你需要创建路径起始点。 **moveTo()**
+3. 接着，你使用画图命令去画出路径。 
+4. 之后你把路径封闭（如果需要的话）。 **closePath()**
+5. 一旦路径生成，你就能通过描边或填充路径区域来渲染图形。**stroke() fill()**
+
+```javascript
+    function draw() {
+        var canvas = document.getElementById('canvas');
+        if (canvas.getContext) {
+            var ctx = canvas.getContext('2d');
+
+            ctx.beginPath();
+            ctx.moveTo(75, 50);
+            ctx.lineTo(100, 75);
+            ctx.lineTo(100, 25);
+            ctx.closePath();
+            ctx.stroke();
+        }
+    }
+```
+
+
+#### --移点命令 moveTo(x, y)
+
+> 将笔触移动到指定的坐标x以及y上。
+
+#### --直线命令 lineTo(x, y)
+
+> 绘制直线，起点与(x,y)相连。
+
