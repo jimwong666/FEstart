@@ -45,6 +45,6 @@
 坐标系统：
 
 <p align="center">
-<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/scanvas/images/default_grid.png" alt="坐标系统">
+<img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/default_grid.png" alt="坐标系统">
 </p>
 <br/>
