@@ -338,7 +338,7 @@ canvas的API可以使用下面这些类型中的一种作为图片的源：
 	var img = new Image();
 	img.src = "./images/rhino.jpg"
 	img.onload = function() {
-		ctx.drawImage(img)
+	ctx.drawImage(img)
 	}
 ```
 
