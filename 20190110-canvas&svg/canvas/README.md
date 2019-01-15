@@ -60,6 +60,7 @@
 **clearRect(x, y, width, height)**
 > 清除指定矩形区域，让清除部分完全透明。
 
+##
 ### -绘制路径
 
 > 首先，canvas内置的傻瓜式画图形只有一个矩形（上面提到的那个），**其他形状全部都需要路径来绘制**。<br/>
@@ -91,10 +92,12 @@
 
 > 将笔触移动到指定的坐标x以及y上。
 
+##
 #### --直线命令 lineTo(x, y)
 
 > 绘制直线，起点与(x,y)相连。
 
+##
 #### --圆弧命令
 
 ```html
@@ -111,6 +114,7 @@
 
 根据给定的控制点和半径画一段圆弧，再以直线连接两个控制点。
 
+##
 #### --贝塞尔曲线命令
 
 ```html
@@ -127,6 +131,7 @@
 
 绘制二次贝塞尔曲线，cp1x,cp1y为一个控制点，x,y为结束点。
 
+##
 #### --矩形命令
 
 ```html
@@ -135,6 +140,7 @@
 
 绘制一个左上角坐标为（x,y），宽高为width以及height的矩形。
 
+##
 ### -Path2D 对象
 
 > Path2D对象用来缓存或记录绘画命令，这样你将能快速地回顾路径。
@@ -217,6 +223,7 @@ Path2D API 添加了 addPath作为将path结合起来的方法。添加了一条
 
 设置图形轮廓的颜色。
 
+##
 ### -整体透明度
 
 ```html
@@ -225,6 +232,7 @@ Path2D API 添加了 addPath作为将path结合起来的方法。添加了一条
 
 这个属性影响到 canvas 里所有图形的透明度，有效的值范围是 0.0 （完全透明）到 1.0（完全不透明），默认是 1.0。
 
+##
 ### -线型
 
 ```javascript
@@ -269,6 +277,7 @@ Path2D API 添加了 addPath作为将path结合起来的方法。添加了一条
 
 设置虚线样式的起始偏移量。
 
+##
 ### -渐变
 
 ```javascript
@@ -283,15 +292,55 @@ createRadialGradient(x1, y1, r1, x2, y2, r2)
 
 createRadialGradient 方法接受 6 个参数，前三个定义一个以 (x1,y1) 为原点，半径为 r1 的圆，后三个参数则定义另一个以 (x2,y2) 为原点，半径为 r2 的圆。
 
+##
 ### -图案
 
 > 用循环来实现图案的效果
 
+##
 ### -阴影
+> 略~
 
 ## 绘制文本
+> 略~
 
 ## 使用图片
+
+> canvas更有意思的一项特性就是图像操作能力。可以用于动态的图像合成或者作为图形的背景，以及游戏界面（Sprites）等等。浏览器支持的任意格式的外部图片都可以使用，比如PNG、GIF或者JPEG。 你甚至可以将同一个页面中其他canvas元素生成的图片作为图片源。
+
+引入图像到canvas里需要以下两步基本操作：
+1. 获得一个指向HTMLImageElement的对象或者另一个canvas元素的引用作为源，也可以通过提供一个URL的方式来使用图片
+2. 使用drawImage()函数将图片绘制到画布上
+
+canvas的API可以使用下面这些类型中的一种作为图片的源：
+
+1. > HTMLImageElement
+
+   这些图片是由Image()函数构造出来的，或者任何的img元素
+
+2. > HTMLVideoElement
+
+   用一个HTML的 video 元素作为你的图片源，可以从视频中抓取当前帧作为一个图像
+
+3. > HTMLCanvasElement
+
+   可以使用另一个 canvas 元素作为你的图片源。
+
+4. > ImageBitmap
+
+   这是一个高性能的位图，可以低延迟地绘制，它可以从上述的所有源以及其它几种源中生成。
+
+**例子：**
+
+```javascript
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+	var img = new Image();
+	img.src = "./images/rhino.jpg"
+	img.onload = function() {
+        ctx.drawImage(img)
+	}
+```
 
 ## 变形
 
