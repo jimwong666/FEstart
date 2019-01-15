@@ -332,13 +332,14 @@ canvas的API可以使用下面这些类型中的一种作为图片的源：
 
 **例子：**
 
+
 ```javascript
-    var canvas = document.getElementById('canvas');
-    var ctx = canvas.getContext('2d');
+	var canvas = document.getElementById('canvas');
+	var ctx = canvas.getContext('2d');
 	var img = new Image();
 	img.src = "./images/rhino.jpg"
 	img.onload = function() {
-	ctx.drawImage(img)
+		ctx.drawImage(img)
 	}
 ```
 
