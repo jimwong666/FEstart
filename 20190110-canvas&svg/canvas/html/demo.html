@@ -22,15 +22,11 @@
     <script>
         function draw() {
             var canvas = document.getElementById('canvas');
-            if (canvas.getContext) {
-                var ctx = canvas.getContext('2d');
-
-                ctx.beginPath();
-                ctx.moveTo(75, 50);
-                ctx.lineTo(100, 75);
-                ctx.lineTo(100, 25);
-                ctx.closePath();
-				ctx.stroke();
+            var ctx = canvas.getContext('2d');
+            var img = new Image();
+            img.src = "../images/rhino.jpg"
+            img.onload = function() {
+                ctx.drawImage(img,0,0,300,227);
             }
         }
         draw();

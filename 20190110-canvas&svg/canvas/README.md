@@ -334,16 +334,47 @@ canvas的API可以使用下面这些类型中的一种作为图片的源：
 
 
 ```javascript
-	var canvas = document.getElementById('canvas');
-	var ctx = canvas.getContext('2d');
-	var img = new Image();
-	img.src = "./images/rhino.jpg"
-	img.onload = function() {
-        ctx.drawImage(img)
-	}
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    var img = new Image();
+    img.src = "../images/rhino.jpg"
+    img.onload = function() {
+        ctx.drawImage(img,0,0,300,227);
+    }
 ```
 
+**ctx.drawImage()：**
+1. 当drawImaged(img, x, y, width, height)有3/6个参数的时候。
+   > img：图片源 <br/>
+   > x、y：图片左上角坐标 <br/>
+   > width和hight：图片绘制时的宽和高
+2. 当drawImaged(img, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)有8个参数的时候。
+   > img：图片源 <br/>
+   > sx、sy：原图片裁剪左上角坐标 <br/>
+   > sWidth和sHight：原图片裁剪的宽和高 <br/>
+   > dx、dy：绘制时图片的左上角坐标 <br/>
+   > dWidth和dHight：绘制时图片的宽和高
+
+
 ## 变形
+
+> 在了解变形之前，我先介绍两个在你开始绘制复杂图形时必不可少的方法。save()和restore()，即：保存和恢复
+
+**save()、restore()：**
+save 和 restore 方法是用来保存和恢复 canvas 状态的，都没有参数。Canvas 的状态就是当前画面应用的所有样式和变形的一个快照。<br/>
+Canvas状态存储在栈中，每当save()方法被调用后，当前的状态就被推送到栈中保存。一个绘画状态包括：<br/>
+* 当前应用的变形（即移动，旋转和缩放，见下）
+* strokeStyle, fillStyle, globalAlpha, lineWidth, lineCap, lineJoin, miterLimit, shadowOffsetX, shadowOffsetY, shadowBlur, shadowColor, globalCompositeOperation 的值
+* 当前的裁切路径（clipping path），会在下一节介绍
+
+示意图：
+
+<p align="center">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/stack.png" alt="栈">
+</p>
+<br/>
+
+
 
 ## 合成与裁剪
 
