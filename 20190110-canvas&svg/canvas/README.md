@@ -87,7 +87,6 @@
     }
 ```
 
-
 #### --移点命令 moveTo(x, y)
 
 > 将笔触移动到指定的坐标x以及y上。
@@ -96,3 +95,208 @@
 
 > 绘制直线，起点与(x,y)相连。
 
+#### --圆弧命令
+
+```html
+1、
+    arc(x, y, radius, startAngle, endAngle, anticlockwise)
+```
+
+画一个以（x,y）为圆心的以radius为半径的圆弧（圆），从startAngle开始到endAngle结束，按照anticlockwise给定的方向（默认为顺时针），为true时，是逆时针方向。
+
+```html
+2、
+    arcTo(x1, y1, x2, y2, radius)
+```
+
+根据给定的控制点和半径画一段圆弧，再以直线连接两个控制点。
+
+#### --贝塞尔曲线命令
+
+```html
+1、
+    quadraticCurveTo(cp1x, cp1y, x, y)
+```
+
+绘制二次贝塞尔曲线，cp1x,cp1y为一个控制点，x,y为结束点。
+
+```html
+2、
+    bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y)
+```
+
+绘制二次贝塞尔曲线，cp1x,cp1y为一个控制点，x,y为结束点。
+
+#### --矩形命令
+
+```html
+    rect(x, y, width, height)
+```
+
+绘制一个左上角坐标为（x,y），宽高为width以及height的矩形。
+
+### -Path2D 对象
+
+> Path2D对象用来缓存或记录绘画命令，这样你将能快速地回顾路径。
+
+```javascript
+    new Path2D();     // 空的Path对象
+    new Path2D(path); // 克隆Path对象
+    new Path2D(d);    // 从SVG建立Path对象
+```
+
+所有的路径方法比如moveTo, rect, arc或quadraticCurveTo等，如我们前面见过的，都可以在Path2D中使用。
+
+```javascript
+    Path2D.addPath(path [, transform])​
+```
+
+Path2D API 添加了 addPath作为将path结合起来的方法。添加了一条路径到当前路径（可能添加了一个变换矩阵）。
+
+**例子：**
+
+```javascript
+    var canvas = document.getElementById('canvas');
+    if (canvas.getContext){
+        var ctx = canvas.getContext('2d');
+
+        var rectangle = new Path2D();
+        rectangle.rect(10, 10, 50, 50);
+
+        var circle = new Path2D();
+        circle.moveTo(125, 35);
+        circle.arc(100, 35, 25, 0, 2 * Math.PI);
+
+        ctx.stroke(rectangle);
+        ctx.fill(circle);
+    }
+```
+
+```javascript
+    var p = new Path2D("M10 10 h 80 v 80 h -80 Z");
+```
+
+## 样式与颜色
+
+在开始正式开始之前，先介绍一下fill()和stroke()
+```javascript
+    context.fill();
+    context.fill(fillRule);
+    context.fill(path, fillRule);
+```
+
+**fillRule：**（可选）
+> 填充方式，有兴趣可以了解一下
+
+**path：**（可选）
+> 指Path2D对象，不填则默认填充黑色。
+
+##
+
+```javascript
+    context.stroke();
+    context.stroke(path);
+```
+
+**path：**（可选）
+> 指Path2D对象，不填则默认填充黑色。
+
+---------------------------------------
+
+### -颜色
+
+```html
+    fillStyle = color
+```
+
+设置图形的填充颜色。
+
+```html
+    strokeStyle = color
+```
+
+设置图形轮廓的颜色。
+
+### -整体透明度
+
+```html
+    globalAlpha = transparencyValue
+```
+
+这个属性影响到 canvas 里所有图形的透明度，有效的值范围是 0.0 （完全透明）到 1.0（完全不透明），默认是 1.0。
+
+### -线型
+
+```javascript
+    lineWidth = value
+```
+
+设置线条宽度。
+
+```javascript
+    lineCap = type
+```
+
+设置线条末端样式。
+
+```javascript
+    lineJoin = type
+```
+
+设定线条与线条间接合处的样式。
+
+```javascript
+    miterLimit = value
+```
+
+限制当两条线相交时交接处最大长度；所谓交接处长度（斜接长度）是指线条交接处内角顶点到外角顶点的长度。
+
+```javascript
+    getLineDash()
+```
+
+返回一个包含当前虚线样式，长度为非负偶数的数组。
+
+```javascript
+    setLineDash(segments)
+```
+
+设置当前虚线样式。
+
+```javascript
+    lineDashOffset = value
+```
+
+设置虚线样式的起始偏移量。
+
+### -渐变
+
+```javascript
+createLinearGradient(x1, y1, x2, y2)
+```
+
+createLinearGradient 方法接受 4 个参数，表示渐变的起点 (x1,y1) 与终点 (x2,y2)。
+
+```javascript
+createRadialGradient(x1, y1, r1, x2, y2, r2)
+```
+
+createRadialGradient 方法接受 6 个参数，前三个定义一个以 (x1,y1) 为原点，半径为 r1 的圆，后三个参数则定义另一个以 (x2,y2) 为原点，半径为 r2 的圆。
+
+### -图案
+
+> 用循环来实现图案的效果
+
+### -阴影
+
+## 绘制文本
+
+## 使用图片
+
+## 变形
+
+## 合成与裁剪
+
+## 动画
+
+## 像素操作
