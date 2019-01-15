@@ -372,7 +372,6 @@ Canvas状态存储在栈中，每当save()方法被调用后，当前的状态�
 <p align="center">
     <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/stack.png" alt="栈">
 </p>
-<br/>
 
 ```javascript
     var ctx = document.getElementById('canvas').getContext('2d');
