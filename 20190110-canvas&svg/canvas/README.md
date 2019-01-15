@@ -47,7 +47,6 @@
 <p align="center">
     <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/default_grid.png" alt="坐标系统">
 </p>
-<br/>
 
 ### -绘制矩形
 
@@ -404,7 +403,47 @@ translate 方法接受两个参数。x 是左右偏移量，y 是上下偏移量
 <p align="center">
     <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/grid_translate.png" alt="translate">
 </p>
-<br/>
+
+### -旋转 rotate(angle)
+
+> 第二个介绍 rotate 方法，它用于以原点为中心旋转 canvas。
+
+**rotate(angle)：**
+这个方法只接受一个参数：旋转的角度(angle)，它是顺时针方向的，以弧度为单位的值。
+
+<p align="center">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/grid_rotate.png" alt="rotate">
+</p>
+
+### -缩放 scale(x, y)
+
+> 接着是缩放。我们用它来增减图形在 canvas 中的像素数目，对形状，位图进行缩小或者放大。
+
+**scale(x, y)：**
+scale 方法接受两个参数。x,y 分别是横轴和纵轴的缩放因子，它们都必须是正值。值比 1.0 小表示缩小，比 1.0 大则表示放大，值为 1.0 时什么效果都没有。
+
+<p align="center">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/scale.png" alt="scale">
+</p>
+
+### -变形 transform(m11, m12, m21, m22m dx, dy)
+
+> 最后一个方法允许对变形矩阵直接修改。
+
+**transform(m11, m12, m21, m22, dx, dy)：**
+
+* m11：水平方向的缩放
+
+* m12：水平方向的倾斜偏移
+
+* m21：竖直方向的倾斜偏移
+
+* m22：竖直方向的缩放
+
+* dx：水平方向的移动
+
+* dy：竖直方向的移动
+
 
 ## 合成与裁剪
 
