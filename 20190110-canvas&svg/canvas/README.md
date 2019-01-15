@@ -444,8 +444,56 @@ scale 方法接受两个参数。x,y 分别是横轴和纵轴的缩放因子，�
 
 * dy：竖直方向的移动
 
-
 ## 合成与裁剪
+
+### -合成
+> 在之前的例子里面，我们总是将一个图形画在另一个之上，对于其他更多的情况，仅仅这样是远远不够的。比如，对合成的图形来说，绘制顺序会有限制。不过，我们可以利用 globalCompositeOperation 属性来改变这种状况。此外, clip属性允许我们隐藏不想看到的部分图形。
+
+**globalCompositeOperation：**
+```
+    globalCompositeOperation = type
+```
+这个属性设定了在画新图形时采用的遮盖策略，其值是一个标识遮盖方式的字符串。
+
+* source-over
+* source-in
+* source-out
+* source-atop
+* destination-over
+* destination-in
+* destination-out
+* destination-atop
+* lighter
+* copy
+* xor
+* multiply
+* screen
+* overlay
+* darken
+* lighten
+* color-dodge
+* color-burn
+* hard-light
+* soft-light
+* difference
+* exclusion
+* hue
+* saturation
+* color
+* luminosity
+
+<p align="center">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/globalCompositeOperation.png" alt="合成">
+</p>
+
+### -裁剪
+
+> 裁切路径和普通的 canvas 图形差不多，不同的是它的作用是遮罩，用来隐藏不需要的部分。如图所示。红边五角星就是裁切路径，所有在路径以外的部分都不会在 canvas 上绘制出来。
+
+<p align="center">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/clipping_path.png" alt="裁剪">
+</p>
+
 
 ## 动画
 
