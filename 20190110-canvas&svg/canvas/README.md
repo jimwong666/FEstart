@@ -65,7 +65,7 @@
 > 首先，canvas内置的傻瓜式画图形只有一个矩形（上面提到的那个），**其他形状全部都需要路径来绘制**。<br/>
 > 图形的基本元素是路径。路径是通过不同颜色和宽度的线段或曲线相连形成的不同形状的点的集合。一个路径，甚至一个子路径，都是闭合的。使用路径绘制图形需要一些额外的步骤。
 
-1. 首先，你要命令式的告诉canvas “我要开始啦~！”。 **beginPath()**
+1. 首先，你要命令式的告诉canvas “我要开始啦~！（若果需要的话，比如绘制非连续样式的线段，就需要。其实许多情况不写也行，但最好都写上）。 **beginPath()**
 2. 然后，你需要创建路径起始点。 **moveTo()**
 3. 接着，你使用画图命令去画出路径。 
 4. 之后你把路径封闭（如果需要的话）。 **closePath()**
@@ -193,8 +193,14 @@ Path2D API 添加了 addPath作为将path结合起来的方法。添加了一条
 **fillRule：**（可选）
 > 填充方式，有兴趣可以了解一下
 
+<p align="center">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/fillRule.png" alt="fillRule">
+</p>
+
 **path：**（可选）
 > 指Path2D对象，不填则默认填充黑色。
+
+
 
 ##
 
@@ -453,7 +459,7 @@ scale 方法接受两个参数。x,y 分别是横轴和纵轴的缩放因子，�
 ```
     globalCompositeOperation = type
 ```
-这个属性设定了在画新图形时采用的遮盖策略，其值是一个标识遮盖方式的字符串。
+这个属性设定了在画新图形时采用的遮盖策略，其值是一个标识遮盖方式的字符串。放在两个图之间，用于改变两个图的层叠关系。
 
 * source-over
 * source-in
@@ -494,7 +500,52 @@ scale 方法接受两个参数。x,y 分别是横轴和纵轴的缩放因子，�
     <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/clipping_path.png" alt="裁剪">
 </p>
 
+**clip()：**
+将当前正在构建的路径转换为当前的裁剪路径。
+
+```javascript
+    context.clip();
+    context.clip(fillRule);
+    context.clip(path, fillRule);
+```
+
+**fillRule：**（可选）
+> 填充方式，有兴趣可以了解一下
+
+**path：**（可选）
+> 指Path2D对象，不填则默认填充黑色。
+
+可以这么使用：
+
+```javascript
+    ctx.arc(60,60,60,0,Math.PI*2,true);
+    ctx.clip();
+    ctx.fillRect(0,0,150,150);
+```
+
+也可以像上面的例子那样：
+
+```javascript
+    context.clip(path, fillRule);
+```
 
 ## 动画
+
+> 大家要知道，canvas 其实没有原生的傻瓜式“一键”动画API，上面我们说了那么多，都在阐述一个概念：“这么让canvas生成一个静态图。”<br/>
+> 所以这些“帧”这么形成动画呢？自然而让就是逐帧动画啦~
+
+**动画的基本步骤：**
+1. **清空 canvas**
+    除非接下来要画的内容会完全充满 canvas （例如背景图），否则你需要清空所有。最简单的做法就是用 clearRect 方法。
+
+2. **保存 canvas 状态**
+    除非接下来要画的内容会完全充满 canvas （例如背景图），否则你需要清空所有。最简单的做法就是用 clearRect 方法。
+
+3. **绘制动画图形**
+    这一步才是重绘动画帧。
+
+4. **恢复 canvas 状态**
+    如果已经保存了 canvas 的状态，可以先恢复它，然后重绘下一帧。
+
 
 ## 像素操作
