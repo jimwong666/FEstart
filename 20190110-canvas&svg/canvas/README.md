@@ -374,7 +374,38 @@ Canvas状态存储在栈中，每当save()方法被调用后，当前的状态�
 </p>
 <br/>
 
+```javascript
+    var ctx = document.getElementById('canvas').getContext('2d');
+    
+    ctx.fillRect(0,0,150,150);   // 使用默认设置绘制一个矩形
+    ctx.save();                  // 保存默认状态
+    
+    ctx.fillStyle = '#09F'       // 在原有配置基础上对颜色做改变
+    ctx.fillRect(15,15,120,120); // 使用新的设置绘制一个矩形
+    
+    ctx.save();                  // 保存当前状态
+    ctx.fillStyle = '#FFF'       // 再次改变颜色配置
+    ctx.globalAlpha = 0.5;    
+    ctx.fillRect(30,30,90,90);   // 使用新的配置绘制一个矩形
+    
+    ctx.restore();               // 重新加载之前的颜色状态
+    ctx.fillRect(45,45,60,60);   // 使用上一次的配置绘制一个矩形
+    
+    ctx.restore();               // 加载默认颜色配置
+    ctx.fillRect(60,60,30,30);   // 使用加载的配置绘制一个矩形
+```
 
+### -移动 translate(x,y)
+
+> 我们先介绍 translate 方法，它用来移动 canvas 和它的 **原点** 到一个不同的位置。
+
+**translate(x, y)：**
+translate 方法接受两个参数。x 是左右偏移量，y 是上下偏移量，如图所示。
+
+<p align="center">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/grid_translate.png" alt="translate">
+</p>
+<br/>
 
 ## 合成与裁剪
 
