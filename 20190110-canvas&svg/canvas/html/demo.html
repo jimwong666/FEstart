@@ -23,7 +23,6 @@
     </div>
 
     <script>
-        function draw() {
 
 // drawImage()
             var canvas = document.getElementById('canvas');
@@ -70,9 +69,29 @@
             // ctx.lineTo(60, 120);
             // ctx.stroke();
 
-// 
-        }
-        draw();
+// 动画
+
+            ctx.translate(0,0);
+            ctx.save();
+            ctx.rect(0,0,20,20);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.translate(10,10);
+            ctx.rect(0,0,20,20);
+            ctx.fill();
+            ctx.stroke();
+            ctx.restore();
+
+                ctx.clearRect(0,0,300,300)
+            ctx.rect(20,20,20,20);
+            ctx.fill();
+            ctx.stroke();
+                
+
+
+            
+
     </script>
 </body>
 </html>
