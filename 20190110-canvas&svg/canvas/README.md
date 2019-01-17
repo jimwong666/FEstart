@@ -63,7 +63,7 @@
 > 首先，canvas内置的傻瓜式画图形只有一个矩形（上面提到的那个），**其他形状全部都需要路径来绘制**。<br/>
 > 图形的基本元素是路径。路径是通过不同颜色和宽度的线段或曲线相连形成的不同形状的点的集合。一个路径，甚至一个子路径，都是闭合的。使用路径绘制图形需要一些额外的步骤。
 
-1. 首先，你要命令式的告诉canvas “我要开始啦~！（若果需要的话，比如绘制非连续样式的线段，就需要。）。 **beginPath()**
+1. 首先，你要命令式的告诉canvas “我要开始啦~！（若果需要的话，比如绘制非连续样式的线段，就需要）。 **beginPath()**
 2. 然后，你需要创建路径起始点。 **moveTo()**
 3. 接着，你使用画图命令去画出路径。 
 4. 之后你把路径封闭（如果需要的话）。 **closePath()**
@@ -547,11 +547,29 @@ scale 方法接受两个参数。x,y 分别是横轴和纵轴的缩放因子，�
 4. **恢复 canvas 状态**
     如果已经保存了 canvas 的状态，可以先恢复它，然后重绘下一帧。
 
-**setInterval 例子：**
+**动画 小例子：**
 
 ```javascript
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
 
+    ctx.fillStyle = "yellow";
+    ctx.translate(30, 30);
+
+    setInterval(function() {
+        // 清除上一次的矩形
+        ctx.clearRect(-30, -30, canvas.width, canvas.height);
+    
+        // 旋转坐标系
+        ctx.rotate(2 * Math.PI / 180);
+    
+        // 绘制图形
+        ctx.fillRect(-10,-10,20,20);
+    }, 100)
 ```
+思考：
+1. 用 path 路径写，在写法上有什么的区别
+2. 我不想写死translate，怎么办？（提示：save() restore()）
 
 ## 像素操作
 
@@ -573,6 +591,13 @@ scale 方法接受两个参数。x,y 分别是横轴和纵轴的缩放因子，�
 * 不依赖 DOM，所以不支持时间处理。
 * 像素图（以来分辨率）。
 * 能够以 .png 或 .jpg 格式保存结果图像。
+
+<p align="center">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/comparison.png" alt="Canvas与SVG比较">
+</p>
+
+所以：
+> SVG适合小图标
 
 
 
