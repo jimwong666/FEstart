@@ -16,13 +16,18 @@
 > canvas 的标签只有两个属性—width和height，并且也是可选的，若果不填则canvas的默认大小width是300px，height是150px。当然，像id、class、title、style这些都是标配哈~！<br/>
 > 也就是说，其实canvas跟其他html元素一样，也可以用css属性（width、height、background、margin等等）。
 
-想要用canvas，首先你的浏览器得 **支持canvas** ，这是前提。
+想要用canvas，首先你的浏览器得 **支持canvas** ，这是前提，（本节课例子默认都是支持canvas）。
 
-> 然后，canvas元素会有一个叫 getcontext() 的方法，这个方法用来获取 **上下文** 和它的绘画功能。“上下文”是一个术语，你可以理解为一种 **特殊的环境** ，只有在这个环境里 canvas 才能做某些事情。
+> 然后，canvas要开始绘图，是要在js里面用的。向下面这样<br/>
 
 ```javascript
-    var context = canvas.getContext(contextType, contextAttributes);
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    // getContext可以接受2个参数(contextType, contextAttributes);
 ```
+
+> 其中 getcontext() 的方法，这个方法用来获取 **上下文** 和它的绘画功能。“上下文”是一个术语，你可以理解为一种 **特殊的环境** ，只有在这个环境里 canvas 才能做某些事情。
+
 **contextType：**
 * "2d"：用来进行2d绘制，也就是二维绘制，平面绘制。这是本次要讲的内容。
 * "webgl"：用来进行3d绘制，如3d游戏等等，不再本节课的范围之内。
@@ -48,6 +53,8 @@
 
 ### -绘制矩形
 
+> 首先，canvas内置的傻瓜式画形状只有一个——矩形，**其他形状全部都需要路径来绘制**。<br/>
+
 **fillRect(x, y, width, height)**
 > 绘制一个填充的矩形，x、y是矩形的左上角坐标。
 
@@ -60,29 +67,25 @@
 ##
 ### -绘制路径
 
-> 首先，canvas内置的傻瓜式画图形只有一个矩形（上面提到的那个），**其他形状全部都需要路径来绘制**。<br/>
 > 图形的基本元素是路径。路径是通过不同颜色和宽度的线段或曲线相连形成的不同形状的点的集合。一个路径，甚至一个子路径，都是闭合的。使用路径绘制图形需要一些额外的步骤。
 
-1. 首先，你要命令式的告诉canvas “我要开始啦~！（若果需要的话，比如绘制非连续样式的线段，就需要）。 **beginPath()**
-2. 然后，你需要创建路径起始点。 **moveTo()**
-3. 接着，你使用画图命令去画出路径。 
-4. 之后你把路径封闭（如果需要的话）。 **closePath()**
-5. 一旦路径生成，你就能通过描边或填充路径区域来渲染图形。**stroke() fill()**
+1. 首先，你要命令式的告诉canvas “我要开始啦~！（若果需要的话，比如绘制非连续样式的线段，就需要）。 **=> beginPath()**
+2. 然后，你需要创建路径起始点。 **=> moveTo()**
+3. 接着，你使用画图命令去画出路径。 **=> 各种命令**
+4. 之后你把路径封闭（如果需要的话）。 **=> closePath()**
+5. 一旦路径生成，你就能通过描边或填充路径区域来渲染图形。**=> stroke()、fill()**
 
 ```javascript
-    function draw() {
-        var canvas = document.getElementById('canvas');
-        if (canvas.getContext) {
-            var ctx = canvas.getContext('2d');
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
 
-            ctx.beginPath();
-            ctx.moveTo(75, 50);
-            ctx.lineTo(100, 75);
-            ctx.lineTo(100, 25);
-            ctx.closePath();
-            ctx.stroke();
-        }
-    }
+    ctx.beginPath(); // 开始
+    ctx.moveTo(75, 50); // 移点，如果需要的话
+    ctx.lineTo(100, 75); // 命令
+    ctx.lineTo(100, 25); // 命令
+    ctx.closePath(); // 结束，如果需要的话
+    ctx.stroke(); // 绘制边框
+    ctx.fill(); // 绘制填充
 ```
 
 #### --移点命令 moveTo(x, y)
@@ -126,7 +129,7 @@
     bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y)
 ```
 
-绘制二次贝塞尔曲线，cp1x,cp1y为一个控制点，x,y为结束点。
+绘制三次贝塞尔曲线，cp1x,cp1y为控制点一，cp2x,cp2y为控制点二，x,y为结束点。
 
 ##
 #### --矩形命令
@@ -198,17 +201,11 @@ Path2D API 添加了 addPath作为将path结合起来的方法。添加了一条
 **path：**（可选）
 > 指Path2D对象，不填则默认填充黑色。
 
-
-
-##
-
 ```javascript
     context.stroke();
     context.stroke(path);
 ```
 
-**path：**（可选）
-> 指Path2D对象，不填则默认填充黑色。
 
 ---------------------------------------
 
@@ -297,6 +294,10 @@ createRadialGradient 方法接受 6 个参数，前三个定义一个以 (x1,y1)
 
 ##
 ### -图案
+
+<p align="center">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/createpattern.png" alt="图案">
+</p>
 
 > 用循环来实现图案的效果
 
@@ -596,8 +597,15 @@ scale 方法接受两个参数。x,y 分别是横轴和纵轴的缩放因子，�
     <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/comparison.png" alt="Canvas与SVG比较">
 </p>
 
-所以：
-> SVG适合小图标
+**SVG适合啥：**
+> 1. 小图标
+> 2. 小动画
+> 3. 矢量图
+> 4. 带用户交互
 
+**Canvas适合啥：**
+> 1. 复杂场景
+> 2. 图表
+> 3. 甚至3D
 
 
