@@ -19,21 +19,22 @@
         }
         #color {
             color: red;
+            height: 21px;
         }
     </style>
 </head>
 <body>
     <div>
+        
         <p id="color"></p>
         <canvas id="canvas_2" width="300" height="300" style="background: #dbdbdb"></canvas>
         <canvas id="canvas" width="300" height="300"></canvas>
         
-        
     </div>
 
     <script>
-        var canvas = document.getElementById('canvas_2');
-        var ctx_2 = canvas.getContext('2d');
+        var canvas_2 = document.getElementById('canvas_2');
+        var ctx_2 = canvas_2.getContext('2d');
 
         ctx_2.lineWidth = 0.8;
         ctx_2.beginPath();
@@ -46,8 +47,8 @@
         ctx_2.stroke();
 //-----------------------------------------------------------------------------
 
-        var canvas = document.getElementById('canvas');
-        var ctx = canvas.getContext('2d');
+        // var canvas = document.getElementById('canvas');
+        // var ctx = canvas.getContext('2d');
         // 改变坐标系
         // ctx.translate(150,150);
         // ctx.scale(1,-0.5);
@@ -78,35 +79,63 @@
         // ctx.closePath();
         // ctx.stroke();
 
-
+// 犀牛 查看色值
         var img = new Image();
         img.src = '../images/rhino.jpg';
         var canvas = document.getElementById('canvas');
         var ctx = canvas.getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+        ctx.mozImageSmoothingEnabled = false;
+        ctx.webkitImageSmoothingEnabled = false;
+        ctx.msImageSmoothingEnabled = false;
         img.onload = function() {
-            ctx.drawImage(img, 0, 0);
-            img.style.display = 'none';
+            ctx.drawImage(img,0,0,10,10, 0, 0,200,200);
             
-            console.log(ctx.getImageData(0,0,300,300).data[59598]);
+            console.log(ctx.getImageData(0,0,300,300).data);
+            for(var i = 1;i<=900;i++){
+                ctx.getImageData(0,0,300,300).data[4*i-1] = 0;
+            }
         };
+
+
         var color = document.getElementById('color');
         function pick(event) {
             var x = event.layerX;
             var y = event.layerY; 
             var pixel = ctx.getImageData(x, y, 1, 1);
             var data = pixel.data;
-            var rgba = x + 1 + ',' + (y + 1) + ',' + 'rgba(' + data[0] + ',' + data[1] + ',' + data[2] + ',' + (data[3] / 255) + ')';
+            var rgba = 'rgba(' + data[0] + ',' + data[1] + ',' + data[2] + ',' + (data[3] / 255) + ')';
+            var coordinate = x + 1 + ',' + (y + 1);
                 color.style.background =  rgba;
-                color.textContent = rgba;
+                color.textContent = coordinate +'----'+ rgba;
         }
         canvas.addEventListener('mousemove', pick);
 
 
+        
+// putImageData
+        // var dirtyCanvas = document.createElement('canvas');
+        // var dirtyContext = dirtyCanvas.getContext('2d');
+        // // 设置屏幕外Canvas尺寸
+        // dirtyCanvas.width = 300;
+        // dirtyCanvas.height = 300;
+        
+        // // 此时可以得到imagedata数据
+        // img.onload = function() {
+        //     dirtyContext.drawImage(img, 0, 0);
+        //     var imagedata = dirtyContext.getImageData(0, 0, 30, 30);
+        //     ctx.putImageData(imagedata,35,35);
+        // }
+       
 
-
-
-
-
+// createImageData
+        // var imagedata = ctx.createImageData(300, 300);
+        // imagedata.data[0] = 0;
+        // imagedata.data[1] = 0;
+        // imagedata.data[2] = 0;
+        // imagedata.data[3] = '255';
+        // ctx.putImageData(imagedata,2,2);
+        // console.log(ctx.getImageData(0,0,300,300).data);
 
     // arc
         // ctx.beginPath();

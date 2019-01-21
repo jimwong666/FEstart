@@ -604,7 +604,7 @@ ImageData.data示意：
 
 ##
 
-**怎么获取canvas的ImageData对象呢？**
+**那么怎么获取canvas的ImageData对象呢？**
 获得一个包含画布场景像素数据的ImageData对像，你可以用getImageData()方法：
 
 ```javascript
@@ -614,6 +614,66 @@ ImageData.data示意：
 这个方法会返回一个ImageData对象，它代表了被选择画布区域的对象数据，此画布的四个角落分别表示为(left, top), (left + width, top), (left, top + height), 以及(left + width, top + height)四个点。
 
 注：任何在画布以外的元素都会被返回成一个透明黑的ImageData对像。
+
+```javascript
+    var img = new Image();
+    img.src = '../images/rhino.jpg';
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    img.onload = function() {
+        ctx.drawImage(img, 0, 0);
+
+        console.log(ctx.getImageData(0,0,300,300).data);
+    };
+```
+
+**那么又怎么设置canvas的ImageData对象呢？**
+
+> putImageData()将给定ImageData对象的数据绘制到位图上。
+
+```javascript
+    context.putImageData(imagedata, dx, dy);
+    context.putImageData(imagedata, dx, dy, dirtyX, dirtyY, dirtyWidth, dirtyHeight);
+```
+
+
+**还可以创建一个ImageData对象**
+
+> 创建一个空白（只能是透明黑）的ImageData对象，你应该使用createImageData() 方法。
+
+1. 创建一个高为height，宽为width的空白ImageData对象
+```javascript
+    var myImageData = ctx.createImageData(width, height);
+```
+
+2.创建一个继承自另外一个ImageData对象的ImageData对象（只继承宽和高哦~背景依然是透明黑）
+```javascript
+    var myImageData = ctx.createImageData(anotherImageData);
+```
+
+接下来，你就可以操作它啦~
+
+```javascript
+    var imagedata = context.createImageData(300, 300);
+    imagedata.data[0] = 0;
+    imagedata.data[1] = 0;
+    imagedata.data[2] = 0;
+    imagedata.data[3] = 255;
+    ctx.putImageData(imagedata,0,0);
+```
+
+// 抗锯齿、灰度。。。
+
+保存图片
+
+
+
+
+
+
+
+
+
 
 # 与SVG对比一下
 
