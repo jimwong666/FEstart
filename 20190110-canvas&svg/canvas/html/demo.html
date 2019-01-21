@@ -12,37 +12,101 @@
         }
         canvas {
             margin: 10px;
+        }
+        #canvas {
             position: absolute;
+            left: 0;
+        }
+        #color {
+            color: red;
         }
     </style>
 </head>
 <body>
     <div>
+        <p id="color"></p>
+        <canvas id="canvas_2" width="300" height="300" style="background: #dbdbdb"></canvas>
+        <canvas id="canvas" width="300" height="300"></canvas>
         
-		<canvas id="canvas_2" width="300" height="300" style="background: #dbdbdb"></canvas>
-		<canvas id="canvas" width="300" height="300"></canvas>
         
     </div>
 
     <script>
         var canvas = document.getElementById('canvas_2');
         var ctx_2 = canvas.getContext('2d');
-        ctx_2.lineWidth = 0.5;
+
+        ctx_2.lineWidth = 0.8;
         ctx_2.beginPath();
-        for(var i=1;i<=30;i++){
+        for(var i = 0; i <= 30; i++){
             ctx_2.moveTo(10*i,0);
             ctx_2.lineTo(10*i,300);
             ctx_2.moveTo(0,10*i);
             ctx_2.lineTo(300,10*i);
-        }
+        };
         ctx_2.stroke();
+//-----------------------------------------------------------------------------
 
-
-
-    // drawImage()
         var canvas = document.getElementById('canvas');
         var ctx = canvas.getContext('2d');
-        
+        // 改变坐标系
+        // ctx.translate(150,150);
+        // ctx.scale(1,-0.5);
+        // ctx.moveTo(-150,0);
+        // ctx.lineTo(150,0);
+        // ctx.moveTo(0,-150);
+        // ctx.lineTo(0,150);
+        // ctx.lineWidth = 2;
+        // ctx.stroke();
+        // // 圆
+        // ctx.beginPath();
+        // ctx.arc(0,0,30,0,2*Math.PI);
+        // ctx.closePath();
+        // ctx.stroke();
+        // // 椭圆
+        // ctx.beginPath();
+        // ctx.ellipse(-30,-60,30,60,0,0,Math.PI*2);
+        // ctx.closePath();
+        // ctx.stroke();
+        // // Path2D
+        // var p = new Path2D("M20 20 h 80 v 80 h -80 Z");
+        // ctx.stroke(p);
+        // // 圆 角度
+        // var a = Math.PI/4;
+        // ctx.beginPath();
+        // ctx.moveTo(0,0);
+        // ctx.lineTo(30*Math.sin(a),30*Math.cos(a));
+        // ctx.closePath();
+        // ctx.stroke();
+
+
+        var img = new Image();
+        img.src = '../images/rhino.jpg';
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        img.onload = function() {
+            ctx.drawImage(img, 0, 0);
+            img.style.display = 'none';
+            
+            console.log(ctx.getImageData(0,0,300,300).data[59598]);
+        };
+        var color = document.getElementById('color');
+        function pick(event) {
+            var x = event.layerX;
+            var y = event.layerY; 
+            var pixel = ctx.getImageData(x, y, 1, 1);
+            var data = pixel.data;
+            var rgba = x + 1 + ',' + (y + 1) + ',' + 'rgba(' + data[0] + ',' + data[1] + ',' + data[2] + ',' + (data[3] / 255) + ')';
+                color.style.background =  rgba;
+                color.textContent = rgba;
+        }
+        canvas.addEventListener('mousemove', pick);
+
+
+
+
+
+
+
 
     // arc
         // ctx.beginPath();
@@ -111,10 +175,13 @@
 
 
 
-    // clip            
+    // clip    
+        // var qwe = new Path2D();  
+        // qwe.rect(0,0,150,50);
+        // ctx.beginPath();
         // ctx.arc(60,60,60,0,Math.PI*2,true);
-        // ctx.clip();
-        // ctx.fillRect(0,0,150,50);
+        // ctx.clip(qwe);
+        // ctx.fill();
 
 
     // beginPath

@@ -115,6 +115,16 @@
 根据给定的控制点和半径画一段圆弧，再以直线连接两个控制点。
 
 ##
+#### --椭圆命令
+
+画一个以（x,y）为中心的以radiusX为X轴半径，radiusY为Y轴半径的椭圆弧（椭圆），从startAngle开始到endAngle结束，按照anticlockwise给定的方向（默认为顺时针），为true时，是逆时针方向。
+
+```html
+    ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, anticlockwise)
+```
+
+
+##
 #### --贝塞尔曲线命令
 
 ```html
@@ -531,9 +541,10 @@ scale 方法接受两个参数。x,y 分别是横轴和纵轴的缩放因子，�
 ## 动画
 
 > 大家要知道，canvas 其实没有原生的傻瓜式“一键”动画API，上面我们说了那么多，都在阐述一个概念：“这么让canvas生成一个静态图。”<br/>
-> 所以这些“帧”这么形成动画呢？自然而让就是逐帧动画啦~<br/>
+> 所以这些静态图（即：“帧”）是怎么形成动画的呢？~~~~~~~~所以我们自然而然就想到了逐帧动画啦~(思考下：我们见过哪些逐帧动画~)<br/>
 
-> 所以自然而然就想到了 setTimeout(function, delay)、setInterval(function, delay)、requestAnimationFrame(callback)
+> 所以我们在js中怎么来实现逐帧动画呢？<br/>
+> setTimeout(function, delay)、setInterval(function, delay)、requestAnimationFrame(callback)
 
 **动画的基本步骤：**
 1. **清空 canvas**
@@ -574,9 +585,35 @@ scale 方法接受两个参数。x,y 分别是横轴和纵轴的缩放因子，�
 
 ## 像素操作
 
-> 到目前为止，我们尚未了解Canvas画布真实像素的原理，事实上，我们可以直接通过 canvas 来操作图片甚至图片上的单个像素点，直接读取或将数据数组写入到 canvas 中。可以实现 缩放、取反色、图片抗锯齿升值压缩图片。<br/>
-> 所以，有兴趣的课后可以看看。
+> 到目前为止，我们尚未了解Canvas画布真实像素的原理，事实上，我们可以直接通过 canvas 来操作图片甚至图片上的单个像素点，直接读取或将数据数组写入到 canvas 中。可以实现 缩放、取反色、图片抗锯齿、压缩图片、保存图片等功能。<br/>
+> 下面，我们先来了解一下ImageData对象
 
+**ImageData对象：**
+canvas中，ImageData对象中存储着canvas对象真实的像素数据，它包含以下几个只读属性：
+
+> width -图片宽度，单位是像素 <br/>
+> height -图片高度，单位是像素 <br/>
+> data -Uint8ClampedArray类型的一维数组，每个像素用4个1bytes值(按照红，绿，蓝和透明值的顺序; 这就是"RGBA"格式)来代表。数组的长度即为图片像素点的个数*4<br/>
+
+ImageData.data示意：
+```javascript
+    [255,255,255,255,0,0,0,255]
+```
+
+**所以：Uint8ClampedArray 包含高度 × 宽度 × 4 bytes数据，索引值从0到(高度×宽度×4)-1**
+
+##
+
+**怎么获取canvas的ImageData对象呢？**
+获得一个包含画布场景像素数据的ImageData对像，你可以用getImageData()方法：
+
+```javascript
+    var myImageData = ctx.getImageData(left, top, width, height);
+```
+
+这个方法会返回一个ImageData对象，它代表了被选择画布区域的对象数据，此画布的四个角落分别表示为(left, top), (left + width, top), (left, top + height), 以及(left + width, top + height)四个点。
+
+注：任何在画布以外的元素都会被返回成一个透明黑的ImageData对像。
 
 # 与SVG对比一下
 
@@ -598,14 +635,13 @@ scale 方法接受两个参数。x,y 分别是横轴和纵轴的缩放因子，�
 </p>
 
 **SVG适合啥：**
-> 1. 小图标
-> 2. 小动画
-> 3. 矢量图
-> 4. 带用户交互
+> 1. 大分辨率屏幕、小图标、小动画
+> 2. 矢量图
+> 3. 需要DOM用户交互的
 
 **Canvas适合啥：**
 > 1. 复杂场景
-> 2. 图表
+> 2. 需要大量依赖JS的（如：数据可视化）
 > 3. 甚至3D
 
 
