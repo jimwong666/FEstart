@@ -10,28 +10,58 @@
             margin: 0;
             padding: 0;
         }
-        canvas {
+        .container {
+            position: relative;
             margin: 10px;
         }
         #canvas {
             position: absolute;
-            left: 0;
+            left: 0px;
+        }
+        #_canvas {
+            position: absolute;
+            left: 0px;
         }
         #color {
             color: red;
             height: 21px;
         }
+        .slider {
+            width: 300px;
+            height: 30px;
+            background: #dbdbdb;
+            position: relative;
+        }
+        .moveButton {
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background: #999;
+            cursor: pointer;
+            color: #fff;
+            user-select: none;
+            position: absolute;
+        }
+        .moveButton:hover {
+            background: #1991FA;
+        }
+        .noClick {
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
-    <div>
+    <div class="container">
         
         <p id="color"></p>
         <canvas id="canvas_2" width="300" height="300" style="background: #dbdbdb"></canvas>
         <canvas id="canvas" width="300" height="300"></canvas>
-        <button id="invertbtn">invertbtn</button>
+        <canvas id="_canvas" width="30" height="300"></canvas>
+        <button id="invertbtn" onclick="onLoad();">invertbtn</button>
         <button id="grayscalebtn">grayscalebtn</button>
-        
+        <div class="slider">
+            <div class="moveButton">→</div>
+        </div>
     </div>
 
     <script>
@@ -81,17 +111,46 @@
         // ctx.closePath();
         // ctx.stroke();
 
-// 犀牛 查看色值  
-        var img = new Image();
-        img.src = '../images/rhino.jpg';
-        var canvas = document.getElementById('canvas');
-        var ctx = canvas.getContext('2d');
+//
+        // var img = new Image();
+        // img.src = '../images/test.png';
+        // var canvas = document.getElementById('canvas');
+        // var ctx = canvas.getContext('2d');
+
+        // var Swidth = 60, Sheight = 60;
+        // var coverPath = new Path2D();
+        // coverPath.moveTo(0, 0);
+        // coverPath.arc(30, 30, 30, 0, 360);
+        // console.log(coverPath.width);
+
+
+        // img.onload = function() {
+        //     ctx.drawImage(img,0,0);
+        
+        //     ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            
+        //     ctx.lineWidth = 2;
+        //     ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
+        //     ctx.stroke(coverPath);
+        //     ctx.fill(coverPath);
+
+        // };
+
+
+
+
+
+
+
+
+// 查看色值  
         // ctx.imageSmoothingEnabled = false;
         // ctx.mozImageSmoothingEnabled = false;
         // ctx.webkitImageSmoothingEnabled = false;
         // ctx.msImageSmoothingEnabled = false;
         // img.onload = function() {
-        //     ctx.drawImage(img,0,0,10,10, 0, 0,200,200);
+        //     // ctx.drawImage(img,0,0,10,10, 0, 0,200,200);
+        //     ctx.drawImage(img,0,0);
         //     var Data = ctx.getImageData(0,0,300,300).data;
         //     Data[0] = 0;
         //     Data[1] = 0;
@@ -101,7 +160,7 @@
 
         // };
 
-        var color = document.getElementById('color');
+        // var color = document.getElementById('color');
         // function pick(event) {
         //     var x = event.layerX;
         //     var y = event.layerY; 
@@ -113,6 +172,7 @@
         //     color.textContent = coordinate +'----'+ rgba;
         // }
         // canvas.addEventListener('mousemove', pick);
+
 
 // 取反色，取灰度
         // img.onload = function() {
@@ -154,16 +214,17 @@
         //     grayscalebtn.addEventListener('click', grayscale);
         // }
 
-    // 保存图片
-        var canvas = document.querySelector('canvas');
+// 保存图片
+    // toDataURL
         // var dataURL = canvas.toDataURL();
         // console.log(dataURL);
 
-        canvas.toBlob(function(blob) {
-            var url = URL.createObjectURL(blob);
-            console.log(url);
-            color.innerHTML = '<img src="'+ url +'">';
-        }, 'image/jpeg');
+    // toBlob
+        // canvas.toBlob(function(blob) {
+        //     var url = URL.createObjectURL(blob);
+        //     console.log(url);
+        //     color.innerHTML = '<img src="'+ url +'">';
+        // }, 'image/jpeg');
 
 
     // 这么操作像素店呢？
@@ -403,6 +464,91 @@
         // ball.draw();
 
 
+// 图片验证
+        // 
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var img = new Image();
+        img.src = '../images/test.png';
+
+        var _canvas = document.getElementById('_canvas');
+        var _ctx = _canvas.getContext('2d');
+
+        // 生成随机数
+        function getRandom(start, end) {
+            return Math.round(Math.random() * (end - start) + start);
+        }
+
+        // 目标长宽
+        var Twidth = 30,
+            Theight = 30;
+            Ttop = null,
+            Tlight = null;
+        
+        var moveButton = document.querySelector('.moveButton'),
+            _canvas = document.querySelector('#_canvas');
+            moveButton.style.width = Twidth + 'px';
+
+        // 图片加载后执行
+        function onLoad() {
+            Ttop = getRandom(50,250),
+            Tlight = getRandom(50,250);
+            console.log(Tlight);
+            ctx.drawImage(img,0,0);
+            // 核心~~~~~~~
+            var imageData = ctx.getImageData(Tlight,Ttop,30,30);
+            _ctx.clearRect(0,0,30,300);
+            _ctx.putImageData(imageData,0,Ttop);
+        };
+
+        img.onload = onLoad;
+
+        var originX = null,
+            isMouseDown = false;
+        // 按下鼠标
+        moveButton.addEventListener('mousedown',function(e) {
+            originX = e.clientX;
+            isMouseDown = true;
+            // console.log(isMouseDown);
+        });
+        // 拖动鼠标
+        document.addEventListener('mousemove',function(e) {
+            if(!isMouseDown) return false;
+            var eventX = e.clientX;
+            var moveX = eventX - originX;
+            if(moveX < 0 || moveX + Twidth > 300) return false;
+            moveButton.style.left = moveX + 'px';
+            _canvas.style.left = moveX + 'px';
+            
+            console.log(moveX);
+        });
+        // 松开鼠标
+        document.addEventListener('mouseup',function(e) {
+            if(!isMouseDown) return false;
+            isMouseDown = false;
+            if (e.clientX == originX) return false;
+            // console.log(isMouseDown);
+            moveButton.classList.add('noClick');
+
+            var eventX = e.clientX;
+            var moveX = eventX - originX;
+
+            if(Math.abs(moveX-Tlight) > 5) {
+                moveButton.textContent = 'x';
+                setTimeout(function() {
+                    onLoad();
+                    moveButton.classList.remove('noClick');
+                    moveButton.style.left = '0px';
+                    _canvas.style.left = '0px';
+                    moveButton.textContent = '→';
+                },1000);
+            }else {
+                moveButton.textContent = '√';
+            }
+
+            
+            
+        });
     </script>
 </body>
 </html>
