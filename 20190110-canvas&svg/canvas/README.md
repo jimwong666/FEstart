@@ -600,11 +600,14 @@ ImageData.data示意：
     [255,255,255,255,0,0,0,255]
 ```
 
-**所以：Uint8ClampedArray 包含高度 × 宽度 × 4 bytes数据，索引值从0到(高度×宽度×4)-1**
+**Uint8ClampedArray 包含高度 × 宽度 × 4 bytes数据，索引值从0到(高度×宽度×4)-1**
+
+所以，x行y列的R/G/B/A的值是多少？
 
 ##
 
 **那么怎么获取canvas的ImageData对象呢？**
+
 获得一个包含画布场景像素数据的ImageData对像，你可以用getImageData()方法：
 
 ```javascript
