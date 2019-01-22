@@ -29,6 +29,8 @@
         <p id="color"></p>
         <canvas id="canvas_2" width="300" height="300" style="background: #dbdbdb"></canvas>
         <canvas id="canvas" width="300" height="300"></canvas>
+        <button id="invertbtn">invertbtn</button>
+        <button id="grayscalebtn">grayscalebtn</button>
         
     </div>
 
@@ -79,51 +81,118 @@
         // ctx.closePath();
         // ctx.stroke();
 
-// 犀牛 查看色值
+// 犀牛 查看色值  
         var img = new Image();
         img.src = '../images/rhino.jpg';
         var canvas = document.getElementById('canvas');
         var ctx = canvas.getContext('2d');
-        ctx.imageSmoothingEnabled = false;
-        ctx.mozImageSmoothingEnabled = false;
-        ctx.webkitImageSmoothingEnabled = false;
-        ctx.msImageSmoothingEnabled = false;
-        img.onload = function() {
-            ctx.drawImage(img,0,0,10,10, 0, 0,200,200);
-            
-            console.log(ctx.getImageData(0,0,300,300).data);
-            for(var i = 1;i<=900;i++){
-                ctx.getImageData(0,0,300,300).data[4*i-1] = 0;
-            }
-        };
+        // ctx.imageSmoothingEnabled = false;
+        // ctx.mozImageSmoothingEnabled = false;
+        // ctx.webkitImageSmoothingEnabled = false;
+        // ctx.msImageSmoothingEnabled = false;
+        // img.onload = function() {
+        //     ctx.drawImage(img,0,0,10,10, 0, 0,200,200);
+        //     var Data = ctx.getImageData(0,0,300,300).data;
+        //     Data[0] = 0;
+        //     Data[1] = 0;
+        //     Data[2] = 0;
+        //     Data[3] = 255;
+        //     console.log(Data[0],Data[1],Data[2],Data[3]);
 
+        // };
 
         var color = document.getElementById('color');
-        function pick(event) {
-            var x = event.layerX;
-            var y = event.layerY; 
-            var pixel = ctx.getImageData(x, y, 1, 1);
-            var data = pixel.data;
-            var rgba = 'rgba(' + data[0] + ',' + data[1] + ',' + data[2] + ',' + (data[3] / 255) + ')';
-            var coordinate = x + 1 + ',' + (y + 1);
-                color.style.background =  rgba;
-                color.textContent = coordinate +'----'+ rgba;
-        }
-        canvas.addEventListener('mousemove', pick);
+        // function pick(event) {
+        //     var x = event.layerX;
+        //     var y = event.layerY; 
+        //     var pixel = ctx.getImageData(x, y, 1, 1);
+        //     var data = pixel.data;
+        //     var rgba = 'rgba(' + data[0] + ',' + data[1] + ',' + data[2] + ',' + (data[3] / 255) + ')';
+        //     var coordinate = x + 1 + ',' + (y + 1);
+        //     color.style.background =  rgba;
+        //     color.textContent = coordinate +'----'+ rgba;
+        // }
+        // canvas.addEventListener('mousemove', pick);
 
+// 取反色，取灰度
+        // img.onload = function() {
+        //     draw(this);
+        //     console.log(ctx.getImageData(0,0,300,300).data);
+        // };
+
+        // function draw(img) {
+        //     var canvas = document.getElementById('canvas');
+        //     var ctx = canvas.getContext('2d');
+        //     ctx.drawImage(img, 0, 0);
+        //     img.style.display = 'none';
+        //     var imageData = ctx.getImageData(0,0,canvas.width, canvas.height);
+        //     var data = imageData.data;
+                
+        //     var invert = function() {
+        //         for (var i = 0; i < data.length; i += 4) {
+        //             data[i]     = 255 - data[i];     // red
+        //             data[i + 1] = 255 - data[i + 1]; // green
+        //             data[i + 2] = 255 - data[i + 2]; // blue
+        //         }
+        //         ctx.putImageData(imageData, 0, 0);
+        //     };
+
+        //     var grayscale = function() {
+        //         for (var i = 0; i < data.length; i += 4) {
+        //             var avg = (data[i] + data[i +1] + data[i +2]) / 3;
+        //             data[i]     = avg; // red
+        //             data[i + 1] = avg; // green
+        //             data[i + 2] = avg; // blue
+        //         }
+        //         ctx.putImageData(imageData, 0, 0);
+        //         console.log(ctx.getImageData(0,0,300,300).data);
+        //     };
+
+        //     var invertbtn = document.getElementById('invertbtn');
+        //     invertbtn.addEventListener('click', invert);
+        //     var grayscalebtn = document.getElementById('grayscalebtn');
+        //     grayscalebtn.addEventListener('click', grayscale);
+        // }
+
+    // 保存图片
+        var canvas = document.querySelector('canvas');
+        // var dataURL = canvas.toDataURL();
+        // console.log(dataURL);
+
+        canvas.toBlob(function(blob) {
+            var url = URL.createObjectURL(blob);
+            console.log(url);
+            color.innerHTML = '<img src="'+ url +'">';
+        }, 'image/jpeg');
+
+
+    // 这么操作像素店呢？
+        // var _Canvas = document.createElement('canvas');
+        // var _Context = _Canvas.getContext('2d');
+        // // 设置屏幕外Canvas尺寸
+        // _Canvas.width = 300;
+        // _Canvas.height = 300;
+        // img.onload = function() {
+        //     _Context.drawImage(img, 0, 0);
+        //     var imagedata = _Context.getImageData(0, 0, 300, 300);
+        //     var Data = ctx.createImageData(300, 300);
+        //     Data = imagedata;
+        //     console.log(Data.data);
+        //     ctx.putImageData(Data,0,0);
+        // }
 
         
 // putImageData
-        // var dirtyCanvas = document.createElement('canvas');
-        // var dirtyContext = dirtyCanvas.getContext('2d');
+        // var _Canvas = document.createElement('canvas');
+        // var _Context = _Canvas.getContext('2d');
         // // 设置屏幕外Canvas尺寸
-        // dirtyCanvas.width = 300;
-        // dirtyCanvas.height = 300;
+        // _Canvas.width = 300;
+        // _Canvas.height = 300;
         
         // // 此时可以得到imagedata数据
         // img.onload = function() {
-        //     dirtyContext.drawImage(img, 0, 0);
-        //     var imagedata = dirtyContext.getImageData(0, 0, 30, 30);
+        //     _Context.drawImage(img, 0, 0);
+        //     var imagedata = _Context.getImageData(0, 0, 30, 30);
         //     ctx.putImageData(imagedata,35,35);
         // }
        

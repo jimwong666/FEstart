@@ -359,11 +359,11 @@ canvas的API可以使用下面这些类型中的一种作为图片的源：
 
 **ctx.drawImage()：**
 1. 当drawImaged(img, x, y, width, height)有3/6个参数的时候。
-   > img：图片源 <br/>
+   > img：可以是各类Canvas图片资源，如<img>图片，SVG图像，Canvas元素本身等<br/>
    > x、y：图片左上角坐标 <br/>
    > width和hight：图片绘制时的宽和高
 2. 当drawImaged(img, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)有8个参数的时候。
-   > img：图片源 <br/>
+   > img：可以是各类Canvas图片资源，如<img>图片，SVG图像，Canvas元素本身等<br/>
    > sx、sy：原图片裁剪左上角坐标 <br/>
    > sWidth和sHight：原图片裁剪的宽和高 <br/>
    > dx、dy：绘制时图片的左上角坐标 <br/>
@@ -662,16 +662,46 @@ ImageData.data示意：
     ctx.putImageData(imagedata,0,0);
 ```
 
-// 抗锯齿、灰度。。。
+**我们还可以对canvas进行缩放、抗锯齿、灰度处理等等：**
 
-保存图片
+> 缩放
 
+就是运用drawImage(img, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
 
+> 抗锯齿
 
+```javascript
+    ctx.imageSmoothingEnabled = true; // 打开，默认
+    ctx.imageSmoothingEnabled = false; // 关闭
+```
 
+> 反色、灰度处理
 
+反色：255 - R/G/B 部分
+灰度：R/G/B = R+G+B/3
 
+**保存图片：**
 
+> HTMLCanvasElement 提供一个toDataURL()方法，此方法在保存图片的时候非常有用。它返回一个包含被类型参数规定的图像表现格式的数据链接(base64)。返回的图片分辨率是96dpi。
+
+```javascript
+    canvas.toDataURL(mimeType, quality);
+```
+
+1. **mimeType（可选）** 表示需要转换的图像的mimeType类型。默认值是image/png，还可以是image/jpeg，甚至image/webp（前提浏览器支持）等。
+2. **quality（可选）** 表示转换的图片质量。范围是0到1。此参数要想有效，图片的mimeType需要是image/jpeg或者image/webp，其他mimeType值无效。默认压缩质量是0.92。
+
+##
+
+> HTMLCanvasElement 还有一个 canvas.toBlob() 方法可以Canvas图像对应的Blob对象（binary large object）。此方法可以把Canvas图像缓存在磁盘上，或者存储在内存中，这个往往由浏览器决定。兼容IE10+
+
+```javascript
+    canvas.toBlob(callback, mimeType, quality);
+```
+
+1. **callback** toBlob()方法执行成功后的回调方法，支持一个参数，表示当前转换的Blob对象。
+2. **mimeType（可选）** mimeType表示需要转换的图像的mimeType类型。默认值是image/png，还可以是image/jpeg，甚至image/webp（前提浏览器支持）等。
+3. **quality（可选）** 表示转换的图片质量。范围是0到1。由于Canvas的toBlob()方法转PNG是无损的，因此，此参数默认是没有效的，除非，指定图片mimeType是image/jpeg或者image/webp，此时默认压缩值是0.92。
 
 
 
