@@ -45,6 +45,15 @@
         .moveButton:hover {
             background: #1991FA;
         }
+        #refresh{
+            position: absolute;
+            left: 253px;
+            top: 40px;
+            opacity: 0.8;
+        }
+        .hide {
+            display: none;
+        }
         .noClick {
             pointer-events: none;
         }
@@ -57,8 +66,11 @@
         <canvas id="canvas_2" width="300" height="300" style="background: #dbdbdb"></canvas>
         <canvas id="canvas" width="300" height="300"></canvas>
         <canvas id="_canvas" width="30" height="300"></canvas>
-        <button id="invertbtn" onclick="onLoad();">invertbtn</button>
-        <button id="grayscalebtn">grayscalebtn</button>
+        <button id='refresh' onclick="onLoad();">刷新</button>
+
+        <!-- <button id="invertbtn">invertbtn</button>
+        <button id="grayscalebtn">grayscalebtn</button> -->
+
         <div class="slider">
             <div class="moveButton">→</div>
         </div>
@@ -544,6 +556,7 @@
                 },1000);
             }else {
                 moveButton.textContent = '√';
+                document.querySelector('#refresh').classList.add('hide');
             }
 
             
