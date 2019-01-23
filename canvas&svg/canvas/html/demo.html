@@ -84,33 +84,13 @@
         // ctx.closePath();
         // ctx.stroke();
 
-//
+// 查看色值 
         var img = new Image();
         img.src = '../images/test.png';
-        img.crossOrigin = "Anonymous";
+        img.crossOrigin = '*'
         var canvas = document.getElementById('canvas');
         var ctx = canvas.getContext('2d');
 
-        var Swidth = 60, Sheight = 60;
-        var coverPath = new Path2D();
-        coverPath.moveTo(0, 0);
-        coverPath.arc(30, 30, 30, 0, 360);
-
-        img.onload = function() {
-            ctx.drawImage(img,0,0);
-        
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-            
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
-            ctx.stroke(coverPath);
-            ctx.fill(coverPath);
-
-        };
-
-
-
-// 查看色值  
         // ctx.imageSmoothingEnabled = false;
         // ctx.mozImageSmoothingEnabled = false;
         // ctx.webkitImageSmoothingEnabled = false;
@@ -267,7 +247,6 @@
         // rectangle.rect(10, 10, 50, 50);
 
         // var circle = new Path2D();
-        // circle.moveTo(125, 35);
         // circle.arc(100, 35, 25, 0, 2 * Math.PI);
 
         // ctx.stroke(rectangle);
@@ -302,12 +281,12 @@
 
 
     // clip    
-        // var qwe = new Path2D();  
-        // qwe.rect(0,0,150,50);
-        // ctx.beginPath();
-        // ctx.arc(60,60,60,0,Math.PI*2,true);
-        // ctx.clip(qwe);
-        // ctx.fill();
+        var qwe = new Path2D();  
+        qwe.rect(0,0,150,50);
+        ctx.beginPath();
+        ctx.arc(60,60,60,0,Math.PI*2,true);
+        ctx.clip(qwe);
+        ctx.fill();
 
 
     // beginPath

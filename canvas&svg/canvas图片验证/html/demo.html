@@ -26,14 +26,16 @@
         }
         .slider {
             width: 300px;
-            height: 30px;
+            height: 50px;
             background: #dbdbdb;
             position: relative;
         }
         .moveButton {
-            height: 30px;
-            line-height: 30px;
+            height: 50px;
+            line-height: 50px;
             text-align: center;
+            font-weight: bold;
+            font-size: 30px;
             background: #999;
             cursor: pointer;
             color: #fff;
@@ -60,7 +62,7 @@
 <body>
     <div class="container">
         <canvas id="canvas" width="300" height="300"></canvas>
-        <canvas id="_canvas" width="30" height="300"></canvas>
+        <canvas id="_canvas" width="50" height="300"></canvas>
         <button id='refresh' onclick="onLoad();">刷新</button>
     </div>
     <div class="slider">
@@ -71,6 +73,7 @@
         var canvas = document.getElementById('canvas');
         var ctx = canvas.getContext('2d');
         var img = new Image();
+        img.crossOrigin = "Anonymous";
         img.src = '../images/test.png';
 
         var _canvas = document.getElementById('_canvas');
@@ -82,25 +85,55 @@
         }
 
         // 目标长宽
-        var Twidth = 30,
-            Theight = 30;
+        var Twidth = 50,
+            Theight = 50;
             Ttop = null,
             Tlight = null;
         
+        function path2d(x,y) {
+            var path2d = new Path2D();
+            path2d.arc(25+x,25+y,25,0,2 * Math.PI);
+            path2d.strokeStyle = 'rgba(255, 255, 255, 1)';
+            path2d.stroke();
+            return path2d;
+        };
+
+        function _draw(ctx, x, y, operation) {
+            ctx.beginPath();
+            ctx.arc(25+x,25+y,24,0,2*Math.PI);
+            ctx.lineWidth = 2;
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+            ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
+            ctx.stroke();
+
+            ctx[operation]();
+        };
+
         var moveButton = document.querySelector('.moveButton'),
             _canvas = document.querySelector('#_canvas');
             moveButton.style.width = Twidth + 'px';
 
         // 图片加载后执行
         function onLoad() {
-            Ttop = getRandom(50,250),
+            _ctx.save();
+            // 清楚画布
+            _ctx.clearRect(0,0,50,300);
+            Ttop = getRandom(50,250);
             Tlight = getRandom(50,250);
-            console.log(Tlight);
+            // 大canvas 放入 img
             ctx.drawImage(img,0,0);
-            // 核心~~~~~~~
-            var imageData = ctx.getImageData(Tlight,Ttop,30,30);
-            _ctx.clearRect(0,0,30,300);
-            _ctx.putImageData(imageData,0,Ttop);
+            // 大canvas 根据图案 画图
+            _draw(ctx,Tlight,Ttop,'fill');
+            // 小canvas 根据图案 裁切
+            _draw(_ctx,0,Ttop,'clip');
+            // 小canvas 放入 img
+            _ctx.drawImage(img,-Tlight,0);
+                
+                            // 获取大canvas验证图
+                            // var imageData = ctx.getImageData(Tlight,Ttop,50,50);
+                            // _ctx.putImageData(imageData,0,Ttop);
+
+            _ctx.restore();
         };
 
         img.onload = onLoad;
@@ -111,7 +144,6 @@
         moveButton.addEventListener('mousedown',function(e) {
             originX = e.clientX;
             isMouseDown = true;
-            // console.log(isMouseDown);
         });
         // 拖动鼠标
         document.addEventListener('mousemove',function(e) {
@@ -121,22 +153,19 @@
             if(moveX < 0 || moveX + Twidth > 300) return false;
             moveButton.style.left = moveX + 'px';
             _canvas.style.left = moveX + 'px';
-            
-            console.log(moveX);
         });
         // 松开鼠标
         document.addEventListener('mouseup',function(e) {
             if(!isMouseDown) return false;
             isMouseDown = false;
             if (e.clientX == originX) return false;
-            // console.log(isMouseDown);
             moveButton.classList.add('noClick');
 
             var eventX = e.clientX;
             var moveX = eventX - originX;
 
             if(Math.abs(moveX-Tlight) > 5) {
-                moveButton.textContent = 'x';
+                moveButton.textContent = 'X';
                 setTimeout(function() {
                     onLoad();
                     moveButton.classList.remove('noClick');
@@ -144,9 +173,11 @@
                     _canvas.style.left = '0px';
                     moveButton.textContent = '→';
                 },1000);
+                console.log("手抖了~失败~");
             }else {
                 moveButton.textContent = '√';
                 document.querySelector('#refresh').classList.add('hide');
+                console.log("成功啦~");
             }
 
         });
