@@ -31,7 +31,7 @@
 ```javascript
     // 图片加载后执行
     function onLoad() {
-		// 保存
+        // 保存
     	_ctx.save();
     	// 清楚画布
     	_ctx.clearRect(0,0,50,300);
@@ -45,7 +45,7 @@
     	_draw(_ctx,0,Ttop,'clip');
     	// 小canvas 放入 img
     	_ctx.drawImage(img,-Tlight,0);
-		// 恢复
+        // 恢复
     	_ctx.restore();
     };
 ```
