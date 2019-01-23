@@ -48,7 +48,7 @@
 坐标系统：
 
 <p align="center">
-    <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/default_grid.png" alt="坐标系统">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/canvas%26svg/canvas/images/default_grid.png" alt="坐标系统">
 </p>
 
 ### -绘制矩形
@@ -205,7 +205,7 @@ Path2D API 添加了 addPath作为将path结合起来的方法。添加了一条
 > 填充方式，有兴趣可以了解一下
 
 <p align="center">
-    <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/fillRule.png" alt="fillRule">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/canvas%26svg/canvas/images/fillRule.png" alt="fillRule">
 </p>
 
 **path：**（可选）
@@ -306,7 +306,7 @@ createRadialGradient 方法接受 6 个参数，前三个定义一个以 (x1,y1)
 ### -图案
 
 <p align="center">
-    <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/createpattern.png" alt="图案">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/canvas%26svg/canvas/images/createpattern.png" alt="图案">
 </p>
 
 > 用循环来实现图案的效果
@@ -384,7 +384,7 @@ Canvas状态存储在栈中，每当save()方法被调用后，当前的状态�
 示意图：
 
 <p align="center">
-    <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/stack.png" alt="栈">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/canvas%26svg/canvas/images/stack.png" alt="栈">
 </p>
 
 ```javascript
@@ -416,7 +416,7 @@ Canvas状态存储在栈中，每当save()方法被调用后，当前的状态�
 translate 方法接受两个参数。x 是左右偏移量，y 是上下偏移量，如图所示。
 
 <p align="center">
-    <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/grid_translate.png" alt="translate">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/canvas%26svg/canvas/images/grid_translate.png" alt="translate">
 </p>
 
 ### -旋转 rotate(angle)
@@ -427,7 +427,7 @@ translate 方法接受两个参数。x 是左右偏移量，y 是上下偏移量
 这个方法只接受一个参数：旋转的角度(angle)，它是顺时针方向的，以弧度为单位的值。
 
 <p align="center">
-    <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/grid_rotate.png" alt="rotate">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/canvas%26svg/canvas/images/grid_rotate.png" alt="rotate">
 </p>
 
 ### -缩放 scale(x, y)
@@ -438,7 +438,7 @@ translate 方法接受两个参数。x 是左右偏移量，y 是上下偏移量
 scale 方法接受两个参数。x,y 分别是横轴和纵轴的缩放因子，它们都必须是正值。值比 1.0 小表示缩小，比 1.0 大则表示放大，值为 1.0 时什么效果都没有。
 
 <p align="center">
-    <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/scale.png" alt="scale">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/canvas%26svg/canvas/images/scale.png" alt="scale">
 </p>
 
 ### -变形 transform(m11, m12, m21, m22m dx, dy)
@@ -498,7 +498,7 @@ scale 方法接受两个参数。x,y 分别是横轴和纵轴的缩放因子，�
 * luminosity
 
 <p align="center">
-    <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/globalCompositeOperation.png" alt="合成">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/canvas%26svg/canvas/images/globalCompositeOperation.png" alt="合成">
 </p>
 
 ### -裁剪
@@ -506,7 +506,7 @@ scale 方法接受两个参数。x,y 分别是横轴和纵轴的缩放因子，�
 > 裁切路径和普通的 canvas 图形差不多，不同的是它的作用是遮罩，用来隐藏不需要的部分。如图所示。红边五角星就是裁切路径，所有在路径以外的部分都不会在 canvas 上绘制出来。
 
 <p align="center">
-    <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/clipping_path.png" alt="裁剪">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/canvas%26svg/canvas/images/clipping_path.png" alt="裁剪">
 </p>
 
 **clip()：**
@@ -724,7 +724,7 @@ ImageData.data示意：
 * 能够以 .png 或 .jpg 格式保存结果图像。
 
 <p align="center">
-    <img src="https://github.com/jimwong666/FEstart/blob/master/20190110-canvas%26svg/canvas/images/comparison.png" alt="Canvas与SVG比较">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/canvas%26svg/canvas/images/comparison.png" alt="Canvas与SVG比较">
 </p>
 
 **SVG适合啥：**
