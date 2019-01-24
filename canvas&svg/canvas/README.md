@@ -621,7 +621,7 @@ canvas中，ImageData对象中存储着canvas对象真实的像素数据，它�
 
 > width -图片宽度，单位是像素 <br/>
 > height -图片高度，单位是像素 <br/>
-> data -Uint8ClampedArray类型的一维数组，每个像素用4个1bytes值(按照红，绿，蓝和透明值的顺序; 这就是"RGBA"格式)来代表。数组的长度即为图片像素点的个数*4<br/>
+> data -Uint8ClampedArray类型的一维数组，从数组第一个开始，每4项表示一个像素点的信息（每一项是1bytes的值，按照红，绿，蓝和透明值的顺序; 这就是"RGBA"格式），像素点的表示顺序是 从左到右-换行-从左到右 ，数组的长度即为图片像素点的个数*4<br/>
 
 ImageData.data示意：
 ```javascript
@@ -632,11 +632,15 @@ ImageData.data示意：
 
 所以，x行y列的R/G/B/A的值是多少？
 
+```
+    imageData.data[((行数-1)*imageData.width + (列数-1))*4 - 1 + 1/2/3/4]
+```
+
 ##
 
 **那么怎么获取canvas的ImageData对象呢？**
 
-获得一个包含画布场景像素数据的ImageData对像，你可以用getImageData()方法：
+获得一个包含画布场景像素数据的ImageData对象，你可以用getImageData()方法：
 
 ```javascript
     var myImageData = ctx.getImageData(left, top, width, height);
@@ -658,16 +662,21 @@ ImageData.data示意：
     };
 ```
 
+##
+
+现在，我已经获取到了ImageData对象~
 **那么又怎么设置canvas的ImageData对象呢？**
 
-> putImageData()将给定ImageData对象的数据绘制到位图上。
+> putImageData()将给定ImageData对象的数据绘制到图片上。
 
 ```javascript
     context.putImageData(imagedata, dx, dy);
     context.putImageData(imagedata, dx, dy, dirtyX, dirtyY, dirtyWidth, dirtyHeight);
 ```
 
+##
 
+另外
 **还可以创建一个ImageData对象**
 
 > 创建一个空白（只能是透明黑）的ImageData对象，你应该使用createImageData() 方法。
