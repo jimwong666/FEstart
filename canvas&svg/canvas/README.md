@@ -2,6 +2,34 @@
 * [基本用法](#基本用法)
 * [绘制形状](#绘制形状)
   * [绘制矩形](#-绘制矩形)
+  * [绘制路径](#-绘制路径)
+    * [移点命令](#--移点命令)
+    * [直线命令](#--直线命令)
+    * [圆弧命令](#--圆弧命令)
+    * [椭圆命令](#--椭圆命令)
+    * [贝塞尔曲线命令](#--贝塞尔曲线命令)
+    * [矩形命令](#--矩形命令)
+  * [Path2D对象](#-Path2D对象)
+* [样式与颜色](#样式与颜色)
+  * [颜色](#-颜色)
+  * [整体透明度](#-整体透明度)
+  * [线型](#-线型)
+  * [渐变](#-渐变)
+  * [图案](#-图案)
+  * [阴影](#-阴影)
+* [绘制文本](#绘制文本)
+* [使用图片](#使用图片)
+* [变形](#变形)
+  * [移动](#-移动)
+  * [旋转](#-旋转)
+  * [缩放](#-缩放)
+  * [变形](#-变形)
+* [合成与裁剪](#合成与裁剪)
+  * [合成](#-合成)
+  * [裁剪](#-裁剪)
+* [动画](#动画)
+* [像素操作](#像素操作)
+* [与SVG对比一下](#与SVG对比一下)
 
 # Canvas
 > canvas 是一个可以使用JavaScript来绘制图形的 HTML 元素。
@@ -408,9 +436,9 @@ Canvas状态存储在栈中，每当save()方法被调用后，当前的状态�
     ctx.fillRect(60,60,30,30);   // 使用加载的配置绘制一个矩形
 ```
 
-### -移动 translate(x,y)
+### -移动
 
-> 我们先介绍 translate 方法，它用来移动 canvas 和它的 **原点** 到一个不同的位置。
+> 我们先介绍 translate(x,y) 方法，它用来移动 canvas 和它的 **原点** 到一个不同的位置。
 
 **translate(x, y)：**
 translate 方法接受两个参数。x 是左右偏移量，y 是上下偏移量，如图所示。
@@ -419,9 +447,9 @@ translate 方法接受两个参数。x 是左右偏移量，y 是上下偏移量
     <img src="https://github.com/jimwong666/FEstart/blob/master/canvas%26svg/canvas/images/grid_translate.png" alt="translate">
 </p>
 
-### -旋转 rotate(angle)
+### -旋转
 
-> 第二个介绍 rotate 方法，它用于以原点为中心旋转 canvas。
+> 第二个介绍 rotate(angle) 方法，它用于以原点为中心旋转 canvas。
 
 **rotate(angle)：**
 这个方法只接受一个参数：旋转的角度(angle)，它是顺时针方向的，以弧度为单位的值。
@@ -430,9 +458,9 @@ translate 方法接受两个参数。x 是左右偏移量，y 是上下偏移量
     <img src="https://github.com/jimwong666/FEstart/blob/master/canvas%26svg/canvas/images/grid_rotate.png" alt="rotate">
 </p>
 
-### -缩放 scale(x, y)
+### -缩放
 
-> 接着是缩放。我们用它来增减图形在 canvas 中的像素数目，对形状，位图进行缩小或者放大。
+> 接着是缩放 scale(x, y)。我们用它来增减图形在 canvas 中的像素数目，对形状，位图进行缩小或者放大。
 
 **scale(x, y)：**
 scale 方法接受两个参数。x,y 分别是横轴和纵轴的缩放因子，它们都必须是正值。值比 1.0 小表示缩小，比 1.0 大则表示放大，值为 1.0 时什么效果都没有。
@@ -441,9 +469,9 @@ scale 方法接受两个参数。x,y 分别是横轴和纵轴的缩放因子，�
     <img src="https://github.com/jimwong666/FEstart/blob/master/canvas%26svg/canvas/images/scale.png" alt="scale">
 </p>
 
-### -变形 transform(m11, m12, m21, m22m dx, dy)
+### -变形
 
-> 最后一个方法允许对变形矩阵直接修改。
+> 最后一个方法允许对变形矩阵直接修改 transform(m11, m12, m21, m22m dx, dy)。
 
 **transform(m11, m12, m21, m22, dx, dy)：**
 
