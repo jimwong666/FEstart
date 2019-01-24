@@ -682,14 +682,14 @@ ImageData.data示意：
 > 创建一个空白（只能是透明黑）的ImageData对象，你应该使用createImageData() 方法。
 
 1. 创建一个高为height，宽为width的空白ImageData对象
-```javascript
-    var myImageData = ctx.createImageData(width, height);
-```
+    ```javascript
+        var myImageData = ctx.createImageData(width, height);
+    ```
 
-2.创建一个继承自另外一个ImageData对象的ImageData对象（只继承宽和高哦~背景依然是透明黑）
-```javascript
-    var myImageData = ctx.createImageData(anotherImageData);
-```
+2. 创建一个继承自另外一个ImageData对象的ImageData对象（只继承宽和高哦~背景依然是透明黑）
+    ```javascript
+        var myImageData = ctx.createImageData(anotherImageData);
+    ```
 
 接下来，你就可以操作它啦~
 
