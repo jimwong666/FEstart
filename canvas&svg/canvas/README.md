@@ -722,7 +722,8 @@ ImageData.data示意：
 
 **保存图片：**
 
-> HTMLCanvasElement 提供一个toDataURL()方法，此方法在保存图片的时候非常有用。它返回一个包含被类型参数规定的图像表现格式的数据链接(base64)。返回的图片分辨率是96dpi。
+> HTMLCanvasElement 提供一个 canvas.toDataURL() 方法，此方法在保存图片的时候非常有用。它返回一个包含被类型参数规定的图像表现格式的数据链接(base64)。返回的图片分辨率是96dpi。<br/>
+> toDataURL()方法是同步的
 
 ```javascript
     canvas.toDataURL(mimeType, quality);
@@ -733,7 +734,8 @@ ImageData.data示意：
 
 ##
 
-> HTMLCanvasElement 还有一个 canvas.toBlob() 方法可以Canvas图像对应的Blob对象（binary large object）。此方法可以把Canvas图像缓存在磁盘上，或者存储在内存中，这个往往由浏览器决定。兼容IE10+
+> HTMLCanvasElement 还有一个 canvas.toBlob() 方法可以Canvas图像对应的Blob对象（binary large object）。此方法可以把Canvas图像缓存在磁盘上，或者存储在内存中，这个往往由浏览器决定。兼容IE10+ <br/>
+> toBlob() 方法是异步的
 
 ```javascript
     canvas.toBlob(callback, mimeType, quality);
@@ -764,12 +766,12 @@ ImageData.data示意：
     <img src="https://github.com/jimwong666/FEstart/blob/master/canvas%26svg/canvas/images/comparison.png" alt="Canvas与SVG比较">
 </p>
 
-**SVG适合啥：**
+**SVG适合场景：**
 > 1. 大分辨率屏幕、小图标、小动画
 > 2. 矢量图
 > 3. 需要DOM用户交互的
 
-**Canvas适合啥：**
+**Canvas适合场景：**
 > 1. 复杂场景
 > 2. 需要大量依赖JS的（如：数据可视化）
 > 3. 甚至3D
