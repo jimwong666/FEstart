@@ -93,14 +93,16 @@
             Theight = 50;
             Ttop = null,
             Tlight = null;
-        
-        function path2d(x,y) {
-            var path2d = new Path2D();
-            path2d.arc(25+x,25+y,25,0,2 * Math.PI);
-            path2d.strokeStyle = 'rgba(255, 255, 255, 1)';
-            path2d.stroke();
-            return path2d;
-        };
+        var moveButton = document.querySelector('.moveButton'),
+            _canvas = document.querySelector('#_canvas');
+            moveButton.style.width = Twidth + 'px';
+        // function path2d(x,y) {
+        //     var path2d = new Path2D();
+        //     path2d.arc(25+x,25+y,25,0,2 * Math.PI);
+        //     path2d.strokeStyle = 'rgba(255, 255, 255, 1)';
+        //     path2d.stroke();
+        //     return path2d;
+        // };
 
         function _draw(ctx, x, y, operation) {
             ctx.beginPath();
@@ -113,9 +115,7 @@
             ctx[operation]();
         };
 
-        var moveButton = document.querySelector('.moveButton'),
-            _canvas = document.querySelector('#_canvas');
-            moveButton.style.width = Twidth + 'px';
+        
 
         // 图片加载后执行
         function onLoad() {
@@ -133,9 +133,7 @@
             // 小canvas 放入 img
             _ctx.drawImage(img,-Tlight,0);
                 
-                            // 获取大canvas验证图
-                            // var imageData = ctx.getImageData(Tlight,Ttop,50,50);
-                            // _ctx.putImageData(imageData,0,Ttop);
+                        
 
             _ctx.restore();
         };
