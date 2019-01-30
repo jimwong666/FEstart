@@ -1,3 +1,5 @@
+原文链接：[How to write async await without try-catch blocks in Javascript](https://blog.grossman.io/how-to-write-async-await-without-try-catch-blocks-in-javascript/ "https://blog.grossman.io/how-to-write-async-await-without-try-catch-blocks-in-javascript/")
+
 # JavaScript中无需 try-catch代码实现异步await的写法
 
 ES7 的新特性 Async/await 允许我们这些开发者像写同步代码一样写异步代码。现在，我们可以在JS中使用Promises对象，他可以简化异步流，避免回调地域。
@@ -156,9 +158,9 @@ export default function to(promise) {
 }
 ```
 
-（wj说：[err,data] = to(promise) 这种形式~！）
+（jim：[err,data] = to(promise) 这种形式~！）
 
-这个工具函数接收promise（wj说：async/await也行鸭~ 本质上也就是promise~）作为参数，将成功的运行结果作为数组的第二项，而把catch中接收的异常作为数组的第一项。
+这个工具函数接收promise（jim：async/await也行鸭~ 本质上也就是promise~）作为参数，将成功的运行结果作为数组的第二项，而把catch中接收的异常作为数组的第一项。
 
 这样我们的async代码就会变成这样：
 
@@ -187,6 +189,8 @@ async function asyncTask() {
 
 我们为此库创建了一个简单的NPM包，您可以使用以下方式安装它：[Github Repo](https://github.com/scopsy/await-to-js "https://github.com/scopsy/await-to-js")
 
-```javascript
+```
 npm i await-to-js
 ```
+
+(jim：配合此篇[文章](https://juejin.im/post/5c49eb28f265da613a545a4b?utm_source=gold_browser_extension "https://juejin.im/post/5c49eb28f265da613a545a4b?utm_source=gold_browser_extension")使用更佳~！)
