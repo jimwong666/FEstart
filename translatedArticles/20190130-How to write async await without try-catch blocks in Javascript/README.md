@@ -158,7 +158,7 @@ export default function to(promise) {
 }
 ```
 
-（jim：[err,data] = to(promise) 这种形式~！ 其实就是ES6的解构赋值~）
+（jim：[err,data] = to(promise) 这种形式~！ 其实就是用了ES6的解构赋值~）
 
 这个工具函数接收promise（jim：async/await也行鸭~ 本质上也就是promise~）作为参数，将成功的运行结果作为数组的第二项，而把catch中接收的异常作为数组的第一项。
 
