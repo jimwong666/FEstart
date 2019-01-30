@@ -158,7 +158,7 @@ export default function to(promise) {
 
 （wj说：[err,data] = to(promise) 这种形式~！）
 
-这个工具函数接收promise（wj说：async/await也行啊~本质上也就是promise~）作为参数，将成功的运行结果作为数组的第二项，而把catch中接收的异常作为数组的第一项。
+这个工具函数接收promise（wj说：async/await也行鸭~ 本质上也就是promise~）作为参数，将成功的运行结果作为数组的第二项，而把catch中接收的异常作为数组的第一项。
 
 这样我们的async代码就会变成这样：
 
@@ -185,7 +185,7 @@ async function asyncTask() {
 
 上面的例子只是解决方案的一个简单用例，您可以在to.js方法中附加拦截器，该方法将接收原始错误对象，记录或执行任何您需要执行的操作，然后再传回。
 
-我们为此库创建了一个简单的NPM包，您可以使用以下方式安装它：[Github Repo](https://github.com/scopsy/await-to-js "标题")
+我们为此库创建了一个简单的NPM包，您可以使用以下方式安装它：[Github Repo](https://github.com/scopsy/await-to-js "https://github.com/scopsy/await-to-js")
 
 ```javascript
 npm i await-to-js
