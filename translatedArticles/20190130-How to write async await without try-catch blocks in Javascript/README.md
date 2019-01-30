@@ -158,7 +158,7 @@ export default function to(promise) {
 }
 ```
 
-（jim：[err,data] = to(promise) 这种形式~！）
+（jim：[err,data] = to(promise) 这种形式~！ 其实就是ES6的解构赋值~）
 
 这个工具函数接收promise（jim：async/await也行鸭~ 本质上也就是promise~）作为参数，将成功的运行结果作为数组的第二项，而把catch中接收的异常作为数组的第一项。
 
@@ -193,4 +193,4 @@ async function asyncTask() {
 npm i await-to-js
 ```
 
-(jim：配合此篇[文章](https://juejin.im/post/5c49eb28f265da613a545a4b?utm_source=gold_browser_extension "https://juejin.im/post/5c49eb28f265da613a545a4b?utm_source=gold_browser_extension")使用更佳~！)
+(jim：配合此篇[文章](https://juejin.im/post/5c49eb28f265da613a545a4b?utm_source=gold_browser_extension "https://juejin.im/post/5c49eb28f265da613a545a4b?utm_source=gold_browser_extension")，食用更佳~！)
