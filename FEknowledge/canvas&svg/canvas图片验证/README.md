@@ -3,7 +3,7 @@
 > 大家应该都看过网站登录界面的图片验证，如下图：
 
 <p align="center">
-    <img src="https://github.com/jimwong666/FEstart/blob/master/canvas%26svg/canvas图片验证/images/bilibili.png" alt="哔哩哔哩">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/FEknowledge/canvas%26svg/canvas图片验证/images/bilibili.png" alt="哔哩哔哩">
 </p>
 
 那么他是怎么实现的呢？让我们来一探究竟~~~
@@ -22,7 +22,7 @@
 >    2. 通过“印记”的位置，在“小图”中使用和大图一样的 drawImage() 写入图片，之后再进行相应的裁剪~~ok~
 
 <p align="center">
-    <img src="https://github.com/jimwong666/FEstart/blob/master/canvas%26svg/canvas图片验证/images/slideToUnlock.png" alt="思考">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/FEknowledge/canvas%26svg/canvas图片验证/images/slideToUnlock.png" alt="思考">
 </p>
 
 主要代码：
