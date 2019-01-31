@@ -146,7 +146,7 @@ if err != nil { return err }
 
 我和我的好友Tomer Barnea试着去寻找简洁的解决办法，最后找到的方法如下：
 
-还记得await就是等待promise的状态变成 resolve 吗(wj说：状态从pengding 变成resolve~)？
+还记得await就是等待promise的状态变成 resolve 吗(jim：状态从pengding 变成 resolve~)？
 
 利用这一点我们可以写一个小小的工具函数来帮助我们处理这些异常。
 
