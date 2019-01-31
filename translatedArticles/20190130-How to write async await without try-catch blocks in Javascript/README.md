@@ -2,7 +2,7 @@
 
 ------------------------------------------------------------------------------------------------
 
-# <img src="https://github.com/jimwong666/FEstart/blob/master/translatedArticles/images/publicFile/icon_teranlation.png" alt="译文">JavaScript中无需 try-catch代码实现异步await的写法
+# <img src="https://github.com/jimwong666/FEstart/blob/master/translatedArticles/images/publicFile/icon_teranlation.png" alt="译文">  JavaScript中无需 try-catch代码实现异步await的写法
 
 ES7 的新特性 Async/await 允许我们这些开发者像写同步代码一样写异步代码。现在，我们可以在JS中使用Promises对象，他可以简化异步流，避免回调地域。
 
