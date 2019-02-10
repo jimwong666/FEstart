@@ -70,83 +70,75 @@
         <div class="moveButton">→</div>
     </div>
 
-
-
-
     <script>
-        var canvas = document.getElementById('canvas');
-        var ctx = canvas.getContext('2d');
+        var canvas = document.getElementById('canvas'),
+            ctx = canvas.getContext('2d'),
+            _canvas = document.getElementById('_canvas'),
+            _ctx = _canvas.getContext('2d');
+
+        // 选定目标区域长宽
+        var Twidth = 50,
+            Theight = 50;
+        // 选定目标距离顶部与左侧的长度
+            Ttop = null,
+            Tleft = null;
+            
+        // 获取图片
         var img = new Image();
         img.crossOrigin = "Anonymous";
         img.src = '../images/test.png';
+        
+        var moveButton = document.querySelector('.moveButton');// 获取滑块
+        moveButton.style.width = Twidth + 'px'; // 设置滑块宽度
 
-        var _canvas = document.getElementById('_canvas');
-        var _ctx = _canvas.getContext('2d');
 
         // 生成随机数
         function getRandom(start, end) {
             return Math.round(Math.random() * (end - start) + start);
         }
 
-        // 目标长宽
-        var Twidth = 50,
-            Theight = 50;
-            Ttop = null,
-            Tlight = null;
-        var moveButton = document.querySelector('.moveButton'),
-            _canvas = document.querySelector('#_canvas');
-            moveButton.style.width = Twidth + 'px';
-        // function path2d(x,y) {
-        //     var path2d = new Path2D();
-        //     path2d.arc(25+x,25+y,25,0,2 * Math.PI);
-        //     path2d.strokeStyle = 'rgba(255, 255, 255, 1)';
-        //     path2d.stroke();
-        //     return path2d;
-        // };
-
+        // 封装canvas操作
         function _draw(ctx, x, y, operation) {
             ctx.beginPath();
-            ctx.arc(25+x,25+y,24,0,2*Math.PI);
+            ctx.arc(25+x,25+y,24,0,2*Math.PI); // 这里目标区域的形状只是个圆，为了方便用例，你可以换成随意什么型状~
             ctx.lineWidth = 2;
             ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
             ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
             ctx.stroke();
-
             ctx[operation]();
         };
 
-        
-
-        // 图片加载后执行
-        function onLoad() {
-            _ctx.save();
-            // 清楚画布
-            _ctx.clearRect(0,0,50,300);
-            Ttop = getRandom(50,250);
-            Tlight = getRandom(50,250);
-            // 大canvas 放入 img
-            ctx.drawImage(img,0,0);
-            // 大canvas 根据图案 画图
-            _draw(ctx,Tlight,Ttop,'fill');
-            // 小canvas 根据图案 裁切
-            _draw(_ctx,0,Ttop,'clip');
-            // 小canvas 放入 img
-            _ctx.drawImage(img,-Tlight,0);
-                
-                        
-
-            _ctx.restore();
-        };
-
+        // 图片加载后执行 
+        function onLoad() { 
+            // 生成随机数，根据图片的宽高，这里我写死了，用的时候可以酌情更改
+            Ttop = getRandom(50,250); 
+            Tleft = getRandom(50,250);  
+            
+            _ctx.save(); // 保存
+            
+            // 清楚画布 
+            _ctx.clearRect(0,0,50,300); 
+            
+            // 大canvas根据位置放入img 
+            ctx.drawImage(img,0,0,300,300); 
+            
+            // 大canvas根据位置填充形状 
+            _draw(ctx, Tleft, Ttop, 'fill'); 
+            
+            // 小canvas 根据位置裁切形状 
+            _draw(_ctx,0,Ttop,'clip'); 
+            
+            // 小canvas 根据位置放入img
+            _ctx.drawImage(img,-Tleft,0,300,300);
+            
+            _ctx.restore(); // 恢复
+        }; 
         img.onload = onLoad;
 
 
-
-
-
-// 鼠标
-        var originX = null,
-            isMouseDown = false;
+        // 鼠标操作  --这里只监听了mouse，所以只适合PC。移动端改成touch*就行了哦~
+        var originX = null, // 初始X位置
+            isMouseDown = false; // 鼠标是否按下状态
         // 按下鼠标
         moveButton.addEventListener('mousedown',function(e) {
             originX = e.clientX;
@@ -171,7 +163,7 @@
             var eventX = e.clientX;
             var moveX = eventX - originX;
 
-            if(Math.abs(moveX-Tlight) > 5) {
+            if(Math.abs(moveX-Tleft) > 5) {
                 moveButton.textContent = 'X';
                 setTimeout(function() {
                     onLoad();
@@ -186,7 +178,6 @@
                 document.querySelector('#refresh').classList.add('hide');
                 console.log("成功啦~");
             }
-
         });
     </script>
 </body>
