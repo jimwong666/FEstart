@@ -1,4 +1,4 @@
-原文链接：[PostCSS – A Comprehensive Introduction](https://blog.grossman.io/how-to-write-async-await-without-try-catch-blocks-in-javascript/ "PostCSS - 综合介绍") <br/>
+原文链接：[PostCSS – A Comprehensive Introduction](https://www.smashingmagazine.com/2015/12/introduction-to-postcss/ "PostCSS - 综合介绍") <br/>
 作者：Drew Minns <br/>
 作者创作时间：2015年12月8日
 
