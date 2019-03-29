@@ -50,7 +50,7 @@
 console.log方法打印到标准输出，无论是终端还是浏览器控制台。
 它默认输出字符串，但可以与模板字符串结合使用来修改它返回的内容。<br/>
 
-Here's how it works:<br/>
+这是它的工作原理：<br/>
 
 模板字符串中的参数传递给[util.format](https://nodejs.org/api/util.html#util_util_format_format_args "util.format")，然后[util.format](https://nodejs.org/api/util.html#util_util_format_format_args "util.format")通过用相应的转换值替换每个替换标记来处理参数。支持的替换tokens是：<br/>
 
