@@ -36,12 +36,12 @@
 
 ## console.log,console.info和console.debug
 
-``
+```js
   console.log(string, substitution)
-``
+```
 
 尽管著名的console.log方法的确出名的不需要介绍，但你会很高兴认识在操作上与console.log相同的console.info和console.debug方法。<br/>
-默认情况下，您可以在Firefox浏览器控制台中使用console.debug，但要在Chrome中使用它，您必须将日志级别设置为详细。<br/>
+默认情况下，您可以在[Firefox](https://www.mozilla.org/en-US/firefox/?v=a "Firefox")浏览器控制台中使用console.debug，但要在[Chrome](https://www.google.com/chrome/ "Chrome")中使用它，您必须将日志级别设置为详细。<br/>
 
 <p align="center">
 <img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_800,q_auto:good,f_auto/v1541946130/ria8tkpfa6xookpoqais.png" alt="chrome设置控制台console">
@@ -56,7 +56,45 @@ Here's how it works:<br/>
 
 ### %s
 
-PostCSS作为Autoprefixer的作者[Andrey Sitnik](https://sitnik.ru/en/ "Andrey Sitnik")开发出来的工具，被正式发布作为CSS编译过程中使用javascript的方法。PostCSS本身只有一个简单的API，这个API在使用浩瀚无边的插件生态系统时，展现出非常强大的能力。为了提供有帮助的查错方法，PostCSS会生成source maps，而且一个抽象语法树（AST）会帮助我们理解在代码何处和代码怎样被转化。
+```js
+  const msg = `Using the console class`;
+  console.log('%s', msg); // Using the console class
+  console.log(msg); // Using the console class
+```
+
+％s是默认替换模式。
+
+### %d, %f, %i, %o
+
+```js
+  const circle = (radius = 1) => {
+    const profile = {};
+    const pi = 22/7;
+    profile.diameter = 2*pi*radius;
+    profile.circumference = pi*radius*2;
+    profile.area = pi*radius^2;
+    profile.volume = 4/3*pi*radius^3;
+  
+    console.log('This circle has a radius of: %d cm', radius);
+    console.log('This circle has a circumference of: %f cm',   profile.diameter);
+    console.log('This circle has an area of: %i cm^2', profile.area);
+    console.log('The profile of this cirlce is: %o', profile);
+    console.log('Diameter %d, Area: %f, Circumference %i',   profile.diameter, profile.area, profile.circumference)
+  }
+
+  circle();
+```
+
+％d将被数字（整数或浮点数）代替。<br/>
+％f将被浮点值替换。<br/>
+％i将被整数替换。<br/>
+％o将被Object替换。<br/>
+
+％o特别方便，因为我们不必使用JSON.stringify来扩展我们的对象，因为它默认显示所有对象的属性。<br/>
+
+
+
+
 
 ## console.table
 没有开发者会从随意的开始一个工程。许多从一个拥有变量、mixin、函数和常规的公用组件的SASS样板开始。我们会为变量、mixin、函数和常规的公用组件分别构建样式表，从而使我们的生产变得更加容易。在这一天的末尾，我们以10个或者更多的样式表来保持代码的组织性。 <br/>
