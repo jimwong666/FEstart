@@ -17,23 +17,45 @@
  * [console.dirxml](#consoledirxml)
  * [console.assert](#consoleassert)
  * [console.error 和 console.warn](#consoleerror和consolewarn)
- * [console.trace(label)](#consoletrace(label))
- * [console.count(label)](#consolecount(label))
- * [console.countReset(label)](#consolecountReset(label))
- * [console.time(label) 和 console.timeEnd(label)](#consoletime(label)和consoletimeEnd(label))
+ * [console.trace(label)](#consoletracelabel)
+ * [console.count(label)](#consolecountlabel)
+ * [console.countReset(label)](#consolecountResetlabel)
+ * [console.time(label) 和 console.timeEnd(label)](#consoletimelabel和consoletimeEndlabel)
  * [结论](#结论)
  * [反馈](#反馈)
 
 ------------------------------------------------------------------------------------------------
 
 
-#基本用法
-CSS的发展，像所有的语言一样，是一个不断迭代的过程。伴随着每一次重大的修改发布，我们都会有新的特性和语法来帮助我们去修改样式。CSS3的提出，使我们能够设计之前只可能用javascript来完成的交互特性。每过一段时间就会有让我们编写样式更简单且更灵活的新工具浮现。 <br/>
-[PostCss](https://github.com/postcss/postcss "PostCss")是最近被推出的样式工具之一。PostCss目标是用一个用户插件和工具的生态系统彻底重构CSS。使用与Sass和LESS这样的预处理器相同的规则，他将拓展的CSS语法和特性转换为现代的、对浏览器友好的CSS。 <br/>
-你会问如何实现的？——Javascript。 <br/>
-Javascript有能力将我们的样式转化的比其他预处理器更块。使用诸如Gulp和Grunt的任务执行工具，我们可以将样式表在构建过程中转化，就像是Sass和LESS的编译。诸如React和AngularJS这样的javascript库或框架允许我们直接在javascript里面进行CSS的编写，为javascript转化我们的样式表开辟了途径。
+## 介绍
+
+在本文中，我们将会学习更有效的使用nodeJS的console类中可用的大多数方法。<br/>
+为了演示，我们将使用版本为70.0.3538.77的Chrome浏览器和版本为8.11.3的nodeJS。<br/>
+好的，让我们开始吧~！<br/>
+
 
 ## console.log,console.info和console.debug
+
+``
+  console.log(string, substitution)
+``
+
+尽管著名的console.log方法的确出名的不需要介绍，但你会很高兴认识在操作上与console.log相同的console.info和console.debug方法。<br/>
+默认情况下，您可以在Firefox浏览器控制台中使用console.debug，但要在Chrome中使用它，您必须将日志级别设置为详细。<br/>
+
+<p align="center">
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_800,q_auto:good,f_auto/v1541946130/ria8tkpfa6xookpoqais.png" alt="chrome设置控制台console">
+</p>
+
+console.log方法打印到标准输出，无论是终端还是浏览器控制台。
+它默认输出字符串，但可以与模板字符串结合使用来修改它返回的内容。<br/>
+
+Here's how it works:<br/>
+
+模板字符串中的参数传递给[util.format](https://nodejs.org/api/util.html#util_util_format_format_args "util.format")，然后[util.format](https://nodejs.org/api/util.html#util_util_format_format_args "util.format")通过用相应的转换值替换每个替换标记来处理参数。支持的替换tokens是：<br/>
+
+### %s
+
 PostCSS作为Autoprefixer的作者[Andrey Sitnik](https://sitnik.ru/en/ "Andrey Sitnik")开发出来的工具，被正式发布作为CSS编译过程中使用javascript的方法。PostCSS本身只有一个简单的API，这个API在使用浩瀚无边的插件生态系统时，展现出非常强大的能力。为了提供有帮助的查错方法，PostCSS会生成source maps，而且一个抽象语法树（AST）会帮助我们理解在代码何处和代码怎样被转化。
 
 ## console.table
