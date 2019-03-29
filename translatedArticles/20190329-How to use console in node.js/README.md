@@ -13,7 +13,7 @@
 > * [基本用法](#基本用法)
 > * [绘制形状](#绘制形状)
 > * [介绍](#介绍)
-> * [console.log, console.info 和 console.debug](#console.log,console.info和console.debug)
+> * [console.log，console.info 和 console.debug](#console.log,console.info和console.debug)
 > * [console.table](#console.table)
 > * [console.dir](#console.dir)
 > * [console.dirxml](#console.dirxml)
@@ -22,7 +22,7 @@
 > * [console.trace(label)](#console.trace(label))
 > * [console.count(label)](#console.count(label))
 > * [console.countReset(label)](#console.countReset(label))
-> * [console.time(label) and console.timeEnd(label)](#console.time(label)和console.timeEnd(label))
+> * [console.time(label) 和 console.timeEnd(label)](#console.time(label)和console.timeEnd(label))
 > * [结论](#结论)
 > * [反馈](#反馈)
 
