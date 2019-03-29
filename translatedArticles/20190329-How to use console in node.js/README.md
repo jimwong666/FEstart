@@ -12,7 +12,7 @@
 
  * [介绍](#介绍)
  * [console.log，console.info 和 console.debug](#console.log,console.info和console.debug)
- * [console.table](#console.table)
+ * [console.table](#console\\.table)
  * [console.dir](#console.dir)
  * [console.dirxml](#console.dirxml)
  * [console.assert](#console.assert)
