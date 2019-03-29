@@ -92,34 +92,224 @@ console.log方法打印到标准输出，无论是终端还是浏览器控制台
 
 ％o特别方便，因为我们不必使用JSON.stringify来扩展我们的对象，因为它默认显示所有对象的属性。<br/>
 
+请注意，您可以根据需要使用任意数量的令牌替换。它们将被替换为与您传递的参数相同的顺序。<br/>
 
+### %c
 
+此替换标记将css样式应用于替换文本。<br/>
 
+```js
+  console.log('LOG LEVEL: %c OK', 'color: green; font-weight: normal');
+  console.log('LOG LEVEL: %c PRIORITY', 'color: blue; font-weight: medium');
+  
+  console.log('LOG LEVEL: %c WARN', 'color: red; font-weight: bold');
+  console.log('ERROR HERE');
+```
+
+实际效果。
+
+<p align="center">
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_700,q_auto:good,f_auto/v1541949197/ilnhnn55xl0cksjthuri.png" alt="chrome设置控制台console内容颜色">
+</p>
+
+在上面，我们注意到在％c替换标记之后传递给console.log的文本受样式影响，但之前的文本保留原样而没有样式。
 
 ## console.table
-没有开发者会从随意的开始一个工程。许多从一个拥有变量、mixin、函数和常规的公用组件的SASS样板开始。我们会为变量、mixin、函数和常规的公用组件分别构建样式表，从而使我们的生产变得更加容易。在这一天的末尾，我们以10个或者更多的样式表来保持代码的组织性。 <br/>
-维护一个不断增加代码片段的Sass或是LESS库是一项不可避免的工作，同时也会让项目变得十分臃肿。许多包含了”以防万一”代码的项目拥有很多没有用到的mixin和函数。PostCss为我们提供了易安装的即插即用(plug-and-play)的插件模块，使得为项目特殊需要的开发过程更加灵活。 <br/>
+
+传递给它的第一个参数是以表格形式返回的数据。第二个是要显示的选定列数组。
+
+```js
+  console.table(tabularData, [properties])
+```
+
+此方法将打印传递给它的输入格式化为表格，然后在表格表示后记录输入对象。
+
+### Arrays
+
+如果将数组作为数据传递给它，则数组中的每个元素都将是表中的一行。
+
+```js
+  const books = ['The Silmarillion', 'The Hobbit', 'Unfinished Tales'];
+  console.table(books);
+```
+
+<p align="center">
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_850,q_auto:good,f_auto/v1540842103/bpdc5kzcyyigccp3qovj.png" alt="chrome设置控制台console为table样式">
+</p>
+
+对于深度为1的简单数组，表中的第一列具有标题索引。在第一列中的索引标题下是数组索引，数组中的项列在值标题下的第二列中。<br/>
+
+这就是嵌套数组的情况。<br/>
+
+```js
+  const authorsAndBooks = [['Tolkien', 'Lord of The Rings'],['Rutger', 'Utopia For Realists'], ['Sinek', 'Leaders Eat Last'], ['Eyal', 'Habit']];
+  console.table(authorsAndBooks);
+```
+
+<p align="center">
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_850,q_auto:good,f_auto/v1541950585/oh8q47fvdvvabmbzxmzl.png" alt="chrome设置控制台console为table样式">
+</p>
+
+### Objects
+
+对于深度为1的对象，对象键将在索引标题下列出，对象中的值列在第二列标题下。
+
+```js
+  const inventory = { apples: 200, mangoes: 50, avocados: 300,   kiwis: 50 };
+  console.table(inventory);
+```
+
+<p align="center">
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_850,q_auto:good,f_auto/v1541950904/vy5iqptgmr6evf1xjov1.png" alt="chrome设置控制台console为table样式">
+</p>
+
+对于嵌套的对象：
+
+```js
+const forexConverter = { 
+    asia: { 
+      rupee: 1.39, 
+      renminbi: 14.59, 
+      ringgit: 24.26 
+    }, 
+    africa: { 
+      rand: 6.49, 
+      nakfa: 6.7 , 
+      kwanza:0.33 
+    }, 
+    europe: {   
+      swissfranc: 101.60, 
+      gbp: 130, 
+      euro: 115.73 
+    } 
+  };
+console.table(forexConverter);
+```
+
+<p align="center">
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_850,q_auto:good,f_auto/v1540842194/wa9eiu5vbndsj1cptvdl.png" alt="chrome设置控制台console为table样式">
+</p>
+
+更多的嵌套对象：
+
+```js
+const workoutLog = { 
+    Monday: { 
+        push: 'Incline Bench Press', 
+        pull: 'Deadlift'
+      },    
+      Wednesday: { 
+        push: 'Weighted Dips', 
+        pull: 'Barbell Rows'
+      }
+  };
+console.table(workoutLog);
+```
+
+<p align="center">
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_850,q_auto:good,f_auto/v1540842251/jtmhrtv4fzt2kpmsgx0s.png" alt="chrome设置控制台console为table样式">
+</p>
+
+在这里，我们指定我们只想在名为“push”的列下查看数据。
+
+```js
+  console.table(workoutLog, 'push');
+```
+
+<p align="center">
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_850,q_auto:good,f_auto/v1540842288/w4zbyeuf2tvy3f6lzy6p.png" alt="chrome设置控制台console为table样式">
+</p>
+
+要对列下的数据进行排序，只需单击列标题即可。非常方便，你说对不？<br/>
+
+> 尝试给console.table传递一个将数组作为值的对象！
 
 ## console.dir
-PostCSS用我们所有生产环境的样式表来迁移所有需要用到的代码去生成函数、公用组件和mixin并且将他们包装成插件。现在，对每一个项目来说，我们可以通过在我们的构建工具引入插件来选取需要的工具。
-[PostCSS FontPath](https://github.com/seaneking/postcss-fontpath "PostCSS FontPath")插件就是展现PostCSS神奇能力的一个例子。我们可以在允许用户使用的webfonts文件中用Sass引入一个mixin。因此我们写入了@font-face标签。
 
+传递给此函数的第一个参数是要记录的对象，而第二个参数是包含选项的对象，这些选项将定义结果输出的填充方式或对象中的哪些属性将显示。<br/>
+返回的是由node的[util.inspect](https://nodejs.org/api/util.html#util_util_inspect_object_options "util.inspect")函数格式化的对象。<br/>
+输入console.dir内的对象、嵌套对象或子对象在点击露出的三角形是会下拉展开的。
 
-## console.dirxml
-```css
-@mixin importfont($font-family, $font-filename, $font-weight : normal, $font-style :normal, $font-stretch : normal) {
-  @font-face {
-    font-family: '#{$font-family}';
-    src: url('#{$font-filename}.eot');
-    src: url('#{$font-filename}.woff') format('woff'),
-    url('#{$font-filename}.ttf') format('truetype');
-    font-weight: $font-weight;
-    font-style: $font-style;
-    font-stretch: $font-stretch;
+```js
+  console.dir(object, options);
+  // where options = { showHidden: true ... }
+```
+
+让我们在实际应用中看一下：
+
+```js
+const user = {
+  details: {
+    name: {
+      firstName: 'Immanuel',
+      lastName: 'Kant'
+    },
+    height: `1.83m"`,
+    weight: '90kg',
+    age: '80',
+    occupation: 'Philosopher',
+    nationality: 'German',
+    books: [
+      {
+        name: 'Critique of Pure Reason',
+        pub: '1781',
+      },
+      {
+        name: 'Critique of Judgement',
+        pub: '1790',
+      },
+      {
+        name: 'Critique of Practical Reason',
+        pub: '1788',
+      },
+      {
+        name: 'Perpetual Peace',
+        pub: '1795',
+      },
+    ],
+    death: '1804'
   }
 }
-@include importfont('mission script', 'fonts/mission-script-webfont', 300);
+
+console.dir(user);
 ```
+
+这是在Chrome控制台中:
+
+<p align="center">
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_900,q_auto:good,f_auto/v1542389099/qn8hqajejxtxi7usaras.png" alt="chrome设置控制台console为可展开的对象">
+</p>
+
+## console.dirxml
+
+此函数将呈现传递的XML / HTML的交互式树。如果无法呈现节点树，则默认为Javascript对象。
+
+```js
+  console.dirxml(object|nodeList);
+```
+
+与console.dir非常相似，可以通过单击显示三角形来展开渲染树，您可以在其中查看子节点。<br/>
+它的输出类似于我们在浏览器的Elements选项卡下找到的输出。<br/>
+下面这是我们从维基百科页面传入一些HTML时的样子。
+
+<p align="center">
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_900,q_auto:good,f_auto/v1542443423/wodvdxbi7e7bmoc4r8rp.png" alt="chrome设置控制台console为可展开的渲染树">
+</p>
+
+让我们从本网站的页面传递一些HTML。
+
+<p align="center">
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_900,q_auto:good,f_auto/v1542443650/pvcu0gj6oplqg1tlh0bn.png" alt="chrome设置控制台console为可展开的渲染树">
+</p>
+
+下面这是我们传入一个对象时的样子。
+
+<p align="center">
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_900,q_auto:good,f_auto/v1542443062/sn0tjtxmrsftuamr6wbu.png" alt="chrome设置控制台console为可展开的对象">
+</p>
+
+> 尝试在某些HTML上调用console.dir，看看会发生什么！
+
 ## console.assert
 如果在我们的项目中使用PostCSS FontPath插件，我们就不再需要像上面那个例子一样引用Sass mixins。我们可以在我们的CSS中写入如下代码，PostCSS会通过Grunt或者Gulp来将它转化为我们需要的代码。
 
