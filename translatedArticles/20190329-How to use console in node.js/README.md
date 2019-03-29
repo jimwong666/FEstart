@@ -34,7 +34,7 @@
 > 好的，让我们开始吧~！<br/>
 
 
-## console.log,console.info和console.debug
+## console.log，console.info和console.debug
 
 ```js
   console.log(string, substitution)
