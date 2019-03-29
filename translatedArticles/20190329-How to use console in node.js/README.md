@@ -12,6 +12,20 @@
 
 > * [基本用法](#基本用法)
 > * [绘制形状](#绘制形状)
+> * [介绍](#介绍)
+> * [console.log, console.info 和 console.debug](#console.log,console.info和console.debug)
+> * [console.table](#console.table)
+> * [console.dir](#console.dir)
+> * [console.dirxml](#console.dirxml)
+> * [console.assert](#console.assert)
+> * [console.error 和 console.warn](#console.error和console.warn)
+> * [console.trace(label)](#console.trace(label))
+> * [console.count(label)](#console.count(label))
+> * [console.countReset(label)](#console.countReset(label))
+> * [console.time(label) and console.timeEnd(label)](#console.time(label)和console.timeEnd(label))
+> * [结论](#结论)
+> * [反馈](#反馈)
+
 
 CSS的发展，像所有的语言一样，是一个不断迭代的过程。伴随着每一次重大的修改发布，我们都会有新的特性和语法来帮助我们去修改样式。CSS3的提出，使我们能够设计之前只可能用javascript来完成的交互特性。每过一段时间就会有让我们编写样式更简单且更灵活的新工具浮现。 <br/>
 [PostCss](https://github.com/postcss/postcss "PostCss")是最近被推出的样式工具之一。PostCss目标是用一个用户插件和工具的生态系统彻底重构CSS。使用与Sass和LESS这样的预处理器相同的规则，他将拓展的CSS语法和特性转换为现代的、对浏览器友好的CSS。 <br/>
