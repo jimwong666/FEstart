@@ -12,7 +12,7 @@
 
  * [介绍](#介绍)
  * [console.log，console.info 和 console.debug](#console.log,console.info和console.debug)
- * [console.table](#console\\.table)
+ * [console.table](#consoletable)
  * [console.dir](#console.dir)
  * [console.dirxml](#console.dirxml)
  * [console.assert](#console.assert)
@@ -36,7 +36,7 @@ Javascript有能力将我们的样式转化的比其他预处理器更块。使�
 ## console.log,console.info和console.debug
 PostCSS作为Autoprefixer的作者[Andrey Sitnik](https://sitnik.ru/en/ "Andrey Sitnik")开发出来的工具，被正式发布作为CSS编译过程中使用javascript的方法。PostCSS本身只有一个简单的API，这个API在使用浩瀚无边的插件生态系统时，展现出非常强大的能力。为了提供有帮助的查错方法，PostCSS会生成source maps，而且一个抽象语法树（AST）会帮助我们理解在代码何处和代码怎样被转化。
 
-## console\\.table
+## console.table
 没有开发者会从随意的开始一个工程。许多从一个拥有变量、mixin、函数和常规的公用组件的SASS样板开始。我们会为变量、mixin、函数和常规的公用组件分别构建样式表，从而使我们的生产变得更加容易。在这一天的末尾，我们以10个或者更多的样式表来保持代码的组织性。 <br/>
 维护一个不断增加代码片段的Sass或是LESS库是一项不可避免的工作，同时也会让项目变得十分臃肿。许多包含了”以防万一”代码的项目拥有很多没有用到的mixin和函数。PostCss为我们提供了易安装的即插即用(plug-and-play)的插件模块，使得为项目特殊需要的开发过程更加灵活。 <br/>
 
