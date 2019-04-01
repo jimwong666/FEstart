@@ -413,7 +413,7 @@ Node REPL将停止执行后续代码的错误。
 
 ## console.count(label)
 
-Count将开始并递增名称标签的计数器。
+Count将开始并递增名label的计数器。
 
 让我们构建一个单词计数器，看看它是如何工作的。
 
@@ -445,7 +445,7 @@ Count将开始并递增名称标签的计数器。
 
 ## console.countReset(label)
 
-顾名思义，这会重置具有console.count方法设置的标签的计数器。
+顾名思义，这会重置具有console.count方法设置label的计数器。
 
 ```js
   const getOccurences = (word = 'foolish') => {
@@ -481,7 +481,7 @@ console.time函数启动一个定时器，其label作为函数的参数提供，
   console.timeEnd('<timer-label'>);\
 ```
 
-我们可以使用它来计算通过将相同的标签名称传递给两个函数来运行操作所花费的时间。
+我们可以使用它来计算通过将相同label传递给两个函数来运行操作所花费的时间。
 
 ```js
   const users = ['Vivaldi', 'Beethoven', 'Ludovico'];
