@@ -22,7 +22,6 @@
  * [console.countReset(label)](#consolecountResetlabel)
  * [console.time(label) 和 console.timeEnd(label)](#consoletimelabel和consoletimeEndlabel)
  * [结论](#结论)
- * [反馈](#反馈)
 
 ------------------------------------------------------------------------------------------------
 
@@ -472,13 +471,13 @@ Count将开始并递增名label的计数器。
 
 我们可以看到我们的getOc​​curences函数返回2，因为在短语中确实有两个愚蠢的词出现，但由于我们的计数器在每次匹配时被重置，所以它记录为两次 foolish：1。
 
-## console.time(label) and console.timeEnd(label)
+## console.time(label) 和 console.timeEnd(label)
 
 console.time函数启动一个定时器，其label作为函数的参数提供，而console.timeEnd函数停止一个定时器，其中label作为参数提供给函数。
 
 ```js
   console.time('<timer-label>');
-  console.timeEnd('<timer-label'>);\
+  console.timeEnd('<timer-label'>);
 ```
 
 我们可以使用它来计算通过将相同label传递给两个函数来运行操作所花费的时间。
