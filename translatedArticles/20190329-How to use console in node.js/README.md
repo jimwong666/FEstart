@@ -311,53 +311,209 @@ console.dir(user);
 > 尝试在某些HTML上调用console.dir，看看会发生什么！
 
 ## console.assert
-如果在我们的项目中使用PostCSS FontPath插件，我们就不再需要像上面那个例子一样引用Sass mixins。我们可以在我们的CSS中写入如下代码，PostCSS会通过Grunt或者Gulp来将它转化为我们需要的代码。
+传递给函数的第一个参数是一个测试为truthy的值。如果传递的值未被评估为truthy，则传递的所有其他参数都被视为要打印的消息。
 
-```css
-@font-face {
-  font-family: 'My Font';
-  font-path: '/path/to/font/file';
-  font-weight: normal;
-  font-style: normal;
-}
+Node REPL将停止执行后续代码的错误。
+
+```js
+  console.assert(value, [...messages])
 ```
+
+这是一个基本的例子：
+
+```js
+  console.assert(false, 'Assertion failed'); // Assertion failed
+```
+
+<p align="center">
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_900,q_auto:good,f_auto/v1541951415/fukgrwfgei34mafzvtr1.png" alt="console.assert">
+</p>
+
+现在，让我们开心的玩一会吧~ 我们将使用console.assert构建一个迷你测试框架。
+
+```js
+  const sum = (a = 0, b = 0) => Number(a) + Number(b);
+  
+  function test(functionName, actualFunctionResult, expected) {
+    const actual = actualFunctionResult;
+    const pass = actual === expected;
+    console.assert(pass, `Assertion failed for ${functionName}`);
+    return `Test passed ${actual} === ${expected}`;
+  }
+  
+  console.log(test('sum', sum(1,1), 2)); // Test passed 2 === 2
+  console.log(test('sum', sum(), 0)); // Test passed 0 === 0
+  console.log(test('sum', sum, 2)); // Assertion failed for sum
+  console.log(test('sum', sum(3,3), 4)); // Assertion failed for sum
+```
+
+在Node REPL或浏览器控制台中运行上面的内容，看看会发生什么。
+
 ## console.error和console.warn
-截至到这篇文章发表时，社区中已经有超过100个目前可用的插件，它们允许我们使用未来的CSS语法、缩写、工具和这门语言的拓展。它不仅仅是一个“很酷的工具”，而且在它的用户基数中正计入WordPress、Google和Twittter的团队。
+
+这两个基本相同。它们都会打印传递给它们的任何字符串。
+
+但是，console.warn会在传递消息之前打印出三角形警告符号，而console.error会在消息传递之前打印出危险符号。
+
+```js
+  console.error(string, substitution);
+  console.warn(string, substitution);
+```
+
+让我们注意，字符串替换可以与console.log方法相同的方式应用。
+
+<p align="center">
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_700,q_auto:good,f_auto/v1541951976/cvzw5gdir3wb00j5lq4s.png" alt="console.error和console.warn">
+</p>
+
+<p align="center">
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_700,q_auto:good,f_auto/v1541951995/wvlqqwtscmbgyvmbtzlp.png" alt="console.error和console.warn">
+</p>
+
+这是使用console.error的迷你日志记录功能。
+
+```js
+  const sum = (a = 0, b = 0) => Number(a) + Number(b);
+  
+  function otherTest(actualFunctionResult, expected) {
+    if (actualFunctionResult !== expected) {
+      console.error(new Error(`Test failed ${actualFunctionResult}   !== ${expected}`));
+    } else {
+      // pass
+    }
+  }
+  
+  otherTest(sum(1,1), 3);
+```
+
+<p align="center">
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_700,q_auto:good,f_auto/v1540842041/jcpzevvgpltag2733awn.png" alt="console.error和console.warn">
+</p>
 
 ## console.trace(label)
-由于PostCSS是基于Javascript的，我们在项目中可以使用像Gulp和Grunt这样的构建工具去转化CSS。下面的教程演示了如何通过[Gulp](https://gulpjs.com/ "Gulp")或[Grunt](https://gruntjs.com/ "Grunt")在你的工作流中添加PostCSS。使用哪种构建工具并不重要，这仅仅取决于个人的偏向或哪种对于我们的项目来说是最好的。
 
-> [在Github](https://github.com/drewminns/postCSS-starter "Gulp和Grunt完整版")可以找到可用于Gulp和Grunt这两者的完整版。可以将它作为一个初学者的模板随意使用，并且可以按需拓展。
+此控制台方法将打印字符串Trace后跟传递给函数的label，然后将堆栈跟踪打印到函数的当前位置。
+
+```js
+  function getCapital(country) {
+    const capitalMap = {
+      belarus: 'minsk', australia: 'canberra', egypt: 'cairo',   georgia: 'tblisi', latvia: 'riga', samoa: 'apia'
+    };
+    console.trace('Start trace here');
+    return Object.keys(capitalMap).find(item => item === country) ?   capitalMap[country] : undefined;
+  }
+  
+  console.log(getCapital('belarus'));
+  console.log(getCapital('accra'));
+```
+
+<p align="center">
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_900,q_auto:good,f_auto/v1540842029/xpcxgnlm7xrpyhkeqdbt.png" alt="console.trace(label)">
+</p>
 
 ## console.count(label)
-> 如果你不熟悉Gulp,推荐你阅读Callum Macrae写的”[building-with-gulp](https://www.smashingmagazine.com/2014/06/building-with-gulp/ "building-with-gulp")”来开始使用这个构建工具。
 
-在终端运行以下命令来安装PostCSS模块至你的项目：
+Count将开始并递增名称标签的计数器。
 
+让我们构建一个单词计数器，看看它是如何工作的。
+
+```js
+  const getOccurences = (word = 'foolish') => {
+    const phrase = `Oh me! Oh life! of the questions of these   recurring, Of the endless trains of the faithless, of cities   fill’d with the foolish, Of myself forever reproaching myself,   for who more foolish than I, and who more faithless?`;
+  
+    let count = 0;
+    const wordsFromPhraseArray = phrase.replace(/[,.!?]/igm, '')  .split(' ');
+    wordsFromPhraseArray.forEach((element, idx) => {
+      if (element === word) {
+        count ++;
+        console.count(word);
+      }
+    });
+    return count;
+  }
+  
+  getOccurences();
 ```
-npm i gulp-postcss -D
-```
 
-在你项目的Gulpfile.js中，我们需要去引入安装好的PostCSS模块然后在一个任务中使用它。确认更新你的开发文件路径和转化过的输出文件的目录。
+<p align="center">
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_900,q_auto:good,f_auto/v1540841976/nq4niudnzsf00cunyjs9.png" alt="console.count(label)">
+</p>
+
+在这里，我们看到 foolish 这个词被记录了两次。
+
+我们可以使用它作为一个方便的方法来查看调用函数的次数或代码执行的次数。
 
 ## console.countReset(label)
+
+顾名思义，这会重置具有console.count方法设置的标签的计数器。
+
 ```js
-var postcss = require('gulp-postcss');
-gulp.task('styles', function () {
-    return gulp.src('path/to/dev/style.css')
-        .pipe(postcss([]))
-        .pipe(gulp.dest(path/to/prod))
-});
+  const getOccurences = (word = 'foolish') => {
+    const phrase = `Oh me! Oh life! of the questions of these   recurring, Of the endless trains of the faithless, of cities   fill’d with the foolish, Of myself forever reproaching myself,   for who more foolish than I, and who more faithless?`;
+  
+    let count = 0;
+    const wordsFromPhraseArray = phrase.replace(/[,.!?]/igm, '')  .split(' ');
+    wordsFromPhraseArray.forEach((element, idx) => {
+      if (element === word) {
+        count ++;
+        console.count(word);
+        console.countReset(word);
+      }
+    });
+    return count;
+  }
+  
+  getOccurences();
 ```
 
-在命令行输入gulp styles来运行这个任务。
+<p align="center">
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_900,q_auto:good,f_auto/v1540842007/fvk2cutjkpia5jckgix2.png" alt="console.countReset(label)">
+</p>
 
-## console.time(label)和console.timeEnd(label)
-> 如果你不熟悉Gulp,推荐你阅读Mike Cunsolo写的”[Get Up and Running With Grunt](https://www.smashingmagazine.com/2013/10/get-up-running-grunt/ "Get Up and Running With Grunt")”来开始使用这个构建工具。
+我们可以看到我们的getOc​​curences函数返回2，因为在短语中确实有两个愚蠢的词出现，但由于我们的计数器在每次匹配时被重置，所以它记录为两次 foolish：1。
 
-在终端中运行以下命令来在你的项目中安装PostCSS模块：
+## console.time(label) and console.timeEnd(label)
+
+console.time函数启动一个定时器，其label作为函数的参数提供，而console.timeEnd函数停止一个定时器，其中label作为参数提供给函数。
+
+```js
+  console.time('<timer-label>');
+  console.timeEnd('<timer-label'>);\
+```
+
+我们可以使用它来计算通过将相同的标签名称传递给两个函数来运行操作所花费的时间。
+
+```js
+  const users = ['Vivaldi', 'Beethoven', 'Ludovico'];
+  
+  const loop = (array) => {
+    array.forEach((element, idx) => {
+      console.log(element);
+    })
+  }
+  
+  const timer = () => {
+    console.time('timerLabel');
+    loop(users);
+    console.timeEnd('timerLabel');
+  }
+  
+  timer();
+```
+
+<p align="center">
+<img src="https://scotch-res.cloudinary.com/image/upload/dpr_1,w_900,q_auto:good,f_auto/v1540884539/locjs2mqu3979pkrdrj0.png" alt="console.time(label) and console.timeEnd(label)">
+</p>
+
+在计时器停止后，我们可以看到计时器label与时间值显示。
+
+循环函数0.6909ms完成循环遍历数组。
 
 ## 结论
 
-## 反馈
+最后，我们已经到了本教程的最后。我希望你喜欢它。
+
+我已经省略了控制台类的非标准用法，如console.profile，console.profileEnd和console.timeLog，但是可以随意试验它们，让我知道它是怎么回事。
+
+
 
