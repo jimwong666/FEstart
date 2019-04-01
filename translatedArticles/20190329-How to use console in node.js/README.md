@@ -20,7 +20,7 @@
  * [console.trace(label)](#consoletracelabel)
  * [console.count(label)](#consolecountlabel)
  * [console.countReset(label)](#consolecountResetlabel)
- * [console.time(label) 和 console.timeEnd(label)](#consoletimelabel和consoletimeEndlabel)
+ * [console.time(label) 和 console.timeEnd(label)](user-content-consolelogconsoleinfo和consoledebug)
  * [结论](#结论)
 
 ------------------------------------------------------------------------------------------------
