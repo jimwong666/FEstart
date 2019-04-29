@@ -7,7 +7,7 @@
 # <img src="https://github.com/jimwong666/FEstart/blob/master/translatedArticles/images/publicFile/icon_teranlation.png" alt="译文">了解JavaScript中的Memoization
 
 <p align="center">
-<img src="(https://scotch-res.cloudinary.com/image/upload/w_1000,q_auto:good,f_auto/v1549388375/dcugfumfvlbdyrf7skqh.png)" alt="Understanding Memoization In JavaScript">
+<img src="https://scotch-res.cloudinary.com/image/upload/w_1000,q_auto:good,f_auto/v1549388375/dcugfumfvlbdyrf7skqh.png" alt="Understanding Memoization In JavaScript">
 </p>
 
  * [介绍](#介绍)
