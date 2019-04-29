@@ -1,10 +1,10 @@
-原文链接：[How to use console in node.js](https://scotch.io/tutorials/understanding-memoization-in-javascript#toc-testing-our-memoizer-function "了解JavaScript中的Memoization") <br/>
+原文链接：[How to use console in node.js](https://scotch.io/tutorials/understanding-memoization-in-javascript#toc-testing-our-memoizer-function "理解JavaScript中的Memoization") <br/>
 作者：Philip Obosi <br/>
 作者创作时间：2019年3月4日
 
 ------------------------------------------------------------------------------------------------
 
-# <img src="https://github.com/jimwong666/FEstart/blob/master/translatedArticles/images/publicFile/icon_teranlation.png" alt="译文">了解JavaScript中的Memoization
+# <img src="https://github.com/jimwong666/FEstart/blob/master/translatedArticles/images/publicFile/icon_teranlation.png" alt="译文">理解JavaScript中的Memoization
 
 <p align="center">
 <img src="https://scotch-res.cloudinary.com/image/upload/w_1000,q_auto:good,f_auto/v1549388375/dcugfumfvlbdyrf7skqh.png" alt="Understanding Memoization In JavaScript">
