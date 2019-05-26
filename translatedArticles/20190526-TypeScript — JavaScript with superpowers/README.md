@@ -1,6 +1,6 @@
-原文链接：[TypeScript — JavaScript with superpowers](https://www.strilliant.com/2018/02/28/typescript-%E2%80%94-javascript-with-superpowers-%E2%80%93-freecodecamp-org/ "TypeScript — 超级大国般的JavaScript") <br/>
-作者：不详 <br/>
-作者创作时间：2018年3月左右
+原文链接：[TypeScript — JavaScript with superpowers](https://medium.freecodecamp.org/typescript-javascript-with-super-powers-a333b0fcabc9 "TypeScript — 超级大国般的JavaScript") <br/>
+作者：Indrek Lasn <br/>
+作者创作时间：2018年2月28日
 
 ------------------------------------------------------------------------------------------------
 
@@ -181,3 +181,39 @@ tuple 期望第一个值是number，但不是，它是一个字符串"Indrek"，
 </p>
 
 <hr />
+
+<p align="center">
+<img src="https://www.strilliant.com/images/1*DHGUJYw9MdbnobyC1wf0Pg.png" alt="Any">
+</p>
+
+Any 类型很简单。我们根本不知道我们正在处理什么类型，所以它就可以用 any
+
+例子如下：
+
+<p align="center">
+<img src="https://www.strilliant.com/images/1*aDKDyw7uN7cbA7QMjpm3GA.png" alt="Any">
+</p>
+
+注意我们如何多次重新分配这个人的类型。首先，它是一个字符串，后来是一个数字，最后是一个布尔值。我们根本无法确定类型。
+
+现实世界的例子是，如果你使用第三方库而你不知道类型时，就可以用它。
+
+我们来一个阵列吧。您从API中提取一些数据并将其存储在数组中。该数组由随机数据组成。它不仅包含字符串，数字，也不会像 Tuple 一样有组织的结构。Any类型来帮助你！
+
+<p align="center">
+<img src="https://www.strilliant.com/images/1*nDGWiVcZHWXRPT3NMqHeuQ.png" alt="Any">
+</p>
+
+如果您知道数组只包含一种类型，则可以向编译器明确说明，如下所示：
+
+<p align="center">
+<img src="https://www.strilliant.com/images/1*AT2v5vHOq9_kuraL2E2hnA.png" alt="Any">
+</p>
+
+尽管这篇文章不长，但我们会在下一篇继续讨论。我们仍然需要覆盖几个最后的基本类型 — enum — never — null — undefined和特殊情况 type assertions。
+
+[如果您有兴趣了解更多内容，请参阅以下文档](https://www.typescriptlang.org/docs/handbook/basic-types.html "TypeScript")
+
+注意：我使用Visual Studio Code，Ayu Mirage主题和Source Code Pro字体。
+
+[这是第二部分](https://www.strilliant.com/2018/03/08/typescript-%E2%80%94-javascript-with-superpowers-%E2%80%94-part-ii-%E2%80%93-cleversonder-%E2%80%93-medium/ "TypeScript — JavaScript with superpowers II")
