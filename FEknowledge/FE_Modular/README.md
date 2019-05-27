@@ -35,11 +35,11 @@
 
 我们在平常开发时，在代码中经常会碰到：
 ```js
-  require('xxxxxx')
+  require('xxxxxx');
 ```
 或者是:
 ```js
-  import xxx form 'xxx'
+  import xxx form 'xxx';
 ```
 
 大家都知道这是引入模块，是前端的模块化。但同样都是引入模块，它们为什么不一样呢？什么地方用 require 而什么地方有用 import 呢？
@@ -74,3 +74,8 @@ IIFE 即 立即执行函数，其实平常很多人都用过 IIFE，也知道它
 
 
 最开始，我们对于模块区分的概念，可能是从文件的区分开始的，在一个简易的项目中，编程的习惯是通过一个 HTML 文件加上若干个 JavaScript 文件来区分不同的模块，就像这样：
+
+<p align="center">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/FEknowledge/FE_Modular/images/iife.jpg" alt="IIFE">
+</p>
+
