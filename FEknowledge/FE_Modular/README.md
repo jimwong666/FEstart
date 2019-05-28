@@ -200,7 +200,7 @@ CommonJS 在 [Wikipedia](https://en.wikipedia.org/wiki/CommonJS "Wikipedia") 中
 	CommonJS不同的实现
 </p>
 
-但是我们关注的是其中 [Node.js 的实现部分](https://nodejs.org/docs/latest/api/modules.html  'CommonJS的node.js的实现')。
+但现在我们更关注的是其中 [Node.js 的实现部分](https://nodejs.org/docs/latest/api/modules.html  'CommonJS的node.js的实现')。
 
 ### Node.js Modules
 
@@ -289,13 +289,11 @@ exports 是 module.exports 的引用。作为一个引用，如果我们修改�
 
 exports 从指向 module.exports 变为了 other。
 
-**3. 弊端**
+**3. 不足**
 
-CommonJS 这一标准的是为了让 JavaScript 在多个环境下实现模块化。
+CommonJS 这一标准的是为了让 JavaScript 在多个环境下实现模块化。require() 是为node.js设计的。需要依赖了 Node.js 的环境变量：module，exports，require，global。浏览器没法用啊！
 
 > **插一句：**
-> 
-> 有人就会问require是为node.js设计的。需要依赖了 Node.js 的环境变量：module，exports，require，global。浏览器没法用啊！
 > 
 > 但是我们发现，前端代码中是见过require("xxx")的，这是为什么？？？
 >
@@ -304,3 +302,121 @@ CommonJS 这一标准的是为了让 JavaScript 在多个环境下实现模块�
 > 这样CommonJS就通吃啦~！
 
 说完了**服务端的模块化**，接下来我们聊聊，在**浏览器端的模块化**，又经历了些什么呢？
+
+# RequireJS & AMD（Asynchronous Module Definition）
+
+> 试想一下，假如我们现在是在浏览器环境下，使用类似于 Node.js Module 的方式来管理我们的模块（例如 Browserify)，会有什么样的问题呢？
+
+因为我们已经了解了 require() 的实现，所以你会发现这其实是一个复制的过程，将被 require 的内容，赋值到一个 module 对象的属性上，然后返回这个对象的 exports 属性。
+
+这样做会有什么问题呢？在我们还没有完成复制的时候，无法使用被引用的模块中的方法和属性。在服务端可能这不是一个问题(因为服务器的文件都是存放在本地，并且是有缓存的)，但在浏览器环境下，这会导致阻塞，使得我们后面的步骤无法进行下去，还可能会执行一个未定义的方法而导致出错。
+
+相对于服务端的模块化，浏览器环境下，模块化的标准必须满足一个新的需求：**异步的模块管理**
+
+在这样的背景下，[RequireJS](https://requirejs.org/docs/api.html "RequireJS") 出现了，我们简单的了解一下它最核心的部分：
+
+* 引入其他模块：require()
+* 定义新的模块：define()
+
+看一个AMD简单的例子：
+
+```js
+	define('math',['jquery'], function ($) {//引入jQuery模块
+		return {
+			add: function(x,y){
+				return x + y;
+			}
+		};
+	});
+
+	require(['jquery','math'], function ($,math) {
+    console.log(math.add(10,100));//110
+});
+```
+
+### 优势
+
+RequireJS 是基于 [AMD 规范](https://github.com/amdjs/amdjs-api/wiki/AMD "AMD规范") 实现的，那么相对于 Node.js 的 Module 它有什么优势呢?
+
+* 以函数的形式返回模块的值，尤其是构造函数，可以更好的实现API 设计，Node 中通过 module.exports 来支持这个，但使用 "return function (){}" 会更清晰。这意味着，我们不必通过处理 “module” 来实现 “module.exports”，它是一个更清晰的代码表达式。
+* **动态代码加载**（在AMD系统中通过require（['xxx','xxx']，function（xxx,xxx）{}）来完成）是一项基本要求。 Node 不支持这种需求，而是依赖于require（''）的**同步**行为，这对于 Web 环境来说是不方便的。
+* 等等
+
+### 新的问题
+
+通过上面的语法说明，我们会发现一个很明显的问题，在使用 RequireJS 声明一个模块时，必须指定所有的依赖项 ，这些依赖项会被当做形参传到 factory 中，对于依赖的模块会提前执行（在 RequireJS 2.0 也可以选择延迟执行），这被称为：依赖前置。
+
+这会带来什么问题呢？
+
+加大了开发过程中的难度，无论是阅读之前的代码还是编写新的内容，也会出现这样的情况：引入的另一个模块中的内容是条件性执行的。
+
+# SeaJS & CMD（Common Module Definition）
+
+针对 AMD 规范中可以优化的部分，[CMD 规范](https://github.com/cmdjs/specification/blob/master/draft/module.md "CMD规范") 出现了，而 SeaJS 则作为它的具体实现之一，与 AMD 十分相似：
+
+```js
+// AMD 的一个例子，当然这是一种极端的情况
+  define('amd',["header", "main", "footer"], function(header, main, footer) { 
+      if (xxx) {
+        header.setHeader('new-title')
+      }
+      if (xxx) {
+        main.setMain('new-content')
+      }
+      if (xxx) {
+        footer.setFooter('new-footer')
+      }
+  });
+  
+   // 与之对应的 CMD 的写法
+  define(function(require, exports, module) {
+      if (xxx) {
+        var header = require('./header')
+        header.setHeader('new-title')
+      }
+      if (xxx) {
+        var main = require('./main')
+        main.setMain('new-content')
+      }
+      if (xxx) {
+        var footer = require('./footer')
+        footer.setFooter('new-footer')
+      }
+  });
+```
+
+看一个CMD简单的例子：
+
+```js
+  // 定义模块  myModule.js
+  define(function(require, exports, module) {
+    var $ = require('jquery.js')
+    $('div').addClass('active');
+    exports.data = 1;
+  });
+  
+  // 加载模块
+  seajs.use(['myModule.js'], function(my){
+      var star= my.data;
+      console.log(star);  //1
+  });
+```
+
+我们可以很清楚的看到，CMD 规范中，只有当我们用到了某个外部模块的时候，它才会去引入，这回答了我们上一小节中遗留的问题，这也是它与 AMD 规范最大的不同点：CMD推崇依赖就近 + 延迟执行
+
+### 仍然存在的问题
+
+我们能够看到，按照 CMD 规范的依赖就近的规则定义一个模块，会导致模块的加载逻辑偏重，有时你并不知道当前模块具体依赖了哪些模块或者说这样的依赖关系并不直观。
+而且对于 AMD 和 CMD 来说，都只是适用于浏览器端的规范，而 Node.js module 仅仅适用于服务端，都有各自的局限性。
+
+# ECMAScript6 Module
+
+ECMAScript6 标准增加了 JavaScript 语言层面的模块体系定义，作为浏览器和服务器通用的模块解决方案它可以取代我们之前提到的 AMD ，CMD ,CommonJS。适用于前后端。
+
+关于 ES6 的 Module 相信大家每天的工作中都会用到，对于使用上有疑问可以看看 [ES6 Module 入门，阮一峰](http://es6.ruanyifeng.com/#docs/module "ES6 Module 入门")
+
+特点：
+
+* 与 CommonJS 一样，具有紧凑的语法，对循环依赖以及单个 exports 的支持
+* 与 AMD 一样，直接支持异步加载和可配置模块加载
+* 结构可以静态分析（用于静态检查，优化等）

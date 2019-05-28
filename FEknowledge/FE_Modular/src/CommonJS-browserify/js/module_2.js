@@ -1,0 +1,1 @@
+module.exports = 'hi! 我是 module_2.js'
