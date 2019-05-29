@@ -1,4 +1,6 @@
 define(function (require, exports, module) {
-    var color = "red";
-	exports.color = color
+    var size = 66;
+	module.exports = {
+		size: size
+	}
 })

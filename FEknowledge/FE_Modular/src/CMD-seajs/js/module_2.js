@@ -1,8 +1,10 @@
 define(function (require, exports, module) {
-	var color = require("./module_1");
+	var size = require("./module_1");
 
-	var size = "66";
+	var color = "red";
 	
-	exports.size = size;
-	exports.color = color;
+	module.exports = {
+		color: color,
+		size: size.size + 1
+	}
 })
