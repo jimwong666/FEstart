@@ -293,7 +293,7 @@ exports 从指向 module.exports 变为了 other。
 
 **3. 不足** -->
 
-CommonJS 这一标准的是为了让 JavaScript 在多个环境下实现模块化。require() 是为node.js设计的。索要需要依赖 Node.js 的环境变量：module，exports，require，global。浏览器没法用啊！真可惜...
+总之CommonJS 这一标准的是为了让 JavaScript 在多个环境下实现模块化。require() 是为node.js设计的。索要需要依赖 Node.js 的环境变量：module，exports，require，global。浏览器没法用啊！真可惜...
 
 > **插一句：**
 > 
@@ -461,4 +461,16 @@ ECMAScript6 标准增加了 JavaScript 语言层面的模块体系定义，作�
 
 # 总结
 
-这篇文章知识大致的介绍了
+这篇文章知识大致的介绍了 前端模块化的发展 历程，但是缺少详细使用说明等等，大家感兴趣可以自行了解。
+
+* [Node.js Modules](https://nodejs.org/docs/latest/api/modules.html#modules_modules "Node.js Modules")
+* [浏览器加载 CommonJS 模块的原理与实现](http://www.ruanyifeng.com/blog/2015/05/commonjs-in-browser.html "阮一峰-浏览器加载 CommonJS 模块的原理与实现")
+* [browserify](http://browserify.org/ "browserify")
+* [AMD规范](https://github.com/amdjs/amdjs-api/wiki/AMD "AMD规范")
+* [requirejs](https://requirejs.org/docs/api.html "requirejs")
+* [CMD规范](https://github.com/cmdjs/specification/blob/master/draft/module.md "CMD规范")
+* [seajs](https://github.com/seajs/seajs "seajs")
+* [ECMAScript®2015语言规范](https://www.ecma-international.org/ecma-262/6.0/index.html "ECMAScript®2015语言规范")
+* [阮一峰-ES6 Module](http://es6.ruanyifeng.com/#docs/module "阮一峰-ES6 Module")
+* [张鑫旭-万岁，浏览器原生支持ES6 export和import模块啦！](https://www.zhangxinxu.com/wordpress/2018/08/browser-native-es6-export-import-module/ "张鑫旭-万岁，浏览器原生支持ES6 export和import模块啦！")
+
