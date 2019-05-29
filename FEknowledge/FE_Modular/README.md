@@ -3,12 +3,15 @@
 - [IIFE](#iife)
 - [CommonJS](#commonjs)
     - [Node.js Modules](#nodejs-modules)
+    - [Node.js Modules 中 require 的实现](#nodejs-modules-%E4%B8%AD-require-%E7%9A%84%E5%AE%9E%E7%8E%B0)
 - [RequireJS & AMD（Asynchronous Module Definition）](#requirejs--amdasynchronous-module-definition)
     - [优势](#%E4%BC%98%E5%8A%BF)
     - [新的问题](#%E6%96%B0%E7%9A%84%E9%97%AE%E9%A2%98)
 - [SeaJS & CMD（Common Module Definition）](#seajs--cmdcommon-module-definition)
+    - [闪光点](#%E9%97%AA%E5%85%89%E7%82%B9)
     - [仍然存在的问题](#%E4%BB%8D%E7%84%B6%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98)
 - [ECMAScript6 Module](#ecmascript6-module)
+    - [特点：](#%E7%89%B9%E7%82%B9)
 - [总结](#%E6%80%BB%E7%BB%93)
 
 <hr/>  
@@ -24,7 +27,7 @@
   import xxx form 'xxx';
 ```
 
-大家都知道这是引入模块，是前端的模块化。但同样都是引入模块，它们为什么不一样呢？require 和 import 有什么区别呢？
+大家都知道这是引入模块，是前端的模块化。但同样都是引入模块，require 和 import 有啥不一样？
 
 那么今天我们一起来探讨学习一下！
 
@@ -36,7 +39,7 @@
 
 为了实现简单的页面交互逻辑，js代码寥寥数语即可；但是如今CPU、浏览器性能都得到了极大的提升，很多的页面逻辑处理都迁移到了客户端，这就造成了前端代码的逐渐庞大和复杂。
 
-而当js项目的复杂度变大后，开发者就需要组织（复用、依赖等等）这些复杂的代码。遗憾的是当时的js并没有像 Ruby 的require、Python 的import。可是连 CSS 都有@import，可伶的js...
+而当js项目的复杂度变大后，开发者就需要组织（代码块之间相互依赖等等）这些复杂的代码。遗憾的是当时的js并没有像 Ruby 的require、Python 的import这样的东西。可是连 CSS 都有@import啊！！可怜的js...
 
 所以js开发者急需模拟出类似的功能，来隔离、组织复杂的Javascript代码，即我们称为前端模块化。
 
@@ -50,7 +53,7 @@
 * **CMD**
 * **ES6 Module**
 
-现在就让我们来看看模块化是怎么一步步完善的：
+现在就让我们来看看前端模块化是怎么一步步完善的：
 
 <hr/>  
 
@@ -119,10 +122,9 @@ IIFE 即 立即执行函数，其实平常很多人都用过 IIFE，也知道它
     <img src="https://github.com/jimwong666/FEstart/blob/master/FEknowledge/FE_Modular/images/iife_2.jpg" alt="IIFE">
 </p>
 
-试想一下如果这是在一个团队中，这是一件多么可怕的事情啊...
+试想一下如果这是在一个团队中，哦豁，完球了！
 
 现在我们知道，仅仅通过不同的文件，我们无法做到将这些变量分开，因为它们都被绑在了同一个 window 变量上。
-
 那我们怎么去解决呢？
 
 我们都知道，在 JavaScript 中，**函数拥有自己的作用域** 的，也就是说，如果我们可以用一个函数将这些变量包裹起来，那这些变量就不会直接被声明在全局变量 window 上了：
@@ -130,16 +132,16 @@ IIFE 即 立即执行函数，其实平常很多人都用过 IIFE，也知道它
 所以现在 main.js 的内容会被修改成这样：
 
 ```js
-  function mainWarraper() {
+  function main() {
     var main_message = '这是一条内容信息' //main.js
     var main_error = '这是一条错误信息' //main.js
     console.log('error:', main_error)
   }
   
-  mainWarraper();
+  main();
 ```
 
-为了确保我们定义在函数 mainWarraper 的内容会被执行，所以我们必须在这里执行 mainWarraper() 本身，现在我们在 window 里面找不到 main_message 和 main_error 了，因为它们被隐藏在了 mainWarraper 中，但是 mainWarraper 仍旧污染了我们的 window（mainWarraper仍然挂在window对象下）：
+为了确保我们定义在函数 main 的内容会被执行，所以我们必须在这里执行 main() 本身，现在我们在 window 里面找不到 main_message 和 main_error 了，因为它们被隐藏在了 main 中，但是 main 仍旧污染了我们的 window（main仍然挂在window对象下啊！）：
 
 <p align="center">
     <img src="https://github.com/jimwong666/FEstart/blob/master/FEknowledge/FE_Modular/images/iife_3.jpg" alt="IIFE">
@@ -159,8 +161,11 @@ IIFE 即 立即执行函数，其实平常很多人都用过 IIFE，也知道它
 
 因为是一个匿名的函数，执行完后很快就会被释放，这种机制不会污染全局对象。
 
-虽然看起来有些麻烦，但它确实解决了我们将变量分离开来的需求，不是吗？然而在今天，几乎没有人会用这样方式来实现模块化编程。
+优点：
 
+* 就是简单，用就完事了
+
+然而在今天，几乎没有人会用这样方式来实现模块化编程。
 后来又发生了什么呢？
 
 <hr/>  
@@ -179,7 +184,7 @@ CommonJS 在 [Wikipedia](https://en.wikipedia.org/wiki/CommonJS "Wikipedia") 中
 
 > CommonJS is a project with the goal to establish conventions on module ecosystem for JavaScript outside of the web browser. The primary reason of its creation was a major lack of commonly accepted form of JavaScript scripts module units which could be reusable in environments different from that provided by a conventional web browser e.g. web server or native desktop applications which run JavaScript scripts.
 
-> CommonJS 是一个旨在 Web 浏览器之外，为 JavaScript 建立模块生态系统的约定的项目。 其创建的主要原因是缺乏普遍接受的 JavaScript 脚本模块单元形式，而这一形式可以让 JavaScript 在不同于传统网络浏览器提供的环境中重复使用，例如， 运行 JavaScript 脚本的 Web 服务器或本机桌面应用程序。
+> CommonJS 是一个旨在 **Web 浏览器之外**，为 JavaScript 建立模块生态系统的约定的项目。 其创建的主要原因是缺乏普遍接受的 JavaScript 脚本模块单元形式，而这一形式可以让 JavaScript 在不同于传统网络浏览器提供的环境中重复使用，例如， 运行 JavaScript 脚本的 Web 服务器或本机桌面应用程序。
 
 通过上面这些描述，相信你已经知道 CommonJS 是诞生于怎样的背景，但是这里所说的 **CommonJS 是一套通用的规范，与之对应的有非常多不同的实现**：
 
@@ -187,7 +192,7 @@ CommonJS 在 [Wikipedia](https://en.wikipedia.org/wiki/CommonJS "Wikipedia") 中
     <img src="https://github.com/jimwong666/FEstart/blob/master/FEknowledge/FE_Modular/images/commonjs_0.jpg" alt="CommonJS"> 
 </p>
 
-但现在我们更关注的是其中 [Node.js 的实现部分](https://nodejs.org/docs/latest/api/modules.html  'CommonJS的node.js的实现')。
+但这其中**最受关注**的是其中 [Node.js 的实现部分](https://nodejs.org/docs/latest/api/modules.html  'CommonJS的node.js的实现')。下面我们来看看。
 
 <hr/>
 
@@ -198,7 +203,7 @@ CommonJS 在 [Wikipedia](https://en.wikipedia.org/wiki/CommonJS "Wikipedia") 中
 ```js
   (function(exports, require, module, __filename, __dirname) {
 
-  // Module code actually lives in here
+  // 从参数 exports, require, module, __filename, __dirname 可以看出，这玩意儿是服务于nodejs的...
 
   // 实际上，模块内的代码被放在这里
 
@@ -221,13 +226,13 @@ const a = require("./a");
 
 虽然这里有 5 个参数，但是我们把它们先放在一边，然后尝试站在一个模块的角度来思考这样一个问题：作为一个模块，你希望自己具备什么样的能力呢?
 
-1. **暴露部分自己的方法或者变量的能力** ：这是我存在的意义，因为，对于那些想使用我的人而言这是必须的。[ exports:导出对象 , module:模块的引用 ] 
+1. **暴露部分自己的方法或者变量的能力** ：这是我存在的意义，因为，对于那些想使用我的人而言这是必须的。**（exports:导出对象 , module:模块的引用）**
    
-2. **引入其他模块的能力**：有的时候我也需要通过别人的帮助来实现一些功能，只把我的注意力放在我想做的事情（核心逻辑）上。[ require:引用方法 ]
+2. **引入其他模块的能力**：有的时候我也需要通过别人的帮助来实现一些功能，只把我的注意力放在我想做的事情（核心逻辑）上。**（require:引用方法 ）**
    
-3. **告诉别人我的物理位置**：方便别人找到我，并且对我进行更新或者修改。[ __filename:绝对文件名, __dirname:目录路径 ]
+3. **告诉别人我的物理位置**：方便别人找到我，并且对我进行更新或者修改。**（__filename:绝对文件名, __dirname:目录路径）**
 
-<!-- ### Node.js Modules 中 require 的实现
+### Node.js Modules 中 require 的实现
 
 为什么我们要了解 require 方法的实现呢？因为理解这一过程，我们可以更好地理解下面的几个问题：
 
@@ -300,17 +305,18 @@ exports 是 module.exports 的引用。作为一个引用，如果我们修改�
 
 exports 从指向 module.exports 变为了 other。
 
-**3. 不足** -->
+**3. 不足**
 
-总之CommonJS 这一标准的是为了让 JavaScript 在多个环境下实现模块化。require() 是为node.js设计的。索要需要依赖 Node.js 的环境变量：module，exports，require，global。浏览器没法用啊！真可惜...
+* CommonJS 这一标准的是为了让 JavaScript 在多个环境下实现模块化。它服务于node.js，所以需要依赖 Node.js 的环境变量：module，exports，require，global。这样的话浏览器根本没法用啊！真可惜...
+* 就算浏览器能用。但是你看到代码 ``exports = someFunc;  module.exports = someFunc;`` 了吗？他实际上是做了复制，但是在我们还没有完成复制的时候，无法使用被引用的模块中的方法和属性。这种同步的方式也不适合浏览器啊！而且一次只能加载一个，不能并行加载。
 
 > **插一句：**
 > 
-> 但是我们发现，前端代码中是见过require("xxx")的，这是为什么？？？
+> 幸运的时我们发现，前端代码中是见过require("xxx")的，这是为什么？？？
 >
 > 因为后来出现了 Browserify 这样的实现。有兴趣的同学可以读读阮一峰老师的 [这篇文章](http://www.ruanyifeng.com/blog/2015/05/commonjs-in-browser.html "Browserify")。
 >
-> 这样CommonJS就通吃啦~！
+> 这样CommonJS就通吃啦~！（那么问题来了！它是怎么处理同步问题的...？     好吧...Browserify 是需要打包的，又不是直接用的...）
 >
 > **那我们来看一下Browserify的小例子吧！（见/CommonJS-browserify/文件夹下面的代码）**
 
@@ -356,7 +362,7 @@ exports 从指向 module.exports 变为了 other。
 RequireJS 是基于 [AMD 规范](https://github.com/amdjs/amdjs-api/wiki/AMD "AMD规范") 实现的，那么相对于 Node.js 的 Module 它有什么优势呢?
 
 * 以函数的形式返回模块的值，尤其是构造函数，可以更好的实现API 设计，Node 中通过 module.exports 来支持这个，但使用 "return function (){}" 会更清晰。这意味着，我们不必通过处理 “module” 来实现 “module.exports”，它是一个更清晰的代码表达式。
-* **动态代码加载**（在AMD系统中通过require（['xxx','xxx']，function（xxx,xxx）{}）来完成）是一项基本要求。 Node 不支持这种需求，而是依赖于require（）的**同步**行为，这对于 Web 环境来说是不方便的。
+* **动态代码加载**（在AMD系统中通过require（['xx1','xx2']，function（xxx,xxx）{}），并且可以并行加载多个模块（不过由于异步加载，xx1和xx2模块加载顺序不一定哦）。
 * 等等
 
 **那我们来看一下 RequireJS 的小例子吧！（见/AMD-requirejs/文件夹下面的代码）**
@@ -432,7 +438,9 @@ RequireJS 是基于 [AMD 规范](https://github.com/amdjs/amdjs-api/wiki/AMD "AM
   });
 ```
 
-我们可以很清楚的看到，CMD 规范中，只有当我们用到了某个外部模块的时候，它才会去引入，这回答了我们上一小节中遗留的问题，这也是它与 AMD 规范最大的不同点：CMD推崇依赖就近 + 延迟执行
+### 闪光点
+* **依赖就近-延迟执行** 这正是CMD所推崇的。只有当我们用到了某个外部模块的时候，它才会去引入。这解决了我们上一小节中遗留的问题。
+* 当你看到 ``require();  module.exports = {};`` 的时候，是不是有一种似曾相识的感觉，对！没错！与 requirejs 怎么这么像啊！！所以它与 CommonJS 的 Node.js Modules 规范保持了很大的兼容性。
 
 **那我们来看一下 SeaJS 的小例子吧！（见/CMD-seajs/文件夹下面的代码）**
 
@@ -467,9 +475,10 @@ ECMAScript6 标准增加了 JavaScript 语言层面的模块体系定义，作�
 
 **那我们来看一下 ES6 模块化 的小例子吧！（见/ES6/文件夹下面的代码）**
 
-特点：
+### 特点：
 
-* 与 CommonJS 一样，具有紧凑的语法，对循环依赖以及单个 exports 的支持
+* 以后浏览器会大规模支持，再也不要引入什么插件、模块的了！！！
+* 与 CommonJS 一样，具有紧凑的语法
 * 与 AMD 一样，直接支持异步加载和可配置模块加载
 * 结构可以静态分析（用于静态检查，优化等；只读）
 * 可动态加载(import(`xxx/${xxx}/xxx`).then(xxx))
