@@ -197,7 +197,7 @@ CommonJS 在 [Wikipedia](https://en.wikipedia.org/wiki/CommonJS "Wikipedia") 中
 
 <p align="center">
     <img src="https://github.com/jimwong666/FEstart/blob/master/FEknowledge/FE_Modular/images/commonjs_0.jpg" alt="CommonJS">
-	CommonJS不同的实现
+	  <span>CommonJS不同的实现<span/>  
 </p>
 
 但现在我们更关注的是其中 [Node.js 的实现部分](https://nodejs.org/docs/latest/api/modules.html  'CommonJS的node.js的实现')。
