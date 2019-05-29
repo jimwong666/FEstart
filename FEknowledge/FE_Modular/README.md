@@ -196,8 +196,7 @@ CommonJS 在 [Wikipedia](https://en.wikipedia.org/wiki/CommonJS "Wikipedia") 中
 通过上面这些描述，相信你已经知道 CommonJS 是诞生于怎样的背景，但是这里所说的 **CommonJS 是一套通用的规范，与之对应的有非常多不同的实现**：
 
 <p align="center">
-    <img src="https://github.com/jimwong666/FEstart/blob/master/FEknowledge/FE_Modular/images/commonjs_0.jpg" alt="CommonJS">
-	  <span>CommonJS不同的实现<span/>  
+    <img src="https://github.com/jimwong666/FEstart/blob/master/FEknowledge/FE_Modular/images/commonjs_0.jpg" alt="CommonJS"> 
 </p>
 
 但现在我们更关注的是其中 [Node.js 的实现部分](https://nodejs.org/docs/latest/api/modules.html  'CommonJS的node.js的实现')。
