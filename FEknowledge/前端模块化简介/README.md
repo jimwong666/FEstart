@@ -11,7 +11,7 @@
     - [闪光点](#%E9%97%AA%E5%85%89%E7%82%B9)
     - [仍然存在的问题](#%E4%BB%8D%E7%84%B6%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98)
 - [ECMAScript6 Module](#ecmascript6-module)
-    - [特点：](#%E7%89%B9%E7%82%B9)
+    - [特点](#%E7%89%B9%E7%82%B9)
 - [总结](#%E6%80%BB%E7%BB%93)
 
 <hr/>  
@@ -468,20 +468,22 @@ ECMAScript6 标准增加了 JavaScript 语言层面的模块体系定义，作�
   // b.js
   import {show} from "./a" ;
   show();
+
   // 或者
+
   import * as all from "./a" ;
   all.show();
 ```
 
 **那我们来看一下 ES6 模块化 的小例子吧！（见/ES6/文件夹下面的代码）**
 
-### 特点：
+### 特点
 
 * 以后浏览器会大规模支持，再也不要引入什么插件、模块的了！！！
 * 与 CommonJS 一样，具有紧凑的语法
 * 与 AMD 一样，直接支持异步加载和可配置模块加载
 * 结构可以静态分析（用于静态检查，优化等；只读）
-* 可动态加载(import(`xxx/${xxx}/xxx`).then(xxx))
+* 可动态加载(import(\`xxx/${xxx}/xxx\`).then(xxx))
 * 等等
 
 <hr/>  
