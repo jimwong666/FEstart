@@ -237,7 +237,7 @@ const a = require("./a");
    
 3. **告诉别人我的物理位置**：方便别人找到我，并且对我进行更新或者修改。[ __filename:绝对文件名, __dirname:目录路径 ]
 
-### Node.js Modules 中 require 的实现
+<!-- ### Node.js Modules 中 require 的实现
 
 为什么我们要了解 require 方法的实现呢？因为理解这一过程，我们可以更好地理解下面的几个问题：
 
@@ -310,9 +310,9 @@ exports 是 module.exports 的引用。作为一个引用，如果我们修改�
 
 exports 从指向 module.exports 变为了 other。
 
-**3. 不足**
+**3. 不足** -->
 
-CommonJS 这一标准的是为了让 JavaScript 在多个环境下实现模块化。require() 是为node.js设计的。需要依赖了 Node.js 的环境变量：module，exports，require，global。浏览器没法用啊！
+CommonJS 这一标准的是为了让 JavaScript 在多个环境下实现模块化。require() 是为node.js设计的。索要需要依赖 Node.js 的环境变量：module，exports，require，global。浏览器没法用啊！真可惜...
 
 > **插一句：**
 > 
@@ -321,8 +321,8 @@ CommonJS 这一标准的是为了让 JavaScript 在多个环境下实现模块�
 > 因为后来出现了 Browserify 这样的实现。有兴趣的同学可以读读阮一峰老师的 [这篇文章](http://www.ruanyifeng.com/blog/2015/05/commonjs-in-browser.html "Browserify")。
 >
 > 这样CommonJS就通吃啦~！
-
-**那我们来看一下Browserify的小例子吧！（见/CommonJS-browserify/文件夹下面的代码）**
+>
+> **那我们来看一下Browserify的小例子吧！（见/CommonJS-browserify/文件夹下面的代码）**
 
 说完了**服务端的模块化**，接下来我们聊聊，在**浏览器端的模块化**，又经历了些什么呢？
 
@@ -475,3 +475,9 @@ ECMAScript6 标准增加了 JavaScript 语言层面的模块体系定义，作�
 * 与 CommonJS 一样，具有紧凑的语法，对循环依赖以及单个 exports 的支持
 * 与 AMD 一样，直接支持异步加载和可配置模块加载
 * 结构可以静态分析（用于静态检查，优化等；只读）
+* 可动态加载(import(`xxx/${xxx}/xxx`).then(xxx))
+* 等等
+
+# 总结
+
+这篇文章知识大致的介绍了
