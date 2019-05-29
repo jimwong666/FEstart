@@ -11,6 +11,7 @@
 - [ECMAScript6 Module](#ecmascript6-module)
 - [总结](#%E6%80%BB%E7%BB%93)
 
+<hr/>  
 
 # 前言
 
@@ -26,6 +27,8 @@
 大家都知道这是引入模块，是前端的模块化。但同样都是引入模块，它们为什么不一样呢？require 和 import 有什么区别呢？
 
 那么今天我们一起来探讨学习一下！
+
+<hr/>  
 
 # 前端模块化
 
@@ -48,6 +51,8 @@
 * **ES6 Module**
 
 现在就让我们来看看模块化是怎么一步步完善的：
+
+<hr/>  
 
 # IIFE
 
@@ -158,6 +163,8 @@ IIFE 即 立即执行函数，其实平常很多人都用过 IIFE，也知道它
 
 后来又发生了什么呢？
 
+<hr/>  
+
 # CommonJS
 
 在 2009 年的一个冬天， 一名来自 Mozilla 团队的的工程师 Kevin Dangoor 开始捣鼓了一个叫 ServerJS 的项目，他是这样描述的：
@@ -181,6 +188,8 @@ CommonJS 在 [Wikipedia](https://en.wikipedia.org/wiki/CommonJS "Wikipedia") 中
 </p>
 
 但现在我们更关注的是其中 [Node.js 的实现部分](https://nodejs.org/docs/latest/api/modules.html  'CommonJS的node.js的实现')。
+
+<hr/>
 
 ### Node.js Modules
 
@@ -206,7 +215,7 @@ module.exports = "xxx";
 const a = require("./a");
 ```
 
-是的，在模块内的代码被真正执行以前，实际上，这些代码都被包含在了一个这样的函数中。
+在模块内的代码被真正执行以前，实际上，这些代码都被包含在了一个这样的函数中。
 
 如果你真正阅读了上一节中关于 IIFE 的内容，你会发现，其实核心思想是一样的，Node.js 对于模块私有化的实现也还是通过了一个函数。但是这有哪些不同呢？
 
@@ -307,6 +316,8 @@ exports 从指向 module.exports 变为了 other。
 
 说完了**服务端的模块化**，接下来我们聊聊，在**浏览器端的模块化**，又经历了些什么呢？
 
+<hr/>  
+
 # RequireJS & AMD（Asynchronous Module Definition）
 
 > 试想一下，假如我们现在是在浏览器环境下，使用类似于 Node.js Module 的方式来管理我们的模块（例如 Browserify)，会有什么样的问题呢？
@@ -357,6 +368,8 @@ RequireJS 是基于 [AMD 规范](https://github.com/amdjs/amdjs-api/wiki/AMD "AM
 这会带来什么问题呢？
 
 加大了开发过程中的难度，无论是阅读之前的代码还是编写新的内容，也会出现这样的情况：引入的另一个模块中的内容是条件性执行的（就是事先引入的模块不一定执行，这不是浪费嘛!）。
+
+<hr/>  
 
 # SeaJS & CMD（Common Module Definition）
 
@@ -428,6 +441,8 @@ RequireJS 是基于 [AMD 规范](https://github.com/amdjs/amdjs-api/wiki/AMD "AM
 我们能够看到，按照 CMD 规范的依赖就近的规则定义一个模块，会导致模块的**加载逻辑偏重**，有时你并不知道当前模块具体依赖了哪些模块或者说这样的**依赖关系并不直观**。
 而且对于 AMD 和 CMD 来说，都只是适用于**浏览器端**的规范，而 Node.js module 仅仅适用于**服务端**，都有各自的局限性。
 
+<hr/>  
+
 # ECMAScript6 Module
 
 ECMAScript6 标准增加了 JavaScript 语言层面的模块体系定义，作为浏览器和服务器通用的模块解决方案它可以取代我们之前提到的 AMD ，CMD ,CommonJS。适用于前后端。
@@ -450,6 +465,7 @@ ECMAScript6 标准增加了 JavaScript 语言层面的模块体系定义，作�
   all.show();
 ```
 
+**那我们来看一下 ES6 模块化 的小例子吧！（见/ES6/文件夹下面的代码）**
 
 特点：
 
@@ -459,11 +475,13 @@ ECMAScript6 标准增加了 JavaScript 语言层面的模块体系定义，作�
 * 可动态加载(import(`xxx/${xxx}/xxx`).then(xxx))
 * 等等
 
+<hr/>  
+
 # 总结
 
 这篇文章知识大致的介绍了 前端模块化的发展 历程，但是缺少详细使用说明等等，大家感兴趣可以自行了解。
 
-* [Node.js Modules](https://nodejs.org/docs/latest/api/modules.html#modules_modules "Node.js Modules")
+* [Node.js Modules 官方文档](https://nodejs.org/docs/latest/api/modules.html#modules_modules "Node.js Modules 官方文档")
 * [浏览器加载 CommonJS 模块的原理与实现](http://www.ruanyifeng.com/blog/2015/05/commonjs-in-browser.html "阮一峰-浏览器加载 CommonJS 模块的原理与实现")
 * [browserify](http://browserify.org/ "browserify")
 * [AMD规范](https://github.com/amdjs/amdjs-api/wiki/AMD "AMD规范")
