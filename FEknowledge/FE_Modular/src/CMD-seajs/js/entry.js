@@ -1,10 +1,4 @@
-// seajs 的简单配置
-seajs.config({
-	base: "../js/",
-	alias: {
-	  
-	}
-  })
+// seajs 配置
 
 seajs.use(['../js/module_2'],function(data) { // 变态的地方~~
 	var p = document.getElementsByTagName('p')[0];
