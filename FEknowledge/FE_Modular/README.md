@@ -52,7 +52,7 @@
 
 为了实现简单的页面交互逻辑，js代码寥寥数语即可；但是如今CPU、浏览器性能都得到了极大的提升，很多的页面逻辑处理都迁移到了客户端，这就造成了前端代码的逐渐庞大和复杂。
 
-而当js项目的复杂度变大后，开发者就需要组织（复用、依赖等等）这些复杂的代码。遗憾的是当时的js并没有像 Ruby 的require、Python 的import。当时就连 CSS 都有@import...
+而当js项目的复杂度变大后，开发者就需要组织（复用、依赖等等）这些复杂的代码。遗憾的是当时的js并没有像 Ruby 的require、Python 的import。可是连 CSS 都有@import，可伶的js...
 
 所以js开发者急需模拟出类似的功能，来隔离、组织复杂的Javascript代码，即我们称为前端模块化。
 
@@ -70,7 +70,7 @@
 
 # IIFE
 
-IIFE 即 立即执行函数，其实平常很多人都用过 IIFE，也知道它是怎么回事，但这里我们仍旧来认识解释一下它：
+IIFE 即 立即执行函数，其实平常很多人都用过 IIFE，也知道它是怎么回事，但这里我们仍旧来认识一下它：
 
 
 最开始，我们对于模块区分的概念，可能是从文件的区分开始的，在一个简易的项目中，编程的习惯是通过一个 HTML 文件加上若干个 JavaScript 文件来区分不同的模块，就像这样：
@@ -203,15 +203,26 @@ CommonJS 在 [Wikipedia](https://en.wikipedia.org/wiki/CommonJS "Wikipedia") 中
 
 ### Node.js Modules
 
-> 这里不会解释 Node.js Modules 的 API 基本用法，因为这些都可以通过阅读 [官方文档](https://nodejs.org/docs/latest/api/modules.html#modules_modules "Node.js Modules") 来了解，我们会讨论为什么会这样设计，以及大家比较难理解的点来展开。
-
-在 Node.js 模块系统中，每个文件都被视为一个单独的模块，在一个Node.js 的模块中，本地的变量是私有的，而这个私有的实现，是通过把 Node.js 的模块包装在一个函数中，也就是 The module wrapper，我们来看看，在 [官方示例中](https://nodejs.org/docs/latest/api/modules.html#modules_the_module_wrapper "官方示例") 它长什么样：
+在 [Node.js 模块系统](https://nodejs.org/docs/latest/api/modules.html#modules_modules "Node.js 模块系统")中，每个文件都被视为一个单独的模块，在一个Node.js 的模块中，本地的变量是私有的，而这个私有的实现，是通过把 Node.js 的模块包装在一个函数中，也就是 The module wrapper，我们来看看，在 [官方示例中](https://nodejs.org/docs/latest/api/modules.html#modules_the_module_wrapper "官方示例") 它长什么样：
 
 ```js
   (function(exports, require, module, __filename, __dirname) {
+
   // Module code actually lives in here
+
   // 实际上，模块内的代码被放在这里
+
   });
+```
+
+用的时候：
+
+```js
+// a.js
+module.exports = "xxx";
+
+// b.js
+const a = require("./a");
 ```
 
 是的，在模块内的代码被真正执行以前，实际上，这些代码都被包含在了一个这样的函数中。
@@ -221,7 +232,9 @@ CommonJS 在 [Wikipedia](https://en.wikipedia.org/wiki/CommonJS "Wikipedia") 中
 虽然这里有 5 个参数，但是我们把它们先放在一边，然后尝试站在一个模块的角度来思考这样一个问题：作为一个模块，你希望自己具备什么样的能力呢?
 
 1. **暴露部分自己的方法或者变量的能力** ：这是我存在的意义，因为，对于那些想使用我的人而言这是必须的。[ exports:导出对象 , module:模块的引用 ] 
+   
 2. **引入其他模块的能力**：有的时候我也需要通过别人的帮助来实现一些功能，只把我的注意力放在我想做的事情（核心逻辑）上。[ require:引用方法 ]
+   
 3. **告诉别人我的物理位置**：方便别人找到我，并且对我进行更新或者修改。[ __filename:绝对文件名, __dirname:目录路径 ]
 
 ### Node.js Modules 中 require 的实现
@@ -238,18 +251,20 @@ CommonJS 在 [Wikipedia](https://en.wikipedia.org/wiki/CommonJS "Wikipedia") 中
   function require(/* ... */) {
     const module = { exports: {} };
     ((module, exports) => {
+
       // Module code here. In this example, define a function.
       // 模块代码在这里，在这个例子中，我们定义了一个函数
+
       function someFunc() {}
       exports = someFunc;
-      // At this point, exports is no longer a shortcut to module.exports, and
-      // this module will still export an empty default object.
+
       // 当代码运行到这里时，exports 不再是 module.exports 的引用，并且当前的
       // module 仍旧会导出一个空对象(就像上面声明的默认对象那样)
+
       module.exports = someFunc;
-      // At this point, the module will now export someFunc, instead of the
-      // default object.
+
       // 当代码运行到这时，当前 module 会导出 someFunc 而不是默认的对象
+
     })(module, module.exports);
     return module.exports;
   }
@@ -263,27 +278,34 @@ require 相当于把被引用的 module 拷贝了一份到当前 module 中
 
 exports 是 module.exports 的引用。作为一个引用，如果我们修改它的值，实际上修改的是它对应的引用对象的值。
 
-就如:
+就如这样:
 
 ```js
-  exports.a = 1
-  // 等同于
-  module.exports = {
-      a: 1
+  var a = {
+    key: 1
   }
+
+  ;(function(b){
+    b.key = 2
+  })(a)
+
+  a //{ key: 2 }
 ```
 
-但是如果我们修改了 exports 引用的地址，对于它原来所引用的内容来说，没有任何影响，反而我们断开了这个引用于原来的地址之间的联系：
+与这样：
 
 ```js
-  exports = {
-      a: 1
+  var a = {
+    key: 1
   }
-  
-  // 相当于
-  
-  let other = {a: 1} //为了更加直观，我们这样声明了一个变量
-  exports = other
+
+  ;(function(b){
+    b = {
+      value: 3
+    }
+  })(a)
+
+  a //{ key: 1 }
 ```
 
 exports 从指向 module.exports 变为了 other。
@@ -300,6 +322,8 @@ CommonJS 这一标准的是为了让 JavaScript 在多个环境下实现模块�
 >
 > 这样CommonJS就通吃啦~！
 
+**那我们来看一下Browserify的小例子吧！（见/CommonJS-browserify/文件夹下面的代码）**
+
 说完了**服务端的模块化**，接下来我们聊聊，在**浏览器端的模块化**，又经历了些什么呢？
 
 # RequireJS & AMD（Asynchronous Module Definition）
@@ -308,7 +332,7 @@ CommonJS 这一标准的是为了让 JavaScript 在多个环境下实现模块�
 
 因为我们已经了解了 require() 的实现，所以你会发现这其实是一个复制的过程，将被 require 的内容，赋值到一个 module 对象的属性上，然后返回这个对象的 exports 属性。
 
-这样做会有什么问题呢？在我们还没有完成复制的时候，无法使用被引用的模块中的方法和属性。在服务端可能这不是一个问题(因为服务器的文件都是存放在本地，并且是有缓存的)，但在浏览器环境下，这会导致阻塞，使得我们后面的步骤无法进行下去，还可能会执行一个未定义的方法而导致出错。
+这样做会有什么问题呢？在我们还没有完成复制的时候，无法使用被引用的模块中的方法和属性。在服务端可能这不是一个问题(因为服务器的文件都是存放在本地，并且是有缓存的)，但在浏览器环境下（网络请求文件有延迟），这会导致阻塞，使得我们后面的步骤无法进行下去，还可能会执行一个未定义的方法而导致出错。
 
 相对于服务端的模块化，浏览器环境下，模块化的标准必须满足一个新的需求：**异步的模块管理**
 
@@ -320,7 +344,9 @@ CommonJS 这一标准的是为了让 JavaScript 在多个环境下实现模块�
 看一个AMD简单的例子：
 
 ```js
-	define('math',['jquery'], function ($) {//引入jQuery模块
+	define('math',['jquery'], function ($) {
+    // 其他代码
+
 		return {
 			add: function(x,y){
 				return x + y;
@@ -330,7 +356,7 @@ CommonJS 这一标准的是为了让 JavaScript 在多个环境下实现模块�
 
 	require(['jquery','math'], function ($,math) {
     console.log(math.add(10,100));//110
-});
+  });
 ```
 
 ### 优势
@@ -338,8 +364,10 @@ CommonJS 这一标准的是为了让 JavaScript 在多个环境下实现模块�
 RequireJS 是基于 [AMD 规范](https://github.com/amdjs/amdjs-api/wiki/AMD "AMD规范") 实现的，那么相对于 Node.js 的 Module 它有什么优势呢?
 
 * 以函数的形式返回模块的值，尤其是构造函数，可以更好的实现API 设计，Node 中通过 module.exports 来支持这个，但使用 "return function (){}" 会更清晰。这意味着，我们不必通过处理 “module” 来实现 “module.exports”，它是一个更清晰的代码表达式。
-* **动态代码加载**（在AMD系统中通过require（['xxx','xxx']，function（xxx,xxx）{}）来完成）是一项基本要求。 Node 不支持这种需求，而是依赖于require（''）的**同步**行为，这对于 Web 环境来说是不方便的。
+* **动态代码加载**（在AMD系统中通过require（['xxx','xxx']，function（xxx,xxx）{}）来完成）是一项基本要求。 Node 不支持这种需求，而是依赖于require（）的**同步**行为，这对于 Web 环境来说是不方便的。
 * 等等
+
+**那我们来看一下 RequireJS 的小例子吧！（见/AMD-requirejs/文件夹下面的代码）**
 
 ### 新的问题
 
@@ -347,7 +375,7 @@ RequireJS 是基于 [AMD 规范](https://github.com/amdjs/amdjs-api/wiki/AMD "AM
 
 这会带来什么问题呢？
 
-加大了开发过程中的难度，无论是阅读之前的代码还是编写新的内容，也会出现这样的情况：引入的另一个模块中的内容是条件性执行的。
+加大了开发过程中的难度，无论是阅读之前的代码还是编写新的内容，也会出现这样的情况：引入的另一个模块中的内容是条件性执行的（就是事先引入的模块不一定执行，这不是浪费嘛!）。
 
 # SeaJS & CMD（Common Module Definition）
 
@@ -391,7 +419,16 @@ RequireJS 是基于 [AMD 规范](https://github.com/amdjs/amdjs-api/wiki/AMD "AM
   define(function(require, exports, module) {
     var $ = require('jquery.js')
     $('div').addClass('active');
-    exports.data = 1;
+    module.exports = {
+      data: 1
+    };
+    
+    // exports = { // seajs可以有多种方式导出
+    //   data: 1
+    // };
+    // return {
+    //   data: 1
+    // };
   });
   
   // 加载模块
@@ -403,10 +440,12 @@ RequireJS 是基于 [AMD 规范](https://github.com/amdjs/amdjs-api/wiki/AMD "AM
 
 我们可以很清楚的看到，CMD 规范中，只有当我们用到了某个外部模块的时候，它才会去引入，这回答了我们上一小节中遗留的问题，这也是它与 AMD 规范最大的不同点：CMD推崇依赖就近 + 延迟执行
 
+**那我们来看一下 SeaJS 的小例子吧！（见/CMD-seajs/文件夹下面的代码）**
+
 ### 仍然存在的问题
 
-我们能够看到，按照 CMD 规范的依赖就近的规则定义一个模块，会导致模块的加载逻辑偏重，有时你并不知道当前模块具体依赖了哪些模块或者说这样的依赖关系并不直观。
-而且对于 AMD 和 CMD 来说，都只是适用于浏览器端的规范，而 Node.js module 仅仅适用于服务端，都有各自的局限性。
+我们能够看到，按照 CMD 规范的依赖就近的规则定义一个模块，会导致模块的**加载逻辑偏重**，有时你并不知道当前模块具体依赖了哪些模块或者说这样的**依赖关系并不直观**。
+而且对于 AMD 和 CMD 来说，都只是适用于**浏览器端**的规范，而 Node.js module 仅仅适用于**服务端**，都有各自的局限性。
 
 # ECMAScript6 Module
 
@@ -414,8 +453,25 @@ ECMAScript6 标准增加了 JavaScript 语言层面的模块体系定义，作�
 
 关于 ES6 的 Module 相信大家每天的工作中都会用到，对于使用上有疑问可以看看 [ES6 Module 入门，阮一峰](http://es6.ruanyifeng.com/#docs/module "ES6 Module 入门")
 
+示例：
+
+```js
+  // a.js
+  export function show() {
+    // balabala
+  }
+
+  // b.js
+  import {show} from "./a" ;
+  show();
+  // 或者
+  import * as all from "./a" ;
+  all.show();
+```
+
+
 特点：
 
 * 与 CommonJS 一样，具有紧凑的语法，对循环依赖以及单个 exports 的支持
 * 与 AMD 一样，直接支持异步加载和可配置模块加载
-* 结构可以静态分析（用于静态检查，优化等）
+* 结构可以静态分析（用于静态检查，优化等；只读）
