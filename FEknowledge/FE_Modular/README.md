@@ -344,17 +344,17 @@ CommonJS 这一标准的是为了让 JavaScript 在多个环境下实现模块�
 看一个AMD简单的例子：
 
 ```js
-	define('math',['jquery'], function ($) {
+  define('math',['jquery'], function ($) {
     // 其他代码
-
-		return {
-			add: function(x,y){
-				return x + y;
-			}
-		};
-	});
-
-	require(['jquery','math'], function ($,math) {
+  
+    return {
+      add: function(x,y){
+        return x + y;
+      }
+    };
+  });
+  
+  require(['jquery','math'], function ($,math) {
     console.log(math.add(10,100));//110
   });
 ```
