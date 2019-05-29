@@ -1,6 +1,7 @@
 - [前言](#%E5%89%8D%E8%A8%80)
 - [前端模块化](#%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96)
 - [IIFE](#iife)
+    - [优点](#%E4%BC%98%E7%82%B9)
 - [CommonJS](#commonjs)
     - [Node.js Modules](#nodejs-modules)
     - [Node.js Modules 中 require 的实现](#nodejs-modules-%E4%B8%AD-require-%E7%9A%84%E5%AE%9E%E7%8E%B0)
@@ -161,7 +162,7 @@ IIFE 即 立即执行函数，其实平常很多人都用过 IIFE，也知道它
 
 因为是一个匿名的函数，执行完后很快就会被释放，这种机制不会污染全局对象。
 
-优点：
+### 优点
 
 * 就是简单，用就完事了
 
