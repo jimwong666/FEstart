@@ -321,13 +321,13 @@ require 相当于把被引用的 module 拷贝了一份到当前 module 中
   obj // obj是多少？
 ```
 
-exports 是 module.exports 的一个拷贝副本。作为一个拷贝副本，如果我们修改它的值，实际上修改的是它对应的引用对象的值。
+exports 其实是 module.exports 的一个拷贝副本。作为一个拷贝副本，如果我们修改它内部的值，它当然只会改变对象内部。但当我们改变了他的指针，实际上就修改的是它对应的值了。
 所以 exports 从指向 module.exports 变为了 other，此时``exports`` 与 ``module.exports`` 其实已经没啥关系了，都是复制的``someFunc``。
 
 **3. 这样的方式有什么弊端？**
 
 * CommonJS 这一标准的是为了让 JavaScript 在多个环境下实现模块化。它服务于node.js，所以需要依赖 Node.js 的环境变量：module，exports，require，global。这样的话浏览器根本没法用啊！真可惜...
-* 就算浏览器能用。但是你看到代码 ``exports = someFunc;  module.exports = someFunc;`` 了吗？我们上面也说了这是拷贝的过程，但是在我们还没有完成复制的时候，就无法使用被引用的模块中的方法和属性。这种同步的方式也不适合浏览器啊(浏览器ajax请求时)！而且一次只能加载一个，不能并行加载，我要加载多个还要写多行require("xxx")。
+* 就算浏览器能用。但是你看到代码 ``exports = someFunc;  module.exports = someFunc;`` 了吗？我们上面也说了``exports`` 与 ``module.exports`` 都是复制的``someFunc``，所以在我们还没有完成复制的时候，就无法使用被引用的模块中的方法和属性。这种同步的方式也不适合浏览器啊(浏览器ajax请求时)！而且一次只能加载一个，不能并行加载，我要加载多个还要写多行require("xxx")。
 
 > **插一句：**
 > 
