@@ -354,7 +354,7 @@ exports 其实是 module.exports 的一个拷贝副本。作为一个拷贝副�
 
 相对于服务端的模块化，浏览器环境下，模块化的标准必须满足一个新的需求：**异步的模块管理**
 
-在这样的背景下，[RequireJS](https://requirejs.org/docs/api.html "RequireJS") 出现了，我们简单的了解一下它最核心的部分：
+在这样的背景下，[RequireJS](https://requirejs.org/docs/api.html "RequireJS") 出现了，RequireJS 是基于 [AMD 规范](https://github.com/amdjs/amdjs-api/wiki/AMD "AMD规范") 实现的，我们简单的了解一下它最核心的部分：
 
 * 引入其他模块：require()
 * 定义新的模块：define()
@@ -379,7 +379,7 @@ exports 其实是 module.exports 的一个拷贝副本。作为一个拷贝副�
 
 ### 优势
 
-RequireJS 是基于 [AMD 规范](https://github.com/amdjs/amdjs-api/wiki/AMD "AMD规范") 实现的，那么相对于 Node.js 的 Module 它有什么优势呢?
+那么相对于 Node.js 的 Module 它有什么优势呢?
 
 * 以函数的形式返回模块的值，尤其是构造函数，可以更好的实现API 设计，Node 中通过 module.exports 来支持这个，但使用 "return function (){}" 会更清晰。这意味着，我们不必通过处理 “module” 来实现 “module.exports”，它是一个更清晰的代码表达式。
 * **异步代码加载**（在AMD系统中通过require（['xx1','xx2']，function（xx1,xx2）{//回调函数这里写要干嘛干嘛}），并且一次可以并行加载多个模块。
