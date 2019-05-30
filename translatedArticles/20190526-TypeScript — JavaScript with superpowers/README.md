@@ -6,11 +6,11 @@
 
 # <img src="https://github.com/jimwong666/FEstart/blob/master/translatedArticles/images/publicFile/icon_teranlation.png" alt="译文">TypeScript — 超级大国般的JavaScript
 
-Javascript很酷，但你知道什么更酷吗？
+> Javascript很酷，但你知道什么更酷吗？
+> 
+> —— TypeScript!
 
-—— TypeScript!
-
-> 你能告诉我下面这段代码出了什么问题吗？
+你能告诉我下面这段代码出了什么问题吗？
 
 <p align="center">
 <img src="https://www.strilliant.com/images/1*IgMNDPa6Oq8De5f7Pvnmnw.png" alt="TypeScript">
@@ -24,7 +24,7 @@ ES6
 
 TypeScript代码 - 看到红色的下划线了吗？TypeScript给了我们暗示了一些可怕的错误。
 
-你可能会想到这个（干的不错！） - toUpperCase()是一种String方法。而我们传递一个整数作为参数，因此我们不能调用toUpperCase()。
+你可能会想到这个（可以！很强！）: toUpperCase()是一种String方法。而我们传递一个整数作为参数，因此我们不能调用toUpperCase()。
 
 让我们来声明只能将类型为String的参数传递给nameToUpperCase()的方式来解决它。
 

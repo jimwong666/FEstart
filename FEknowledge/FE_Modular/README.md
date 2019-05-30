@@ -317,7 +317,8 @@ exports 从指向 module.exports 变为了 other。
 >
 > 因为后来出现了 Browserify 这样的实现。有兴趣的同学可以读读阮一峰老师的 [这篇文章](http://www.ruanyifeng.com/blog/2015/05/commonjs-in-browser.html "Browserify")。
 >
-> 这样CommonJS就通吃啦~！（那么问题来了！它是怎么处理同步问题的...？     好吧...Browserify 是需要打包的，又不是直接用的...）
+> 这样CommonJS就通吃啦~！（那么问题来了！它是怎么处理我上面提到的同步问题的呢...？）    
+> （好吧...Browserify 是需要打包的，又不是直接用的...）
 >
 > **那我们来看一下Browserify的小例子吧！（见/CommonJS-browserify/文件夹下面的代码）**
 
