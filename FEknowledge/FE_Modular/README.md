@@ -382,18 +382,18 @@ exports 其实是 module.exports 的一个拷贝副本。作为一个拷贝副�
 RequireJS 是基于 [AMD 规范](https://github.com/amdjs/amdjs-api/wiki/AMD "AMD规范") 实现的，那么相对于 Node.js 的 Module 它有什么优势呢?
 
 * 以函数的形式返回模块的值，尤其是构造函数，可以更好的实现API 设计，Node 中通过 module.exports 来支持这个，但使用 "return function (){}" 会更清晰。这意味着，我们不必通过处理 “module” 来实现 “module.exports”，它是一个更清晰的代码表达式。
-* **动态代码加载**（在AMD系统中通过require（['xx1','xx2']，function（xxx,xxx）{}），并且可以并行加载多个模块（不过由于异步加载，xx1和xx2模块加载顺序不一定哦）。
+* **异步代码加载**（在AMD系统中通过require（['xx1','xx2']，function（xx1,xx2）{//回调函数这里写要干嘛干嘛}），并且一次可以并行加载多个模块。
 * 等等
 
 **那我们来看一下 RequireJS 的小例子吧！（见/AMD-requirejs/文件夹下面的代码）**
 
 ### 新的问题
 
-通过上面的语法说明，我们会发现一个很明显的问题，在使用 RequireJS 声明一个模块时，必须指定所有的依赖项 ，这些依赖项会被当做形参传到 factory 中，对于依赖的模块会提前执行（在 RequireJS 2.0 也可以选择延迟执行），这被称为：依赖前置。
+通过上面的语法说明，我们会发现一个很明显的问题，在使用 RequireJS 声明一个模块时，必须指定所有的依赖项 ，这些依赖项会被当做形参传到 factory 中，对于依赖的模块会提前执行（在 RequireJS 2.0 也可以选择延迟执行），这被称为：**依赖前置**。
 
 这会带来什么问题呢？
 
-加大了开发过程中的难度，无论是阅读之前的代码还是编写新的内容，也会出现这样的情况：引入的另一个模块中的内容是条件性执行的（就是事先引入的模块不一定执行，这不是浪费嘛!）。
+会出现这样的情况：引入的另一个模块中的内容是条件性执行的（就是事先引入的模块不一定执行，那copy的模块不是浪费嘛!）。
 
 <hr/>  
 
@@ -467,15 +467,19 @@ RequireJS 是基于 [AMD 规范](https://github.com/amdjs/amdjs-api/wiki/AMD "AM
 ### 仍然存在的问题
 
 我们能够看到，按照 CMD 规范的依赖就近的规则定义一个模块，会导致模块的**加载逻辑偏重**，有时你并不知道当前模块具体依赖了哪些模块或者说这样的**依赖关系并不直观**。
-而且对于 AMD 和 CMD 来说，都只是适用于**浏览器端**的规范，而 Node.js module 仅仅适用于**服务端**，都有各自的局限性。
+
+> 综上：对于 AMD 和 CMD 来说，都只是适用于**浏览器端**的规范，而 Node.js module 仅仅适用于**服务端**，都有各自的局限性。
+> 那有没有更优雅的方案呢？
 
 <hr/>  
 
 # ECMAScript6 Module
 
-ECMAScript6 标准增加了 JavaScript 语言层面的模块体系定义，作为浏览器和服务器通用的模块解决方案它可以取代我们之前提到的 AMD ，CMD ,CommonJS。适用于前后端。
+> 突然，时间到达了2015年6月17日，ECMAScript 6发布正式版本，即ECMAScript 2015。
 
-关于 ES6 的 Module 相信大家每天的工作中都会用到，对于使用上有疑问可以看看 [ES6 Module 入门，阮一峰](http://es6.ruanyifeng.com/#docs/module "ES6 Module 入门")
+ECMAScript6 标准增加了 JavaScript 语言层面的模块体系定义，作为浏览器和服务器通用的模块解决方案它可以取代我们之前提到的 AMD ，CMD ,CommonJS。适用于前后端。至此，终于有了“官方”的模块化了T_T!
+
+关于 ES6 的 Module 相信大家每天的工作中都会用到（vue.js、react等等前端框架都有用到），对于使用上有疑问可以看看 [ES6 Module 入门，阮一峰](http://es6.ruanyifeng.com/#docs/module "ES6 Module 入门")
 
 示例：
 
@@ -499,11 +503,11 @@ ECMAScript6 标准增加了 JavaScript 语言层面的模块体系定义，作�
 
 ### 特点
 
-* 以后浏览器会大规模支持，再也不要引入什么插件、模块的了！！！
-* 与 CommonJS 一样，具有紧凑的语法
-* 与 AMD 一样，直接支持异步加载和可配置模块加载
-* 结构可以静态分析（用于静态检查，优化等；只读）
-* 可动态加载(import(\`xxx/${xxx}/xxx\`).then(xxx))
+* **以后**浏览器会大规模支持，再也不要引入什么插件的了！
+* 与 CommonJS 一样，具有紧凑的语法``export {xx,xxx}; import {xx,xxx} from "xxx";``
+* 与 AMD 一样，直接支持并行加载、异步加载等等
+* 结构可以静态分析（用于静态检查，优化等）
+* 可动态加载``import(`xxx/${xxx}/xxx`).then(xxx);``
 * 等等
 
 <hr/>  
