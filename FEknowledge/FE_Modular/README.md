@@ -460,7 +460,7 @@ exports 其实是 module.exports 的一个拷贝副本。作为一个拷贝副�
 
 ### 闪光点
 * **依赖就近-延迟执行** 这正是CMD所推崇的。只有当我们用到了某个外部模块的时候，它才会去引入。这解决了我们上一小节中遗留的问题。
-* 当你看到 ``require();  module.exports = {};`` 的时候，是不是有一种似曾相识的感觉，对！没错！与 requirejs 怎么这么像啊！！所以它与 CommonJS 的 Node.js Modules 规范保持了很大的兼容性。
+* 当你看到 ``require();  module.exports = {};`` 的时候，是不是有一种似曾相识的感觉，对！没错！与 commonjs 怎么这么像啊！！所以它与 CommonJS 的 Node.js Modules 规范保持了很大的兼容性。
 
 **那我们来看一下 SeaJS 的小例子吧！（见/CMD-seajs/文件夹下面的代码）**
 
