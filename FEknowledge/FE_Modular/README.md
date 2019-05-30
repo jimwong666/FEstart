@@ -510,7 +510,7 @@ ECMAScript6 标准增加了 JavaScript 语言层面的模块体系定义，作�
 
 # 总结
 
-这篇文章知识大致的介绍了 前端模块化的发展 历程，但是缺少详细使用说明等等，大家感兴趣可以自行了解。
+这篇文章知识大致的介绍了 前端模块化的发展 历程，但是**缺少详细使用说明**等等，大家感兴趣可以自行了解。
 
 * [Node.js Modules 官方文档](https://nodejs.org/docs/latest/api/modules.html#modules_modules "Node.js Modules 官方文档")
 * [浏览器加载 CommonJS 模块的原理与实现](http://www.ruanyifeng.com/blog/2015/05/commonjs-in-browser.html "阮一峰-浏览器加载 CommonJS 模块的原理与实现")
