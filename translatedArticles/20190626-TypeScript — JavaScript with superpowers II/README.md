@@ -8,7 +8,6 @@
 
 <p align="center">
 <img src="https://www.strilliant.com/images/1*lrVNbYOEn_ni9NNRTY0r7w.png" alt="Enum">
-Enum
 </p>
 
 Enums(枚举)允许你将值和一些友好的名称组合在一起，想想一下你有一个你有这样一个列表。
@@ -17,14 +16,12 @@ Enums(枚举)允许你将值和一些友好的名称组合在一起，想想一�
 
 <p align="center">
 <img src="https://www.strilliant.com/images/1*4qFIKpovAtDdkA0HkrqEVw.png" alt="Enum">
-Enum
 </p>
 
 你可以像这样从 enum 中获取值：
 
 <p align="center">
 <img src="https://www.strilliant.com/images/1*KaoKC7ZCuXwLPR_1ntY9SQ.png" alt="Enum">
-Enum
 </p>
 
 但是等等。它返回值的索引的整数。与数组一样，枚举的索引从0开始。
@@ -33,21 +30,18 @@ Enum
 
 <p align="center">
 <img src="https://www.strilliant.com/images/1*ymUuAzpdwzeMc3522yb0MA.png" alt="Enum">
-Enum
 </p>
 
 注意值是如何成为字符串的。
 
 <p align="center">
 <img src="https://www.strilliant.com/images/1*XnRIFhuCMpJFp8CmVUnf3g.png" alt="Enum">
-Enum
 </p>
 
 另一个很好的例子是使用枚举来存储应用程序状态。
 
 <p align="center">
 <img src="https://www.strilliant.com/images/1*nOLoMIf6YLl0XbFoPWeHmw.png" alt="Enum">
-Enum
 </p>
 
 如果你有兴趣了解更多关于枚举的知识 —— 我发现了一个[很好的答案](https://stackoverflow.com/questions/28818849/how-do-the-different-enum-variants-work-in-typescript/28818850#28818850 "Enum")，就是enum的细节。
