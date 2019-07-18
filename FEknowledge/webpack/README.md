@@ -1,1 +1,1 @@
-
+1. webpack 4.x 已经废弃 webpack 3.x 的 extract-text-webpack-plugin（用于提取css为单独css文件）。可以继续用 extract-text-webpack-plugin，但必须用对应的beta版本（npm install --save-dev extract-text-webpack-plugin@next），但这个beta版本不支持生成hash。所以最好用 mini-css-extract-plugin。但这个插件不能 style-loader 混用，会有冲突。
