@@ -43,3 +43,43 @@
   1.适用于箭头函数，但要显式的传一些参数，比如e
   2.适用于普通函数，但要记得绑定this
   
+
+
+## 20190726 工具型插件 react-only-if
+
+安装：
+```
+	npm i --save-dev react-only-if
+```
+
+使用：
+```jsx
+	// 伪代码
+	import React from 'react';
+	import ReactOnlyIf from 'react-only-if'; // react-only-if插件
+	import {conditionA, conditionB, conditionC} from '../data/condition';
+	import SecrectData from '../src/components/SecrectData.jsx'; // 需要判断是否渲染的组件
+
+	// 条件判断
+	const SecrectDataOnlyIf = ReactOnlyIf(
+		({conditionA, conditionB, conditionC}) => {
+			return conditionA && (conditionB || conditionC);
+		}
+	)(SecrectData)
+
+	// 
+	export default class Home extends React.Component {
+		render() {
+			return (
+				<SecrectDataOnlyIf />
+			);
+		}
+	}
+```
+
+**意义：**
+
+要保持组件内部没有过多地逻辑，及组件应尽可能保持简洁易懂
+
+
+
