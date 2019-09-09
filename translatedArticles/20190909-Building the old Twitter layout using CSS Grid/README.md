@@ -135,5 +135,5 @@ Twitter使用CSS Grid之前的基本演示
 
 如果你已经到了这一点，恭喜!! 您已准备好进入下一阶段。并且是为此布局实现移动视图。这将在下一篇文章中介绍。
 
-下一篇文章 - [设置移动布局](https://medium.com/quick-code/building-the-old-twitter-layout-using-css-grid-9aeee2260ba4 "设置移动布局")
+下一篇文章 - [设置移动布局](https://github.com/jimwong666/FEstart/tree/master/translatedArticles/20190909-Building%20the%20old%20Twitter%20layout%20using%20CSS%20Grid%20%E2%85%A1 "设置移动布局")
 
