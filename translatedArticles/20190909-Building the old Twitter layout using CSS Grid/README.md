@@ -4,7 +4,7 @@
 
 ------------------------------------------------------------------------------------------------
 
-# <img src="https://github.com/jimwong666/FEstart/blob/master/translatedArticles/images/publicFile/icon_teranlation.png" alt="译文">使用CSS Grid构建旧的Twitter布局
+# <img src="https://github.com/jimwong666/FEstart/blob/master/translatedArticles/images/publicFile/icon_teranlation.png" alt="译文">使用CSS Grid构建旧的Twitter布局 - 介绍
 
 <p align="center">
 <img src="https://miro.medium.com/max/2690/1*yZbODHhGBxizxFK2nohhrQ.png" alt="layout">
