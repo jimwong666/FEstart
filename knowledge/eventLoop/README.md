@@ -49,7 +49,6 @@
 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/20440496/42146675-c35e6bdc-7dfb-11e8-920b-2c626c9845f5.png" alt="浏览器">
-<span>图1</span>
 </p>
 
 其中浏览器内核进程中的 **JS引擎线程** 就是处理 JS 的。
