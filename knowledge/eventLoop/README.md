@@ -160,24 +160,20 @@ JavaScript 单线程中的任务可以分为**同步任务**和**异步任务**�
 
   setTimeout(() => {
     console.log(2);
-    let _promise = new Promise((resolve,reject) => {
-      console.log(3);
-      resolve();
-    })
     Promise.resolve().then(function(){
-      console.log(6)
+      console.log(3)
     })
   },0)
 
   let promise = new Promise((resolve,reject) => {
-    console.log(7);
+    console.log(4);
     resolve();
   });
 
   promise.then(function(){
-    console.log(4);
+    console.log(5);
     return setTimeout(function(){
-      console.log(5);
+      console.log(6);
     },0)
   })
 ```
