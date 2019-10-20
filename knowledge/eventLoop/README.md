@@ -146,9 +146,67 @@ JavaScript 单线程中的**任务**（tesk）可以分为**同步任务**和**�
 
 ##### 狭义上来说：
 
-JavaScript 的任务不仅仅分为同步任务和异步任务，同时从另一个维度，也分为了宏任务(MacroTask)和微任务(MicroTask)。
+JavaScript 的任务不仅仅分为同步任务和异步任务，同时从另一个维度，也分为了**宏任务**(MacroTask)和**微任务**(MicroTask)。
 
-先说说 MacroTask，所有的同步任务代码都是MacroTask（）。script(整体代码), setTimeout, setInterval, setImmediate, I/O, UI rendering
+先说说 MacroTask，MacroTask包括：script(整体代码), setTimeout, setInterval, setImmediate, I/O, UI rendering等等。
+
+再说说 MicroTask，其实很少，只要记住几个：Process.nextTick、Promise.then catch finally(注意不是 Promise)、MutationObserver。
+
+<p align="center">
+<img src="https://mmbiz.qpic.cn/mmbiz_png/nLOS7RCOmU4rnju6mMCibV5lp08m6BoVic5afL1ywWbpJRuv2NzXIYPicdKmZQkuDvHlfFPQzInOMFrLfGMBIOhRQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="宏任务和微任务">
+</p>
+
+顺序：先执行**宏任务**（其实第一个任务中js会把 script代码块 当成一个宏任务从头到尾执行一次）。如果在宏任务执行期间遇到**微任务**，那么它会被放在一个微任务队列，等待本次宏任务执行完毕后在执行这个微任务队列。如果在宏任务执行期间遇到其他的**宏任务**，那么遇到的这些宏任务就会由**事件触发线程**或者和**定时器触发线程**一起负责“筛选”，达到某个条件后将它放入到任务队列（task queue）进行排队等待（！！所以setTimeout和setInterval的定时还准确吗？）主线程（main thread）空闲时依次执行它们。然后这样往复循环~
+
+```js
+  // 小试牛刀
+  console.log(1);
+
+  setTimeout(() => {
+    console.log(2);
+  },20)
+
+  setTimeout(() => {
+    console.log(3)
+  },0)
+
+  Promise.resolve().then(function(){
+    console.log(4)
+  })
+
+  console.log(5);
+```
+
+> 小Tips：
+> 上面我们提到了 宏任务 中有一个：UI rendering（ui渲染）。这是什么呢？
+> 据我不知道对不对的猜测：因为 UI渲染进程 是与 js引擎进程 是互斥的，所以 UI要想渲染怎么办呢？总不能等到所有js执行结束之后再渲染吧，黄花菜都凉了。那只能等 主线程执行js 的间隙渲染喽~ 那么间隙在哪里？？对！就是宏任务之间的间隙。所以是这样执行的：宏任务（当然肯定包括其中的微任务）-->渲染-->宏任务-->渲染-->渲染．．．
+> <p align="center">
+><img src="https://mmbiz.qpic.cn/mmbiz_gif/RrlicwKU9Ad5SrGeicicbSz3ev9ACt9XVPvsqmZ5Em6oSgy91nGFCnzSLxD3VRzWLwgWRmXj981bibC08RegYhyXkg/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1" alt="宏任务和渲染">
+></p>
+> 所以，从某种意义上来说，UI渲染是不是也是一种宏任务，只是他没有属于自己的微任务罢了。
+> 
+> —
+> 最后：仔细想一想，我们在工作中有时导致“跳屏”的原因是不是又多了一种可能呢？？
+> 总结：
+> <p align="center">
+><img src="https://mmbiz.qpic.cn/mmbiz_png/RrlicwKU9Ad5SrGeicicbSz3ev9ACt9XVPvQ51WKxqHeGgCwW2fcibGz0jhNcibf1tc7VwMYKreicdCK9NNVA4qGoNcg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="宏任务和微任务">
+></p>
+
+### node端的 event loop 又是什么呢
+
+Node中的Event Loop是基于libuv实现的，而libuv是 Node 的新跨平台抽象层，libuv使用异步，事件驱动的编程方式，核心是提供i/o的事件循环和异步回调。libuv的API包含有时间，非阻塞的网络，异步文件操作，子进程等等。
+
+Event Loop就是在libuv中实现的。所以关于 Node 的 Event Loop学习，有两个官方途径可以学习:
+* libuv 文档
+* 官网的What is the Event Loop?
+
+在学习 Node 环境下的 Event Loop 之前呢，我们首先要明确执行环境，Node 和浏览器的Event Loop是两个有明确区分的事物，不能混为一谈。nodejs的event是基于libuv，而浏览器的event loop则在html5的规范中明确定义。
+
+<p align="center">
+<img src="" alt="node中event loop">
+</p>
+
+
 
 
 
@@ -177,8 +235,10 @@ JavaScript 的任务不仅仅分为同步任务和异步任务，同时从另一
     Promise.resolve().then(function(){
       console.log(3)
     })
+  },20)
+  setTimeout(() => {
+    console.log(7)
   },0)
-
   let promise = new Promise((resolve,reject) => {
     console.log(4);
     resolve();
