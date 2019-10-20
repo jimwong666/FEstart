@@ -206,19 +206,112 @@ Event Loop就是在libuv中实现的。所以关于 Node 的 Event Loop学习，
 <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/eventLoop/img/node-event-loop.png" alt="node中event loop">
 </p>
 
+Node 的 Event Loop 分为 6 个阶段：
+* timers：执行setTimeout() 和 setInterval()中到期的callback。
+* pending callback: 上一轮循环中有少数的I/O callback会被延迟到这一轮的这一阶段执行
+* idle, prepare：仅内部使用
+* poll: 最为重要的阶段，执行I/O callback，在适当的条件下会阻塞在这个阶段
+* check: 执行setImmediate的callback
+* close callbacks: 执行close事件的callback，例如socket.on('close'[,fn])、http.server.on('close, fn)
 
+> 上面六个阶段都不包括 process.nextTick()(下文会介绍)
 
+<p align="center">
+<img src="https://mmbiz.qpic.cn/mmbiz_png/udZl15qqib0NPJYm99fCKh9SUq52nkiaF0cgXb3z7IA2Hzc042MIlVUat6hUyGssfK6z3RqibKOtrpBgft81uWAvw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="node中event loop">
+</p>
 
+整体的执行机制如上图所示，下面我们具体展开每一个阶段的说明
 
+##### timers 阶段
 
+timers 阶段会执行 setTimeout 和 setInterval 回调，并且是由 poll 阶段控制的。
 
+在 timers 阶段其实使用一个最小堆而不是队列来保存所有的元素，其实也可以理解，因为timeout的callback是按照超时时间的顺序来调用的，并不是先进先出的队列逻辑）。而为什么 timer 阶段在第一个执行阶梯上其实也不难理解。在 Node 中定时器指定的时间也是不准确的，而这样，就能尽可能的准确了，让其回调函数尽快执行。
 
+以下是官网给出的例子：
 
+```js
+  const fs = require('fs');
 
+  function someAsyncOperation(callback) {
+    // Assume this takes 95ms to complete
+    fs.readFile('/path/to/file', callback);
+  }
 
+  const timeoutScheduled = Date.now();
 
+  setTimeout(() => {
+    const delay = Date.now() - timeoutScheduled;
 
+    console.log(`${delay}ms have passed since I was scheduled`);
+  }, 100);
 
+  // do someAsyncOperation which takes 95 ms to complete
+  someAsyncOperation(() => {
+    const startCallback = Date.now();
+
+    // do something that will take 10ms...
+    while (Date.now() - startCallback < 10) {
+      // do nothing
+    }
+  });
+```
+
+当进入事件循环时，它有一个空队列（fs.readFile()尚未完成），因此定时器将等待剩余毫秒数，当到达95ms时，fs.readFile()完成读取文件并且其完成需要10毫秒的回调被添加到轮询队列并执行。
+
+当回调结束时，队列中不再有回调，因此事件循环将看到已达到最快定时器的阈值，然后回到timers阶段以执行定时器的回调。在此示例中，您将看到正在调度的计时器与正在执行的回调之间的总延迟将为105毫秒。
+
+##### pending callbacks 阶段
+
+pending callbacks 阶段其实是 I/O 的 callbacks 阶段。比如一些 TCP 的 error 回调等。
+
+举个栗子：如果TCP socket ECONNREFUSED在尝试connect时receives，则某些* nix系统希望等待报告错误。这将在pending callbacks阶段执行。
+
+##### poll 阶段
+
+poll 阶段主要有两个功能：
+* 执行 I/O 回调
+* 处理 poll 队列（poll queue）中的事件
+
+当时Event Loop 进入到 poll 阶段并且 timers 阶段没有任何可执行的 task 的时候（也就是没有定时器回调），将会有以下两种情况:
+* 如果 poll queue 非空，则 Event Loop就会执行他们，知道为空或者达到system-dependent(系统相关限制)
+* 如果 poll queue 为空，则会发生以下一种情况:
+  * 如果setImmediate()有回调需要执行，则会立即进入到 check 阶段
+  * 相反，如果没有setImmediate()需要执行，则 poll 阶段将等待 callback 被添加到队列中再立即执行，这也是为什么我们说 poll 阶段可能会阻塞的原因
+
+一旦 poll queue 为空，Event Loop就回去检查timer 阶段的任务。如果有的话，则会回到 timer 阶段执行回调。
+
+##### check 阶段
+
+check 阶段在 poll 阶段之后，setImmediate()的回调会被加入check队列中，他是一个使用libuv API 的特殊的计数器。
+
+通常在代码执行的时候，Event Loop 最终会到达 poll 阶段，然后等待传入的链接或者请求等，但是如果已经指定了setImmediate()并且这时候 poll 阶段已经空闲的时候，则 poll 阶段将会被中止然后开始 check 阶段的执行。
+
+##### close callbacks 阶段
+
+如果一个 socket 或者事件处理函数突然关闭/中断(比如：socket.destroy()),则这个阶段就会发生 close 的回调执行。否则他会通过 process.nextTick() 发出。
+
+##### setImmediate() VS setTimeout()
+
+setImmediate() 和 setTimeout()非常的相似，区别取决于谁调用了它。
+
+* setImmediate在 poll 阶段后执行，即check 阶段
+* setTimeout 在 poll 空闲时且设定时间到达的时候执行，在 timer 阶段
+
+计时器的执行顺序将根据调用它们的上下文而有所不同。如果两者都是从主模块中调用的，则时序将受到进程性能的限制。
+
+例如，如果我们运行以下不在I / O周期（即主模块）内的脚本，则两个计时器的执行顺序是不确定的，因为它受进程性能的约束：
+
+```js
+  // timeout_vs_immediate.js
+  setTimeout(() => {
+    console.log('timeout');
+  }, 0);
+
+  setImmediate(() => {
+    console.log('immediate');
+  });
+```
 
 
 
