@@ -203,7 +203,7 @@ Event Loop就是在libuv中实现的。所以关于 Node 的 Event Loop学习，
 在学习 Node 环境下的 Event Loop 之前呢，我们首先要明确执行环境，Node 和浏览器的Event Loop是两个有明确区分的事物，不能混为一谈。nodejs的event是基于libuv，而浏览器的event loop则在html5的规范中明确定义。
 
 <p align="center">
-<img src="" alt="node中event loop">
+<img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/eventLoop/img/node-event-loop.png" alt="node中event loop">
 </p>
 
 
