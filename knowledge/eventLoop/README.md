@@ -186,7 +186,9 @@ JavaScript 的任务不仅仅分为同步任务和异步任务，同时从另一
 > 所以，从某种意义上来说，UI渲染是不是也是一种宏任务，只是他没有属于自己的微任务罢了。
 > 
 > —
+> 
 > 最后：仔细想一想，我们在工作中有时导致“跳屏”的原因是不是又多了一种可能呢？？
+> 
 > 总结：
 > <p align="center">
 ><img src="https://mmbiz.qpic.cn/mmbiz_png/RrlicwKU9Ad5SrGeicicbSz3ev9ACt9XVPvQ51WKxqHeGgCwW2fcibGz0jhNcibf1tc7VwMYKreicdCK9NNVA4qGoNcg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="宏任务和微任务">
