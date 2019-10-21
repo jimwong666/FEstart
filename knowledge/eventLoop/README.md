@@ -179,8 +179,9 @@ JavaScript 的任务不仅仅分为同步任务和异步任务，同时从另一
 
 > 小Tips：
 > 
-> 上面我们提到了 宏任务 中有一个：UI rendering（ui渲染）。这是什么呢？
-> 据我不知道对不对的猜测：因为 UI渲染进程 是与 js引擎进程 是互斥的，所以 UI要想渲染怎么办呢？总不能等到所有js执行结束之后再渲染吧，黄花菜都凉了。那只能等 主线程执行js 的间隙渲染喽~ 那么间隙在哪里？？对！就是宏任务之间的间隙。所以是这样执行的：宏任务（当然肯定包括其中的微任务）-->渲染-->宏任务-->渲染-->渲染．．．
+> 上面我们提到了 宏任务 中有一个：UI rendering（ui渲染）。这是什么意思呢？
+> 
+> 据我猜测：因为 UI渲染进程 是与 js引擎进程 是互斥的，所以 UI要想渲染怎么办呢？总不能等到所有js执行结束之后再渲染吧，黄花菜都凉了。那只能等 主线程执行js 的间隙渲染喽~ 那么间隙在哪里？？对！就是宏任务之间的间隙。所以是这样执行的：宏任务（当然肯定包括其中的微任务）-->渲染-->宏任务-->渲染-->渲染．．．
 > <p align="center">
 ><img src="https://mmbiz.qpic.cn/mmbiz_gif/RrlicwKU9Ad5SrGeicicbSz3ev9ACt9XVPvsqmZ5Em6oSgy91nGFCnzSLxD3VRzWLwgWRmXj981bibC08RegYhyXkg/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1" alt="宏任务和渲染">
 ></p>
