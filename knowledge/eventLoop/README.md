@@ -197,127 +197,226 @@ JavaScript 的任务不仅仅分为同步任务和异步任务，同时从另一
 
 ### node端的 event loop 又是什么呢
 
-Node中的Event Loop是基于libuv实现的，而libuv是 Node 的新跨平台抽象层，libuv使用异步，事件驱动的编程方式，核心是提供i/o的事件循环和异步回调。libuv的API包含有时间，非阻塞的网络，异步文件操作，子进程等等。
+##### node-eventLoop 简介
 
-Event Loop就是在libuv中实现的。所以关于 Node 的 Event Loop学习，有两个官方途径可以学习:
-* libuv 文档
-* 官网的What is the Event Loop?
-
-在学习 Node 环境下的 Event Loop 之前呢，我们首先要明确执行环境，Node 和浏览器的Event Loop是两个有明确区分的事物，不能混为一谈。nodejs的event是基于libuv，而浏览器的event loop则在html5的规范中明确定义。
+Node 中的 Event Loop 和浏览器中的是完全不相同的东西。Node.js采用V8作为js的解析引擎，而I/O处理方面使用了自己设计的libuv，libuv是一个基于事件驱动的跨平台抽象层，封装了不同操作系统一些底层特性，对外提供统一的API，事件循环机制也是它里面的实现（下文会详细介绍）。
 
 <p align="center">
-<img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/eventLoop/img/node-event-loop.png" alt="node中event loop">
+<img src="https://user-gold-cdn.xitu.io/2019/1/11/1683d81674f076eb?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="node">
 </p>
 
-Node 的 Event Loop 分为 6 个阶段：
-* timers：执行setTimeout() 和 setInterval()中到期的callback。
-* pending callback: 上一轮循环中有少数的I/O callback会被延迟到这一轮的这一阶段执行
-* idle, prepare：仅内部使用
-* poll: 最为重要的阶段，执行I/O callback，在适当的条件下会阻塞在这个阶段
-* check: 执行setImmediate的callback
-* close callbacks: 执行close事件的callback，例如socket.on('close'[,fn])、http.server.on('close, fn)
+Node.js的运行机制如下:
 
-> 上面六个阶段都不包括 process.nextTick()(下文会介绍)
+* V8引擎解析JavaScript脚本。
+* 解析后的代码，调用Node API。
+* libuv库负责Node API的执行。它将不同的任务分配给不同的线程，形成一个Event Loop（事件循环），以异步的方式将任务的执行结果返回给V8引擎。
+* V8引擎再将结果返回给用户。
+
+##### 6个阶段
+
+其中libuv引擎中的事件循环分为 6 个阶段，它们会按照顺序反复运行。每当进入某一个阶段的时候，都会从对应的回调队列中取出函数去执行。当队列为空或者执行的回调函数数量到达系统设定的阈值，就会进入下一阶段。
 
 <p align="center">
-<img src="https://mmbiz.qpic.cn/mmbiz_png/udZl15qqib0NPJYm99fCKh9SUq52nkiaF0cgXb3z7IA2Hzc042MIlVUat6hUyGssfK6z3RqibKOtrpBgft81uWAvw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="node中event loop">
+<img src="https://user-gold-cdn.xitu.io/2019/1/12/16841bd9860c1ee9?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="node-eventLoop 6个阶段">
 </p>
 
-整体的执行机制如上图所示，下面我们具体展开每一个阶段的说明
+从上图中，大致看出node中的事件循环的顺序：
 
-##### timers 阶段
+外部输入数据-->轮询阶段(poll)-->检查阶段(check)-->关闭事件回调阶段(close callback)-->定时器检测阶段(timer)-->I/O事件回调阶段(I/O callbacks)-->闲置阶段(idle, prepare)-->轮询阶段（按照该顺序反复运行）...
 
-timers 阶段会执行 setTimeout 和 setInterval 回调，并且是由 poll 阶段控制的。
+* timers 阶段：这个阶段执行timer（setTimeout、setInterval）的回调
+* I/O callbacks 阶段：处理一些上一轮循环中的少数未执行的 I/O 回调
+* idle, prepare 阶段：仅node内部使用
+* poll 阶段：获取新的I/O事件, 适当的条件下node将阻塞在这里
+* check 阶段：执行 setImmediate() 的回调
+* close callbacks 阶段：执行 socket 的 close 事件回调
 
-在 timers 阶段其实使用一个最小堆而不是队列来保存所有的元素，其实也可以理解，因为timeout的callback是按照超时时间的顺序来调用的，并不是先进先出的队列逻辑）。而为什么 timer 阶段在第一个执行阶梯上其实也不难理解。在 Node 中定时器指定的时间也是不准确的，而这样，就能尽可能的准确了，让其回调函数尽快执行。
+注意：上面六个阶段都不包括 **process.nextTick()**(下文会介绍)
 
-以下是官网给出的例子：
+接下去我们详细介绍*timers、poll、check*这3个阶段，因为日常开发中的绝大部分异步任务都是在这3个阶段处理的。
 
-```js
-  const fs = require('fs');
+###### timer阶段
 
-  function someAsyncOperation(callback) {
-    // Assume this takes 95ms to complete
-    fs.readFile('/path/to/file', callback);
-  }
+timers 阶段会执行 setTimeout 和 setInterval 回调，并且是由 poll 阶段控制的。 同样，**在 Node 中定时器指定的时间也不是准确时间，只能是尽快执行**。
 
-  const timeoutScheduled = Date.now();
+###### poll阶段
 
-  setTimeout(() => {
-    const delay = Date.now() - timeoutScheduled;
+poll 是一个至关重要的阶段，这一阶段中，系统会做两件事情
 
-    console.log(`${delay}ms have passed since I was scheduled`);
-  }, 100);
+1. 回到 timer 阶段执行回调
+2. 执行 I/O 回调
 
-  // do someAsyncOperation which takes 95 ms to complete
-  someAsyncOperation(() => {
-    const startCallback = Date.now();
+并且在进入该阶段时如果没有设定了 timer 的话，会发生以下两件事情:
 
-    // do something that will take 10ms...
-    while (Date.now() - startCallback < 10) {
-      // do nothing
-    }
-  });
-```
+* 如果 poll 队列不为空，会遍历回调队列并同步执行，直到队列为空或者达到系统限制
+* 如果 poll 队列为空时，会有两件事发生
+  * 如果有 setImmediate 回调需要执行，poll 阶段会停止并且进入到 check 阶段执行回调
+  * 如果没有 setImmediate 回调需要执行，会等待回调被加入到队列中并立即执行回调，这里同样会有个超时时间设置防止一直等待下去
 
-当进入事件循环时，它有一个空队列（fs.readFile()尚未完成），因此定时器将等待剩余毫秒数，当到达95ms时，fs.readFile()完成读取文件并且其完成需要10毫秒的回调被添加到轮询队列并执行。
+当然设定了 timer 的话且 poll 队列为空，则会判断是否有 timer 超时，如果有的话会回到 timer 阶段执行回调。
 
-当回调结束时，队列中不再有回调，因此事件循环将看到已达到最快定时器的阈值，然后回到timers阶段以执行定时器的回调。在此示例中，您将看到正在调度的计时器与正在执行的回调之间的总延迟将为105毫秒。
+###### check阶段
 
-##### pending callbacks 阶段
-
-pending callbacks 阶段其实是 I/O 的 callbacks 阶段。比如一些 TCP 的 error 回调等。
-
-举个栗子：如果TCP socket ECONNREFUSED在尝试connect时receives，则某些* nix系统希望等待报告错误。这将在pending callbacks阶段执行。
-
-##### poll 阶段
-
-poll 阶段主要有两个功能：
-* 执行 I/O 回调
-* 处理 poll 队列（poll queue）中的事件
-
-当时Event Loop 进入到 poll 阶段并且 timers 阶段没有任何可执行的 task 的时候（也就是没有定时器回调），将会有以下两种情况:
-* 如果 poll queue 非空，则 Event Loop就会执行他们，知道为空或者达到system-dependent(系统相关限制)
-* 如果 poll queue 为空，则会发生以下一种情况:
-  * 如果setImmediate()有回调需要执行，则会立即进入到 check 阶段
-  * 相反，如果没有setImmediate()需要执行，则 poll 阶段将等待 callback 被添加到队列中再立即执行，这也是为什么我们说 poll 阶段可能会阻塞的原因
-
-一旦 poll queue 为空，Event Loop就回去检查timer 阶段的任务。如果有的话，则会回到 timer 阶段执行回调。
-
-##### check 阶段
-
-check 阶段在 poll 阶段之后，setImmediate()的回调会被加入check队列中，他是一个使用libuv API 的特殊的计数器。
-
-通常在代码执行的时候，Event Loop 最终会到达 poll 阶段，然后等待传入的链接或者请求等，但是如果已经指定了setImmediate()并且这时候 poll 阶段已经空闲的时候，则 poll 阶段将会被中止然后开始 check 阶段的执行。
-
-##### close callbacks 阶段
-
-如果一个 socket 或者事件处理函数突然关闭/中断(比如：socket.destroy()),则这个阶段就会发生 close 的回调执行。否则他会通过 process.nextTick() 发出。
-
-##### setImmediate() VS setTimeout()
-
-setImmediate() 和 setTimeout()非常的相似，区别取决于谁调用了它。
-
-* setImmediate在 poll 阶段后执行，即check 阶段
-* setTimeout 在 poll 空闲时且设定时间到达的时候执行，在 timer 阶段
-
-计时器的执行顺序将根据调用它们的上下文而有所不同。如果两者都是从主模块中调用的，则时序将受到进程性能的限制。
-
-例如，如果我们运行以下不在I / O周期（即主模块）内的脚本，则两个计时器的执行顺序是不确定的，因为它受进程性能的约束：
+setImmediate()的回调会被加入check队列中，从event loop的阶段图可以知道，check阶段的执行顺序在poll阶段之后。 我们先来看个例子:
 
 ```js
-  // timeout_vs_immediate.js
-  setTimeout(() => {
-    console.log('timeout');
-  }, 0);
-
-  setImmediate(() => {
-    console.log('immediate');
-  });
+console.log('start')
+setTimeout(() => {
+  console.log('timer1')
+  Promise.resolve().then(function() {
+    console.log('promise1')
+  })
+}, 0)
+setTimeout(() => {
+  console.log('timer2')
+  Promise.resolve().then(function() {
+    console.log('promise2')
+  })
+}, 0)
+Promise.resolve().then(function() {
+  console.log('promise3')
+})
+console.log('end')
+//start=>end=>promise3=>timer1=>timer2=>promise1=>promise2
 ```
 
+* 一开始执行栈的同步任务（这属于宏任务）执行完毕后（依次打印出start end，并将2个timer依次放入timer队列）,会先去执行微任务（**这点跟浏览器端的一样**），所以打印出promise3
+* 然后进入timers阶段，执行timer1的回调函数，打印timer1，并将promise.then回调放入microtask队列，同样的步骤执行timer2，打印timer2；这点跟浏览器端相差比较大，**timers阶段有几个setTimeout/setInterval都会依次执行**，并不像浏览器端，每执行一个宏任务后就去执行一个微任务（关于Node与浏览器的 Event Loop 差异，下文还会详细介绍）。
 
+##### Micro-Task 与 Macro-Task
 
+Node端事件循环中的异步队列也是这两种：macro（宏任务）队列和 micro（微任务）队列。
+
+* 常见的 macro-task 比如：setTimeout、setInterval、 setImmediate、script（整体代码）、 I/O 操作等。
+* 常见的 micro-task 比如: process.nextTick、new Promise().then(回调)等。
+
+##### 注意点:
+
+###### setTimeout 和 setImmediate
+
+二者非常相似，区别主要在于调用时机不同。
+
+* setImmediate 设计在poll阶段完成时执行，即check阶段；
+* setTimeout 设计在poll阶段为空闲时，且设定时间到达后执行，但它在timer阶段执行
+
+```js
+setTimeout(function timeout () {
+  console.log('timeout');
+},0);
+setImmediate(function immediate () {
+  console.log('immediate');
+});
+```
+
+* 对于以上代码来说，setTimeout 可能执行在前，也可能执行在后。
+* 首先 setTimeout(fn, 0) === setTimeout(fn, 1)，这是由源码决定的
+进入事件循环也是需要成本的，如果在准备时候花费了大于 1ms 的时间，那么在 timer 阶段就会直接执行 setTimeout 回调
+* 如果准备时间花费小于 1ms，那么就是 setImmediate 回调先执行了
+
+但当二者在异步i/o callback内部调用时，总是先执行setImmediate，再执行setTimeout:
+
+```js
+const fs = require('fs')
+fs.readFile(__filename, () => {
+    setTimeout(() => {
+        console.log('timeout');
+    }, 0)
+    setImmediate(() => {
+        console.log('immediate')
+    })
+})
+// immediate
+// timeout
+```
+
+在上述代码中，setImmediate 永远先执行。因为两个代码写在 IO 回调中，IO 回调是在 poll 阶段执行，当回调执行完毕后队列为空，发现存在 setImmediate 回调，所以就直接跳转到 check 阶段去执行回调了。
+
+###### process.nextTick
+
+这个函数其实是独立于 Event Loop 之外的，它有一个自己的队列，当每个阶段完成后，如果存在 nextTick 队列，就会清空队列中的所有回调函数，并且优先于其他 microtask 执行。
+
+```js
+setTimeout(() => {
+ console.log('timer1')
+ Promise.resolve().then(function() {
+   console.log('promise1')
+ })
+}, 0)
+process.nextTick(() => {
+ console.log('nextTick')
+ process.nextTick(() => {
+   console.log('nextTick')
+   process.nextTick(() => {
+     console.log('nextTick')
+     process.nextTick(() => {
+       console.log('nextTick')
+     })
+   })
+ })
+})
+// nextTick=>nextTick=>nextTick=>nextTick=>timer1=>promise1
+```
+
+### Node与浏览器的 Event Loop 差异
+
+**浏览器环境下，microtask的任务队列是每个macrotask执行完之后执行。而在Node.js中，microtask会在事件循环的各个阶段之间执行，也就是一个阶段执行完毕，就会去执行microtask队列的任务。**
+
+<p align="center">
+<img src="https://user-gold-cdn.xitu.io/2019/1/12/16841bad1cda741f?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="浏览器-eventLoop和node-eventLoop差异">
+</p>
+
+接下我们通过一个例子来说明两者区别：
+
+##### 浏览器端 event loop
+
+```js
+setTimeout(()=>{
+    console.log('timer1')
+    Promise.resolve().then(function() {
+        console.log('promise1')
+    })
+}, 0)
+setTimeout(()=>{
+    console.log('timer2')
+    Promise.resolve().then(function() {
+        console.log('promise2')
+    })
+}, 0)
+```
+
+浏览器端运行结果：*timer1=>promise1=>timer2=>promise2*
+
+浏览器端的处理过程如下：
+
+<p align="center">
+<img src="https://user-gold-cdn.xitu.io/2019/1/12/16841d6392e8f537?imageslim" alt="浏览器-eventLoop的处理过程">
+</p>
+
+##### node端 event loop
+
+Node端运行结果分两种情况：
+
+* 如果是node11版本一旦执行一个阶段里的一个宏任务(setTimeout,setInterval和setImmediate)就立刻执行微任务队列，这就跟浏览器端运行一致，最后的结果为*timer1=>promise1=>timer2=>promise2*
+* 如果是node10及其之前版本：要看第一个定时器执行完，第二个定时器是否在完成队列中。
+  * 如果是第二个定时器还未在完成队列中，最后的结果为*timer1=>promise1=>timer2=>promise2*
+  * 如果是第二个定时器已经在完成队列中，则最后的结果为*timer1=>timer2=>promise1=>promise2*(下文过程解释基于这种情况下)
+
+1. 全局脚本（main()）执行，将2个timer依次放入timer队列，main()执行完毕，调用栈空闲，任务队列开始执行；
+2. 首先进入timers阶段，执行timer1的回调函数，打印timer1，并将promise1.then回调放入microtask队列，同样的步骤执行timer2，打印timer2；
+3. 至此，timer阶段执行结束，event loop进入下一个阶段之前，执行microtask队列的所有任务，依次打印promise1、promise2
+
+Node端的处理过程如下：
+
+<p align="center">
+<img src="https://user-gold-cdn.xitu.io/2019/1/12/16841d5f85468047?imageslim" alt="node-eventLoop的处理过程">
+</p>
+
+### 总结
+
+浏览器和Node 环境下，microtask 任务队列的执行时机不同
+
+* Node端，microtask 在事件循环的各个阶段之间执行
+* 浏览器端，microtask 在事件循环的 macrotask 执行完之后执行
 
 
 
