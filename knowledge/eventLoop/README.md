@@ -195,6 +195,31 @@ JavaScript 的任务不仅仅分为同步任务和异步任务，同时从另一
 ><img src="https://mmbiz.qpic.cn/mmbiz_png/RrlicwKU9Ad5SrGeicicbSz3ev9ACt9XVPvQ51WKxqHeGgCwW2fcibGz0jhNcibf1tc7VwMYKreicdCK9NNVA4qGoNcg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="宏任务和微任务">
 ></p>
 
+```js
+  console.log(1);
+
+  setTimeout(() => {
+    console.log(2);
+    Promise.resolve().then(function(){
+      console.log(3)
+    })
+  },20)
+  setTimeout(() => {
+    console.log(7)
+  },0)
+  let promise = new Promise((resolve,reject) => {
+    console.log(4);
+    resolve();
+  });
+
+  promise.then(function(){
+    console.log(5);
+    return setTimeout(function(){
+      console.log(6);
+    },0)
+  })
+```
+
 ### node端的 event loop 又是什么呢
 
 ##### node-eventLoop 简介
@@ -418,31 +443,3 @@ Node端的处理过程如下：
 * Node端，microtask 在事件循环的各个阶段之间执行
 * 浏览器端，microtask 在事件循环的 macrotask 执行完之后执行
 
-
-
-
-
-```js
-  console.log(1);
-
-  setTimeout(() => {
-    console.log(2);
-    Promise.resolve().then(function(){
-      console.log(3)
-    })
-  },20)
-  setTimeout(() => {
-    console.log(7)
-  },0)
-  let promise = new Promise((resolve,reject) => {
-    console.log(4);
-    resolve();
-  });
-
-  promise.then(function(){
-    console.log(5);
-    return setTimeout(function(){
-      console.log(6);
-    },0)
-  })
-```
