@@ -6,3 +6,17 @@
 
 4.右击 pubspec.yaml ，安装依赖
 		
+
+
+
+爬坑：
+1. 代理不太好，gradle会下载失败。报错：
+  <p align="center">
+  <img src="https://miro.medium.com/max/5604/0*mS7vEiMIgqRwI4vZ" alt="flutter爬坑1">
+  </p>
+  <p align="center">
+  <img src="https://miro.medium.com/max/5604/0*mS7vEiMIgqRwI4vZ" alt="flutter爬坑2">
+  </p>
+  解决方法：更改已有版本文件
+  * gradle-wrapper.properties -> distributionUrl=https\://services.gradle.org/distributions/gradle-x.x.x-all.zip 
+  * build.gradle -> ext.kotlin_version = 'x.x.xx' 和 classpath 'com.android.tools.build:gradle:x.x.x'
