@@ -24,10 +24,10 @@
 
 ## [API](https://blog.csdn.net/u013600907/article/details/100098082 "flutter-API")
 > 各种API： Widget、MaterialApp、Scaffold、Container、Text、Image、ClipOval、ListView...
-1. <Widget>：先要自定义组件，那他们肯定都是继承自 1️⃣ StatelessWidget：无状态组件，状态不可变。2️⃣ StatefulWidget：有状态组件，持有的状态可能在widget生命周期改变。
-2. <MaterialApp>：它封装了应用程序实现Material Design所需要的一个Widget。其中包括一些常用的属性：home、title、color、theme、routes...
-3. <Scaffold>：Scaffold是Material Design布局机构的基本实现，此类提供了用于显示drawer（抽屉，比如：左边栏）、snackbar（通知，）和bottom sheet（底部按钮）的API 一般和MaterialApp一起使用。
-4. <Container>：Container是一个容器组件也叫布局组件(可以理解为前端的div，块级元素)，负责布局、绘画、定位和大小。
+1. **Widget**：先要自定义组件，那他们肯定都是继承自 1️⃣ StatelessWidget：无状态组件，状态不可变。2️⃣ StatefulWidget：有状态组件，持有的状态可能在widget生命周期改变。
+2. **MaterialApp**：它封装了应用程序实现Material Design所需要的一个Widget。其中包括一些常用的属性：home、title、color、theme、routes...
+3. **Scaffold**：Scaffold是Material Design布局机构的基本实现，此类提供了用于显示drawer（抽屉，比如：左边栏）、snackbar（通知，）和bottom sheet（底部按钮）的API 一般和MaterialApp一起使用。
+4. **Container**：Container是一个容器组件也叫布局组件(可以理解为前端的div，块级元素)，负责布局、绘画、定位和大小。
     | 属性名 | 类型 | 说明 |
     | :-: | :-: | :- |
     | key | Key | Container唯一表示符，用于查找更新 |
@@ -40,11 +40,11 @@
     | transform | Matrix4 | 位移：调用Matrix4.translationValues(x, y, z)；旋转：Matrix4.rotationZ(-0.5)//整数是顺时针? 负数是逆时针?；缩放：Matrix4.diagonal3Values(x, y, z)； |
     | ... | ... | ... |
 
-5. <Text>：文字组件Text
-6. <Image>：图片组件Image
+5. **Text**：文字组件Text
+6. **Image**：图片组件Image
     * Image组件引用本地图片方法
-7. <ClipOval>：圆形裁切组件ClipOval
-8. <ListView>：ListView组件
+7. **ClipOval**：圆形裁切组件ClipOval
+8. **ListView**：ListView组件
 
 
 
