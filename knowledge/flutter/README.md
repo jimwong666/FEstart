@@ -20,3 +20,12 @@
   解决方法：更改已有版本文件
   * gradle-wrapper.properties -> distributionUrl=https\://services.gradle.org/distributions/gradle-x.x.x-all.zip 
   * build.gradle -> ext.kotlin_version = 'x.x.xx' 和 classpath 'com.android.tools.build:gradle:x.x.x'
+
+
+
+
+
+## 技术相关
+
+##### 路由
+1. onGenerateRoute 路路由拦截 使用时，不管是用 if语句 还是 switch语句，记得一定要加 else 和 default。否则会报错！
