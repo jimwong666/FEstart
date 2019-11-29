@@ -22,16 +22,29 @@
   * build.gradle -> ext.kotlin_version = 'x.x.xx' 和 classpath 'com.android.tools.build:gradle:x.x.x'
 
 
-## API
-> 各种API:
-> Widget、MaterialApp、Scaffold、Container、Text、Image、ClipOval、ListView...
+## [API](https://blog.csdn.net/u013600907/article/details/100098082 "flutter-API")
+> 各种API： Widget、MaterialApp、Scaffold、Container、Text、Image、ClipOval、ListView...
 1. <Widget>：先要自定义组件，那他们肯定都是继承自 1️⃣ StatelessWidget：无状态组件，状态不可变。2️⃣ StatefulWidget：有状态组件，持有的状态可能在widget生命周期改变。
 2. <MaterialApp>：它封装了应用程序实现Material Design所需要的一个Widget。其中包括一些常用的属性：home、title、color、theme、routes...
 3. <Scaffold>：Scaffold是Material Design布局机构的基本实现，此类提供了用于显示drawer（抽屉，比如：左边栏）、snackbar（通知，）和bottom sheet（底部按钮）的API 一般和MaterialApp一起使用。
 4. <Container>：Container是一个容器组件也叫布局组件(可以理解为前端的div，块级元素)，负责布局、绘画、定位和大小。
-| 属性名 | 类型 | 说明 |
-| :-: | :-: | :-: |
-| key | Key | Container唯一表示符，用于查找更新 |
+    | 属性名 | 类型 | 说明 |
+    | :-: | :-: | :- |
+    | key | Key | Container唯一表示符，用于查找更新 |
+    | height | Double | 设置Container容器的高度，设置为double.infinity可以强制在高度上撑满 |
+    | width | Double | 设置Container容器的宽度，设置为double.infinity可以强制在宽度上撑满，不设置，则根据child和父节点两者一起布局 |
+    | decoration | Decoration | 背景样式，一般可定义为BoxDecoration，里边有color属性，设置背景颜色；border:边框样式，里边有Border.all()方法，可以添加color设置边框颜色 |
+    | borderRadius | BorderRadius | 可以设置Container边框圆角BorderRadius.all(Radius.circular())方法;BorderRadius.circular()方法都可以来设置边框圆角当然也可以设置圆角的图片（也可以使用ClipOval组件来实现圆角）BoxDecoration中有一个image的属性 使用方法：[略](https://blog.csdn.net/u013600907/article/details/100098082 "点击查看") |
+    | margin | EdgeInsets | 外边距，调用EdgeInsets.all()方法或EdgeInsets.fromLTRB(left, top, right, bottom)方法来设置参数。 |
+    | padding | EdgeInsets | 内边距，调用EdgeInsets.all()方法或EdgeInsets.fromLTRB(left, top, right, bottom)方法来设置参数。 |
+    | transform | Matrix4 | 位移：调用Matrix4.translationValues(x, y, z)；旋转：Matrix4.rotationZ(-0.5)//整数是顺时针? 负数是逆时针?；缩放：Matrix4.diagonal3Values(x, y, z)； |
+    | ... | ... | ... |
+
+5. <Text>：文字组件Text
+6. <Image>：图片组件Image
+    * Image组件引用本地图片方法
+7. <ClipOval>：圆形裁切组件ClipOval
+8. <ListView>：ListView组件
 
 
 
