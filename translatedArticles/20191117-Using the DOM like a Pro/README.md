@@ -1,15 +1,15 @@
-原文链接：[Using the DOM like a Pro](https://itnext.io/using-the-dom-like-a-pro-163a6c552eba "专业玩DOM") <br/>
+原文链接：[Using the DOM like a Pro](https://itnext.io/using-the-dom-like-a-pro-163a6c552eba "专业玩儿DOM") <br/>
 作者：Danny Moerkerke <br/>
 作者创作时间：2019年9月2日
 
 ------------------------------------------------------------------------------------------------
 
-# <img src="https://github.com/jimwong666/FEstart/blob/master/translatedArticles/images/publicFile/icon_teranlation.png" alt="译文">专业玩DOM
+# <img src="https://github.com/jimwong666/FEstart/blob/master/translatedArticles/images/publicFile/icon_teranlation.png" alt="译文">专业玩儿DOM
 
 > 别再害怕 DOM 了，让我们充分挖掘 DOM 的潜力，你会真的爱上它。
 
 <p align="center">
-<img src="https://miro.medium.com/max/5604/0*mS7vEiMIgqRwI4vZ" alt="专业玩DOM">
+<img src="https://miro.medium.com/max/5604/0*mS7vEiMIgqRwI4vZ" alt="专业玩儿DOM">
 </p>
 
 2008 年，当我刚成为一名专业 Web 开发人员参加工作时，我了解一些 HTML、CSS 和 PHP 的知识。那时我也在学习 JavaScript，因为它可以用来显示和隐藏元素和制作下拉菜单之类很酷的事情。
