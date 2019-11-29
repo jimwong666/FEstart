@@ -27,6 +27,7 @@
 1. **Widget**：先要自定义组件，那他们肯定都是继承自 1️⃣ StatelessWidget：无状态组件，状态不可变。2️⃣ StatefulWidget：有状态组件，持有的状态可能在widget生命周期改变。
 2. **MaterialApp**：它封装了应用程序实现Material Design所需要的一个Widget。其中包括一些常用的属性：home、title、color、theme、routes...
 3. **Scaffold**：Scaffold是Material Design布局机构的基本实现，此类提供了用于显示drawer（抽屉，比如：左边栏）、snackbar（通知，）和bottom sheet（底部按钮）的API 一般和MaterialApp一起使用。
+   * **Scaffold.of**：显示 snackbar 或者 bottom sheet 的时候，需要使用当前的 BuildContext 参数调用 Scaffold.of 函数来获取 ScaffoldState 对象，然后使用 ScaffoldState.showSnackBar 和 ScaffoldState.showBottomSheet 函数来显示。
 4. **Container**：Container是一个容器组件也叫布局组件(可以理解为前端的div，块级元素)，负责布局、绘画、定位和大小。
     | 属性名 | 类型 | 说明 |
     | :-: | :-: | :- |
