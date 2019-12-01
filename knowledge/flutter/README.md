@@ -1,4 +1,10 @@
 1. 按官网教程安装，文件比较难下。https://flutter.dev/docs/get-started/install/windows
+   1. 首次进入as会跳出让你设置代理，可以设置代理。但如果没有的话，在 Android Studio 安装目录 bin/idea.properties 文件中最后追加一句：disable.android.first.run=true
+   2. 安装插件等一些操作，如果没有代理直接 File->Settings
+  ->Apparence & Behavior->System Settings 
+    ->Updates  -> use secure connnection  去掉勾选，就可以愉快的下载插件了
+   3. 设置阿里镜像
+   4. 新建项目的时候，flutter就填 C:\src\flutter，不要在另外install了
 2. 安装Flutter和Dart插件
 3. 各种SDK:
   * 进 setting -> Languages & Frameworks -> Dart和Flutter 设置SDK路径
