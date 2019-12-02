@@ -52,6 +52,10 @@
     * Image组件引用本地图片方法
 7. **ClipOval**：圆形裁切组件ClipOval
 8. **ListView**：ListView组件
+   1. ListView(children: <widget>[Container(...), ..., ...])，这种形式适用于显示的有限的子级List <Widget>
+   2. ListView.builder(itemCount: 3, itemBuilder: (BuildContext context, int index) { return Container(height: 50, color: ...index... ,child: Center(child: Text(...index...)));}); 像这样，用构造函数创建的列表。使用IndexedWidgetBuilder，子级可以延迟构建，并且可以无限多个。
+   3. ListView.separated() 与 ListView.builder 很像，但是它会在子级之间会做一些特殊的处理，比如分隔符，分割线等等
+   4. ListView.custom：CustomScrollView(...)略
 
 
 
