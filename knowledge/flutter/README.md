@@ -76,3 +76,5 @@
 ##### 路由
 
 1. onGenerateRoute 路由拦截 使用时，不管是用 if语句 还是 switch语句，记得一定要加 else 和 default。否则会报错！
+2. ScopedModelDescendant的层级需要尽量低，可以避免大范围的UI重建。这里引用官方的例子。
+3. 新的 Widget 中想要拿到配置的 arguments 可以通过 ModalRoute 来拿。XXXXX({RouteSettings settings,}) : super(settings: settings); --- Map args = ModalRoute.of(context).settings.arguments;
