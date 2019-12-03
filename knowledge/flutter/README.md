@@ -24,6 +24,7 @@
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/flutter/img/flutter_error_2.png" alt="flutter爬坑2">
   </p>
   解决方法：更改已有版本文件
+  
   * gradle-wrapper.properties -> distributionUrl=https\://services.gradle.org/distributions/gradle-x.x.x-all.zip 
   * build.gradle -> ext.kotlin_version = 'x.x.xx' 和 classpath 'com.android.tools.build:gradle:x.x.x'
 
