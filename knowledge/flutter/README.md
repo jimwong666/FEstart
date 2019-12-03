@@ -24,10 +24,15 @@
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/flutter/img/flutter_error_2.png" alt="flutter爬坑2">
   </p>
   解决方法：更改已有版本文件
-  
+
   * gradle-wrapper.properties -> distributionUrl=https\://services.gradle.org/distributions/gradle-x.x.x-all.zip 
   * build.gradle -> ext.kotlin_version = 'x.x.xx' 和 classpath 'com.android.tools.build:gradle:x.x.x'
+  **总结：**统一已有gradle版本，适当时将google换成阿里镜像
 
+20191203：当天的配置是：
+* local.properties => ndk.dir=... => 删掉
+* build.gradle => ext.kotlin_version = '1.2.71'  classpath 'com.android.tools.build:gradle:3.2.1'
+* gradle-warpper.properties => distributionUrl=https\://services.gradle.org/distributions/gradle-4.10.2-all.zip
 
 ## [API](https://blog.csdn.net/u013600907/article/details/100098082 "flutter-API")
 > 各种API： Widget、MaterialApp、Scaffold、Container、Text、Image、ClipOval、ListView...
