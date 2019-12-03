@@ -35,6 +35,7 @@
 3. **Scaffold**：Scaffold是Material Design布局机构的基本实现，此类提供了用于显示drawer（抽屉，比如：左边栏）、snackbar（通知，）和bottom sheet（底部按钮）的API 一般和MaterialApp一起使用。
    * **Scaffold.of**：显示 snackbar 或者 bottom sheet 的时候，需要使用当前的 BuildContext 参数调用 Scaffold.of 函数来获取 ScaffoldState 对象，然后使用 ScaffoldState.showSnackBar 和 ScaffoldState.showBottomSheet 函数来显示。
 4. **Container**：Container是一个容器组件也叫布局组件(可以理解为前端的div，块级元素)，负责布局、绘画、定位和大小。
+    
     | 属性名 | 类型 | 说明 |
     | :-: | :-: | :- |
     | key | Key | Container唯一表示符，用于查找更新 |
@@ -56,7 +57,7 @@
    2. ListView.builder(itemCount: 3, itemBuilder: (BuildContext context, int index) { return Container(height: 50, color: ...index... ,child: Center(child: Text(...index...)));}); 像这样，用构造函数创建的列表。使用IndexedWidgetBuilder，子级可以延迟构建，并且可以无限多个。
    3. ListView.separated() 与 ListView.builder 很像，但是它会在子级之间会做一些特殊的处理，比如分隔符，分割线等等
    4. ListView.custom：CustomScrollView(...)略
-9. **ListTile**：固定高度的单个行，通常包含一些文本以及前导或尾随图标。
+9.  **ListTile**：固定高度的单个行，通常包含一些文本以及前导或尾随图标。
 10. **Padding**：填充类，一个小部件，它通过给定的填充来插入其子级。当将布局约束传递给其子级时，填充将通过给定的填充来缩小约束，从而使子级以较小的尺寸进行布局。然后，填充将自身调整为其孩子的大小，并通过填充物使其膨胀，从而有效地在孩子周围创建了空白空间。Padding()与Container.padding属性两者之间其实没有任何区别。
 11. **Expanded**：一个小部件，可扩展Row，Column或Flex 的子级，以便该子级填充可用空间。
 12. **GestureDetector**：检测手势的小部件。尝试识别与其非null回调相对应的手势。如果此小部件有一个子项，则将其调整为该子项的大小调整行为。
