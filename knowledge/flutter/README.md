@@ -63,11 +63,11 @@
    2. ListView.builder(itemCount: 3, itemBuilder: (BuildContext context, int index) { return Container(height: 50, color: ...index... ,child: Center(child: Text(...index...)));}); 像这样，用构造函数创建的列表。使用IndexedWidgetBuilder，子级可以延迟构建，并且可以无限多个。
    3. ListView.separated() 与 ListView.builder 很像，但是它会在子级之间会做一些特殊的处理，比如分隔符，分割线等等
    4. ListView.custom：CustomScrollView(...)略
-9.  **ListTile**：固定高度的单个行，通常包含一些文本以及前导或尾随图标。
-10. **Padding**：填充类，一个小部件，它通过给定的填充来插入其子级。当将布局约束传递给其子级时，填充将通过给定的填充来缩小约束，从而使子级以较小的尺寸进行布局。然后，填充将自身调整为其孩子的大小，并通过填充物使其膨胀，从而有效地在孩子周围创建了空白空间。Padding()与Container.padding属性两者之间其实没有任何区别。
-11. **Expanded**：一个小部件，可扩展Row，Column或Flex 的子级，以便该子级填充可用空间。
-12. **GestureDetector**：检测手势的小部件。尝试识别与其非null回调相对应的手势。如果此小部件有一个子项，则将其调整为该子项的大小调整行为。
-
+   5.  **ListTile**：固定高度的单个行，通常包含一些文本以及前导或尾随图标。
+9.  **Padding**：填充类，一个小部件，它通过给定的填充来插入其子级。当将布局约束传递给其子级时，填充将通过给定的填充来缩小约束，从而使子级以较小的尺寸进行布局。然后，填充将自身调整为其孩子的大小，并通过填充物使其膨胀，从而有效地在孩子周围创建了空白空间。Padding()与Container.padding属性两者之间其实没有任何区别（有区别）。
+10. **Expanded**：一个小部件，可扩展Row，Column或Flex 的子级，以便该子级填充可用空间。
+11. **GestureDetector**：检测手势的小部件。尝试识别与其非null回调相对应的手势。如果此小部件有一个子项，则将其调整为该子项的大小调整行为。
+12. **NotificationListener**：在widget树中，子widget滚动时会向上发送notification，通过NotificationListener可以监控到该notification。NotificationListener也是一个widget，可以将被监控的widget放入其child内。onNotification为回调函数，ScrollNotification为存放滚动信息的地方。
 
 
 
@@ -76,5 +76,5 @@
 ##### 路由
 
 1. onGenerateRoute 路由拦截 使用时，不管是用 if语句 还是 switch语句，记得一定要加 else 和 default。否则会报错！
-2. ScopedModelDescendant的层级需要尽量低，可以避免大范围的UI重建。这里引用官方的例子。
+2. ScopedModelDescendant 的层级需要尽量低，可以避免大范围的UI重建。这里引用官方的例子。
 3. 新的 Widget 中想要拿到配置的 arguments 可以通过 ModalRoute 来拿。XXXXX({RouteSettings settings,}) : super(settings: settings); --- Map args = ModalRoute.of(context).settings.arguments;
