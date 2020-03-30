@@ -1,5 +1,5 @@
 原文链接：[GraphQL is the better REST](https://www.howtographql.com/basics/1-graphql-is-the-better-rest/ "GraphQL 是更好的 REST") <br/>
-作者：Github:EmilyQiRabbit <br/>
+作者：Github:EmilyQiRabbit 🌸<br/>
 作者创作时间：未知
 
 ------------------------------------------------------------------------------------------------
