@@ -18,11 +18,11 @@
 
 使用 REST API 时，你通常会通过访问多个接口来收集数据。在这个例子中，需要访问 `/users/<id>` 来获取用户信息。然后访问类似 `/users/<id>/posts` 这样的接口来获取用户所有的博客信息。再然后，还要访问第三个接口 `/users/<id>/followers`，它将会返回关注了这个用户所有的粉丝。
 
-![rest](../imgs/graphqlpic1.png)
+![rest](./image/pic_1.png)
 
 而如果是 GraphQL 呢，那么你只需要向 GraphQL 服务发送一个简单的请求，这个请求包含了具体的数据需求。然后服务就会返回一个 JSON 对象，满足所有这些数据需求。
 
-![graphql](../imgs/graphqlpic2.png)
+![graphql](./image/pic_2.png)
 
 ## 再不会有数据的过度/不足获取
 
