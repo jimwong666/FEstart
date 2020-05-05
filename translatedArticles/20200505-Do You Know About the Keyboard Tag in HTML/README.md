@@ -14,6 +14,7 @@ HTML5 的 \<kbd> 标签用于展示键盘输入。使用此标签包装键盘指
 让我们来看看它的实际效果。
 
 ## HTML
+
 ### 使用 \<kbd> 标签
 ```html
 <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Del</kbd>
