@@ -35,10 +35,11 @@ EVENT.Subscribe('Duang', function (masg) {
 });
 
 EVENT.Punlish('Duang', 'jim ');
-
+```
 
 ===============================================================
 
+```javascript
 /* 
 观察者模式 
 1.有一定耦合 
