@@ -1,51 +1,103 @@
 ```javascript
-## webpack4学习心得
+/* 
+发布-订阅模式
+1. 无耦合
+2. 基于一个事件（主题）通道，希望接收通知的对象 Subscriber 通过自定义事件订阅主题，被激活事件的对象 Publisher 通过发布主题事件的方式通知各个订阅该主题的 Subscriber 对象
+ */
+var PubSub = function () {
+    this.handlers = {};
+};
 
-- **npx**：可直接在命令行中运行 node_modules/.bin 目录下的命令，比如：npx webpack
+PubSub.prototype.Subscribe = function (eventType, handler) {
+    if (!(eventType in this.handlers)) {
+        this.handlers[eventType] = [];
+    };
+    this.handlers[eventType].push(handler);
+    return this;
+};
 
-- **更改webpack配置文件名**: npx webpack --config webpack.my.js(命令行中)，webpack --config webpack.my.js(package.json的scripts中)
+PubSub.prototype.unSubscribe = function (eventType) {
+    delete this.handlers[eventType];
+    return this;
+};
 
-- **scripts命令中的传参**：需要加"--"，后面跟参数。比如：npm run build --config webpack.my.js
+PubSub.prototype.Punlish = function (eventType) {
+    var _args = Array.prototype.slice.call(arguments, 1);
+    for (var i = 0, _handlders = this.handlers[eventType]; i < _handlders.length; i++) {
+        _handlders[i].apply(this, _args);
+    };
+};
 
-#### webpack --- module(loader)
+var EVENT = new PubSub;
 
-> loader特点：use后面跟字符串是使用单个loader，而后面跟数组可使用多个loader（数组中执行有顺序，**从右向左**/**从下向上**执行）
+EVENT.Subscribe('Duang', function (masg) {
+    console.log(masg + 'DuangDuangDuang~');
+});
 
-- **style-loader**：把 css 插入到 head 标签中
-- **css-loader**：解析 @import 这种语法的
-- **less-loader**：处理 less 语法，依赖 less，less-loader
-- **sass-loader**：处理 sass 语法，依赖 node-sass，sass-loader
-- **stylus**：处理 stylus 语法，依赖 stylus，stylus-loader
-- **postcss-loader**：处理css浏览器兼容前缀等问题，依赖postcss-loader(postcss-loader一般在less,sass等loader之后执行，在style,css之前执行，即表面顺序看：style, css, postcss, less, sass...(loader思路：less,sass等变成css => postcss => 项目使用的css)，config可以设置设置postcss.config.js的路径，默认在外层)，autoprefixer
-- **babel-loader**：高级语法转低级语法，依赖 @babel/core，babel-loader，@babel/preset-env(es6 -> es5)，@babel/plugin-proposal-class-properties(提案中的class语法)，@babel/plugin-proposal-decorators(提案中的装饰器语法)。。。等等
-
-#### webpack --- plugin
-
-> 插件都是类，都得new一下
-
-- **抽离css插件（mini-css-extract-plugin）**：此插件还有一个loader属性，可用于与style-loader相同的功能（但一个实例只能用于一个文件哦，想抽离成多个文件就多个实例）
-```js
-{
-	test: /\.css$/, 
-	use: [
-		MiniCssextractPlugin.loader, // 功能等同于下面的，都是生成style标签（但这是link形式的），但多了抽离css的功能
-		// { // 生成style标签
-		// 	loader:'style-loader',
-		// 	// options: { // 可调整位置
-		// 	// 	insert: 'head'
-		// 	// }
-		// },
-		{
-			loader: 'css-loader',
-		}
-	]
-},
-```
+EVENT.Punlish('Duang', 'jim ');
 
 
+/* 
+观察者模式 
+1.有一定耦合 
+2.对象间一种一对多的依赖关系
+*/
+class Subject {
+    constructor(name) {
+        this.name = name;
+        this.observers = []; // 观察者列表
+    }
 
-#### webpack --- 优化项
+    // 添加订阅者
+    add(observer) {
+        this.observers.push(observer);
+        // 这里：原文都是进行手动触发（并非自动），我改了下
+        this.notify(this.name);
+    }
 
-- **optimize-css-assets-webpack-plugin**: 压缩css(但是用了此插件，必须用uglifyjs-webpack-plugin手动压缩js，因为js原先是默认压缩的[有很多默认配置，直接导致连es6语法也不支持了。。。]，但用了这个插件，就不会默认压缩了~)
-- **uglifyjs-webpack-plugin**：压缩js
+    // 删除...
+    remove(observer) {
+        let idx = this.observers.findIndex(item => item === observer);
+        idx > -1 && this.observers.splice(idx, 1);
+        // 这里：原文都是进行手动触发（并非自动），我改了下
+        this.notify(this.name);
+    }
+
+    // 通知
+    notify(name) {
+        for (let o of this.observers) {
+            o.update(name);
+        }
+    }
+}
+
+// 观察者
+class Observer {
+    constructor(name) {
+        this.name = name;
+    }
+
+    // 目标对象更新时触发的回调，即收到更新通知后的回调
+    update(_name) {
+        console.log(`目标者通知我更新了，我是：${this.name}-${_name}`);
+    }
+}
+
+// 实例化【被观察者】
+let subject = new Subject("wangjian");
+
+// 实例化两个【观察者】
+// 这里：观察者可以不带参数
+let obs1 = new Observer('前端');
+let obs2 = new Observer('后端');
+
+// 向目标者【添加】观察者
+subject.add(obs1);
+subject.add(obs2);
+
+/* 这里：原文都是进行手动触发（并非自动），我改了下
+
+subject.notify('xyz');
+
+*/
 ```
