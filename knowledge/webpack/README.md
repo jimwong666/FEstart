@@ -56,3 +56,6 @@
 - **optimize-css-assets-webpack-plugin**: 压缩css(但是用了此插件，必须用uglifyjs-webpack-plugin手动压缩js，因为js原先是默认压缩的[有很多默认配置，直接导致连es6语法也不支持了。。。]，但用了这个插件，就不会默认压缩了~)
 - **uglifyjs-webpack-plugin**：压缩js
 ```
+
+# ouput
+- publicPath: 
