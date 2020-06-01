@@ -142,10 +142,3 @@ rules:
 ## 加以实践
 
 在JavaScript中转数字，充满着奇奇怪怪的边界用例。如果你不想考虑这些情况，用 parseFloat() 和Number.isNaN()的组合就最合适了。想灵活处理的话，就用Number()。个人而言，因为无需检查转换结果是否为NaN，我选择 archetype。
-
-
-
-### 使用 \<kbd> 标签
-```html
-<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Del</kbd>
-```
