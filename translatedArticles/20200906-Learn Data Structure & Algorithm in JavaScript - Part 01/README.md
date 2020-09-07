@@ -5,7 +5,7 @@
 ------------------------------------------------------------------------------------------------
 # ![翻译](../images/publicFile/icon_teranlation.png) 学习JavaScript中的数据结构和算法 | 第01部分
 
-###### 简介 (☝️)
+### 简介 (☝️)
 
 <p align="center">
 <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--8mO4yqci--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/fckjy97lgsne017ns9cp.png" alt="使用React Hooks进行状态管理 - 没有Redux和Context API">
@@ -36,7 +36,7 @@ class Car extends Vehicle {
 }
 ```
 
-### 👉 输出：
+#### 👉 输出：
 ```
 Tuut, tuut!
 Ford Mustang
@@ -44,7 +44,7 @@ Ford Mustang
 
 但是，原型继承模式意味着复制对象（📝📝）并更改其属性。这是JavaScript原型的示例
 
-### 👉 JavaScript 继承：
+#### 👉 JavaScript 继承：
 ```javascript
 function Sandwich(bread, ham, butter, cheese, tomato, cucumber) {
     this.bread = bread;
@@ -64,16 +64,16 @@ var sandwich = new Sandwich("bread", "ham", "butter", "cheese", "tomato", "cucum
 sandwich.log();
 ```
 
-### 👉 输出：
+#### 👉 输出：
 ```
 Let's add some bread and cheese
 ```
 
-###### 第一部分：大写O表示法 (😱 🔥 ⚡)
+### 第一部分：大写O表示法 (😱 🔥 ⚡)
 
 在本章的最后，您将了解如何在时间（执行时间）和空间（消耗的内存）方面分析算法的实现。（译者：算法复杂度）
 
-##### 大写O表示法入门（😮）
+#### 大写O表示法入门（😮）
 
 大写O表示法衡量算法的复杂性。用大写O表示，n表示输入数。问题是：“当n接近无穷大时会发生什么？（❓❓）” 大写O表示法告诉您算法的效率。
 
@@ -89,11 +89,11 @@ Let's add some bread and cheese
 
 图1-0和1-1说明了这些常见的时间复杂性，包括实时的和静态的。
 
-##### 常见范例（🤘）
+#### 常见范例（🤘）
 
 见图1-1，O(1)不变。因此，O(1)被称为恒定时间。O(n)是线性时间。并且由于O(n)是线性时间，因此下面的O(n)算法的一个示例是打印从0到n-1的数字，如下所示：
 
-### 线性时间：（🕙）
+#### 线性时间：（🕙）
 ```javascript
 // linear time code goes here
 function exampleLinear(n) {
@@ -106,7 +106,7 @@ exampleLinear(10)
 
 同样，O(n^2)是二次时间，O(n^3)是立方时间。这些复杂性的示例如下所示：
 
-### 次方时间: (🕔)
+#### 次方时间: (🕔)
 ```javascript
 // quadratic time code goes here
 function exampleQuadratic(n) {
@@ -120,7 +120,7 @@ function exampleQuadratic(n) {
 exampleQuadratic(10)
 ```
 
-### 立方时间: (🕣)
+#### 立方时间: (🕣)
 ```javascript
 // cubic time code goes here
 function exampleCubic(n) {
@@ -151,7 +151,7 @@ function exampleLogarithmic(n) {
 exampleLogarithmic(100);
 ```
 
-##### 大写O表示法规则
+### 大写O表示法规则
 
 <p align="center">
 <img src="https://github.com/jimwong666/FEstart/blob/master/translatedArticles/20200906-Learn%20Data%20Structure%20%26%20Algorithm%20in%20JavaScript%20-%20Part%2001/images/Rules%20of%20Big-O%20Notation.PNG" alt="大写O表示法规则">
@@ -165,7 +165,7 @@ exampleLogarithmic(100);
 
 > 注意：暂时不要尝试了解它们。请特别注意前三个规则和多项式规则，因为它们是最常用的。我将在以下各节中讨论每个规则。
 
-##### 系数规则：“摆脱常数”（💯）
+#### 系数规则：“摆脱常数”（💯）
 
 该规则仅要求您忽略任何非输入大小的常量。大输入量时，Big-O中的系数（或常数）可以忽略不计。因此，这是Big-O表示法的最重要规则。
 
@@ -210,7 +210,7 @@ exampleLogarithmic(100);
 
 该代码块具有 f（n）= n + 1（在线性时间内，它也可以是n-1）。上一个操作有 +1个（计数+ = 1）。这仍然具有 O（n）的Big-O表示法。这是因为一个操作不像我们前面所说的那样依赖于输入n。
 
-##### 求和规则：“添加大数据”（➕）
+#### 求和规则：“添加大数据”（➕）
 
 求和规则很容易理解；可以增加时间复杂度。想象一个主（涉及函数 a（n））算法，其中涉及另外两个算法（即for循环）。该主算法的O符号只是其他两种O符号的总和。
 
@@ -234,7 +234,7 @@ exampleLogarithmic(100);
 
  在此示例中， f（n）= 1n（或1n）， g（n）= 5n。由于 f（n）+ g（n）= 6n（或 h（n）+ p（n））。这意味着 O（h（n）+ p（n））为 6n或 O（h（n）+ p（n））= 6n。但是，当应用系数规则时，最终结果为 O（n）= n。这是因为两个循环或运算都遵循该系数规则 f（n）为 O（g（n）），然后 kf（n）是 O（g（n））
 
-##### 产品规则：“乘以大数运算法则”（❌）
+#### 产品规则：“乘以大数运算法则”（❌）
 
 乘积规则只是简单说明了O的乘积。
 
@@ -257,7 +257,7 @@ exampleLogarithmic(100);
 
  在此示例中， f（n）= 5nxn是因为第二个循环具有 5nxn，其运行了 5n次。因此，这总计为 5n2操作。应用系数规则，结果是 O（n）= n2。
 
- ##### 多项式规则：“ k的幂的大O”（📈）
+ #### 多项式规则：“ k的幂的大O”（📈）
 
  多项式规则指出，多项式时间复杂度具有相同多项式的Big-O表示法（请看基础多项式主题）
 
@@ -277,7 +277,7 @@ exampleLogarithmic(100);
 
 在此示例中，f（n）= n2因为第一个循环运行n * n次迭代，这等效于 n2根据多项式规则 f（n）是阶数{k} k的多项式，则 f（n）为 O（nķ）。
 
-##### 摘要（📚）
+### 摘要（📚）
 
 大写O表示法对于分析和比较算法效率很重要。大写O表示法的分析从查看代码开始，然后应用规则，应用规则是因为简化大写O表示法表示法线性或二次规则还不够。以下是最常用的规则：
 
