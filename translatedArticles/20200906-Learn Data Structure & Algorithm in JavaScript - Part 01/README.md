@@ -157,6 +157,12 @@ exampleLogarithmic(100);
 <img src="https://github.com/jimwong666/FEstart/blob/master/translatedArticles/20200906-Learn%20Data%20Structure%20%26%20Algorithm%20in%20JavaScript%20-%20Part%2001/images/Rules%20of%20Big-O%20Notation.PNG" alt="大写O表示法规则">
 <div align="center">不好翻译</div>
 </p>
+- 系数规则：可忽略系数
+- 求和规则：复杂度相加（f(n)+g(n) => O(h(n)+g(n))）
+- 乘法规则：复杂度相乘（f(n)g(n) => O(h(n)g(n))）
+- 传递规则：替换
+- 次方规则：次方
+- 幂规则：log(nk) => O(log(n)) 忽略k
 
 <p align="center">
 <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--jAR-Ss6E--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_66%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/wfz65fnnokqvrwgpga4z.gif" alt="算法">
@@ -281,7 +287,7 @@ exampleLogarithmic(100);
 
 大写O表示法对于分析和比较算法效率很重要。大写O表示法的分析从查看代码开始，然后应用规则，应用规则是因为简化大写O表示法表示法线性或二次规则还不够。以下是最常用的规则：
 
-- 消除常数
-- 加上大O符号
-- 大O表示法相乘
-- 确定大O表示法的多项式
+- 忽略常数
+- 复杂度O相加
+- 复杂度O相乘
+- 确定O的次方数
