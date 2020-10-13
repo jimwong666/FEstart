@@ -8,7 +8,7 @@
 ### 简介 (☝️)
 
 <p align="center">
-<img src="https://res.cloudinary.com/practicaldev/image/fetch/s--8mO4yqci--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/fckjy97lgsne017ns9cp.png" alt="使用React Hooks进行状态管理 - 没有Redux和Context API">
+<img src="https://res.cloudinary.com/practicaldev/image/fetch/s--8mO4yqci--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/fckjy97lgsne017ns9cp.png" alt="学习JavaScript中的数据结构和算法">
 </p>
 
 因为如您所见，我写这个系列文章的动机（🔥🔥）是目前缺少关于JavaScript编写的数据结构和算法的可用信息，而我们见到的大多数关于数据结构和算法书的书都是关于 Java 和 C++ 的：
