@@ -78,3 +78,27 @@
 1. onGenerateRoute 路由拦截 使用时，不管是用 if语句 还是 switch语句，记得一定要加 else 和 default。否则会报错！
 2. ScopedModelDescendant 的层级需要尽量低，可以避免大范围的UI重建。这里引用官方的例子。
 3. 新的 Widget 中想要拿到配置的 arguments 可以通过 ModalRoute 来拿。XXXXX({RouteSettings settings,}) : super(settings: settings); --- Map args = ModalRoute.of(context).settings.arguments;
+
+
+
+#### 20201024补充
+1. 配置各种环境变量（参考：https://blog.csdn.net/qq_27096221/article/details/103971697?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~first_rank_v2~rank_v25-12-103971697.nonecase&utm_term=vscode%20%E6%89%93%E5%BC%80flutter&spm=1000.2123.3001.4430）
+2. 由于墙的缘故，所以有些国外的maven仓库下载会有问题，所以 flutter.gradle 与 build.gradle 两个文件需要改写maven地址
+   1. flutter\packages\flutter_tools\gradle\flutter.gradle（flutter SDK目录下的）
+   2. ***\android\build.gradle（项目目录）
+```
+// 这些目录地下的
+//google()
+//jcenter()
+//都要改写成
+
+   maven { url 'https://maven.aliyun.com/repository/google' }
+   maven { url 'https://maven.aliyun.com/repository/jcenter' }
+   maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+
+// 即国内的阿里云的镜像库
+```
+（参考：https://blog.csdn.net/jinglinggg/article/details/105383270）
+
+3. 打开 AS，目录里面搜索 gradle，最小支持版本需要是5.6.4，否则项目会启动失败，这里的解决方法是：打开flutter项目目录\android\gradle\wrapper\gradle-wrapper.properties 文件，然后直接修改 distributionUrl 的值的版本号（参考：https://blog.csdn.net/jinglinggg/article/details/105383270）
+
