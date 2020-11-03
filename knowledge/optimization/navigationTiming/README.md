@@ -22,7 +22,7 @@
 下图是W3C第一版的 Navigation Timing 的处理模型。从当前浏览器窗口卸载旧页面开始，到新页面加载完成，整个过程一共被切分为 9 个小块：提示卸载旧文档、重定向/卸载、应用缓存、DNS 解析、TCP 握手、HTTP 请求处理、HTTP 响应处理、DOM 处理、文档装载完成。每个小块的首尾、中间做事件分界，取 Unix 时间戳，两两事件之间计算时间差，从而获取中间过程的耗时（精确到毫秒级别）。
 
 <p align="center">
-  ![W3C Navigation Timing Level 1(w3.org)](https://pic2.zhimg.com/80/v2-9f63018694b9b4471e28295ddb675a91_720w.jpg)
+  <img src="https://pic2.zhimg.com/80/v2-9f63018694b9b4471e28295ddb675a91_720w.jpg" alt="W3C Navigation Timing Level 1(w3.org)">
 </p>
 <p align="center">
   <span>W3C Navigation Timing Level 1(w3.org)</span>
