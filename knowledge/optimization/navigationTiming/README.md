@@ -2,7 +2,7 @@
 
 ![Understanding Memoization In JavaScript](https://pic1.zhimg.com/v2-514596bfb7c60cc8c2272f6d3c622331_1440w.jpg?source=172ae18b)
 
-> 我们开发过很多前端应用，可是对性能的测试却很少
+> 我们开发过很多前端应用，可是对前端应用性能的了解却胜少
 
 #### 为什么要监控页面性能？
 
