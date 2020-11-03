@@ -4,6 +4,8 @@
 <img src="https://pic1.zhimg.com/v2-514596bfb7c60cc8c2272f6d3c622331_1440w.jpg?source=172ae18b" alt="Understanding Memoization In JavaScript">
 </p>
 
+![file-list](https://pic1.zhimg.com/v2-514596bfb7c60cc8c2272f6d3c622331_1440w.jpg?source=172ae18b)
+
 > 我们开发过很多前端应用，可是对性能的测试却很少
 
 #### 为什么要监控页面性能？
@@ -25,6 +27,10 @@
 <img src="https://pic2.zhimg.com/80/v2-9f63018694b9b4471e28295ddb675a91_720w.jpg" alt="W3C Navigation Timing Level 1(w3.org)">
 <span>W3C Navigation Timing Level 1(w3.org)</span>
 </p>
+
+
+
+![file-list](https://pic2.zhimg.com/80/v2-9f63018694b9b4471e28295ddb675a91_720w.jpg)
 
 上图是 Level 1 的规范，2012 年底进入候选建议阶段，至今仍在日常使用中；但是在W3C的议程上，它已经功成身退，让位给了精度更高，功能更强大，层次更分明的 Level 2（处理模型如下图）。比如独立划分出来的 Resource Timing，使得我们可以获取具体资源的详细耗时信息。
 
