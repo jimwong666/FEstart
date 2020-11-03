@@ -1,10 +1,6 @@
 # 前端页面性能监控
 
-<p align="center">
-<img src="https://pic1.zhimg.com/v2-514596bfb7c60cc8c2272f6d3c622331_1440w.jpg?source=172ae18b" alt="Understanding Memoization In JavaScript">
-</p>
-
-![file-list](https://pic1.zhimg.com/v2-514596bfb7c60cc8c2272f6d3c622331_1440w.jpg?source=172ae18b)
+![Understanding Memoization In JavaScript](https://pic1.zhimg.com/v2-514596bfb7c60cc8c2272f6d3c622331_1440w.jpg?source=172ae18b)
 
 > 我们开发过很多前端应用，可是对性能的测试却很少
 
@@ -24,26 +20,31 @@
 下图是W3C第一版的 Navigation Timing 的处理模型。从当前浏览器窗口卸载旧页面开始，到新页面加载完成，整个过程一共被切分为 9 个小块：提示卸载旧文档、重定向/卸载、应用缓存、DNS 解析、TCP 握手、HTTP 请求处理、HTTP 响应处理、DOM 处理、文档装载完成。每个小块的首尾、中间做事件分界，取 Unix 时间戳，两两事件之间计算时间差，从而获取中间过程的耗时（精确到毫秒级别）。
 
 <p align="center">
-<img src="https://pic2.zhimg.com/80/v2-9f63018694b9b4471e28295ddb675a91_720w.jpg" alt="W3C Navigation Timing Level 1(w3.org)">
-<span>W3C Navigation Timing Level 1(w3.org)</span>
+  ![W3C Navigation Timing Level 1(w3.org)](https://pic2.zhimg.com/80/v2-9f63018694b9b4471e28295ddb675a91_720w.jpg)
+</p>
+<p align="center">
+  <span>W3C Navigation Timing Level 1(w3.org)</span>
 </p>
 
 
 
-![file-list](https://pic2.zhimg.com/80/v2-9f63018694b9b4471e28295ddb675a91_720w.jpg)
 
 上图是 Level 1 的规范，2012 年底进入候选建议阶段，至今仍在日常使用中；但是在W3C的议程上，它已经功成身退，让位给了精度更高，功能更强大，层次更分明的 Level 2（处理模型如下图）。比如独立划分出来的 Resource Timing，使得我们可以获取具体资源的详细耗时信息。
 
 <p align="center">
-<img src="https://pic2.zhimg.com/80/v2-dc4740614499ad2493efce8d5e827eb1_720w.jpg" alt="W3C Navigation Timing Level 2(w3.org)">
-<span>W3C Navigation Timing Level 2(w3.org)</span>
+  <img src="https://pic2.zhimg.com/80/v2-dc4740614499ad2493efce8d5e827eb1_720w.jpg" alt="W3C Navigation Timing Level 2(w3.org)">
+</p>
+<p align="center">
+  <span>W3C Navigation Timing Level 2(w3.org)</span> 
 </p>
 
 #### 指标解读
 
 <p align="center">
-<img src="https://pic1.zhimg.com/80/v2-e4e26420d6b681b2b15b9edf9db9d4d0_720w.jpg" alt="指标解读">
-<span>指标解读</span>
+  <img src="https://pic1.zhimg.com/80/v2-e4e26420d6b681b2b15b9edf9db9d4d0_720w.jpg" alt="指标解读">
+</p>
+<p align="center">
+  <span>指标解读</span> 
 </p>
 
 #### 采集页面性能的关键指标
@@ -51,8 +52,10 @@
 使用上面的指标，我们可以计算许多重要的指标，如首字节的时间，页面加载时间，dns查找以及连接是否安全。我们把 Navigation Timing API 提供的指标做下归类，按照从上到下的时间流，右边的时刻标记了每个指标从哪里开始计算到哪里截止，比如，跳转时间 redirect 由 redirectEnd - redirectStart 计算得到，其他的类推。
 
 <p align="center">
-<img src="https://pic4.zhimg.com/80/v2-d80be1162b4d17d7c6ff265c26e30c3f_720w.jpg" alt="Navigation Timing API">
-<span>Navigation Timing API</span>
+  <img src="https://pic4.zhimg.com/80/v2-d80be1162b4d17d7c6ff265c26e30c3f_720w.jpg" alt="Navigation Timing API">
+</p>
+<p align="center">
+  <span>Navigation Timing API</span>
 </p>
 
 #### 确定统计起始点 （navigationStart vs fetchStart）
@@ -134,8 +137,10 @@ Navigation Timing API可以监控大部分前端页面的性能。但随着SPA�
 幸运的是，目前W3C关于首屏统计已经进入了提议阶段，以Chrome为首的浏览器正在打造更能代表用户使用体验的FP、FCP、FMP指标，并且逐步开放API。
 
 <p align="center">
-<img src="https://pic2.zhimg.com/80/v2-7bbd2f7c671e5c9e292272040cb3a14d_720w.jpg" alt="用户体验指标">
-<span>用户体验指标</span>
+  <img src="https://pic2.zhimg.com/80/v2-7bbd2f7c671e5c9e292272040cb3a14d_720w.jpg" alt="用户体验指标">
+</p>
+<p align="center">
+  <span>用户体验指标</span>
 </p>
 
 ##### 注意点
