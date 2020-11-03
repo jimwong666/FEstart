@@ -92,9 +92,7 @@ if (performance) {
   <span>Navigation Timing API</span>
 </p>
 
-#### 确定统计起始点 （navigationStart vs fetchStart）
-
-网络性能
+【非页面性能】
 
 #### 重定向耗时
 
@@ -130,6 +128,11 @@ responseEnd - responseStart
 
 > 使用内容分发网络（CDN）和减少请求。使用CDN可以减少网络的请求时延，CDN的域名不要和主站的域名一样，这样会防止访问CDN时还携带主站cookie的问题，对于网络请求，可以使用fetch发送无cookie的请求，减少http包的大小。也可以使用本地缓存策略，尽量减少对服务器数据的重复获取。
 
+
+【页面性能】
+
+#### 确定统计起始点 （navigationStart vs fetchStart）
+
 页面性能统计的起始点时间，应该是用户输入网址回车后开始等待的时间。一个是通过navigationStart获取，相当于在URL输入栏回车或者页面按F5刷新的时间点；另外一个是通过 fetchStart，相当于浏览器准备好使用 HTTP 请求获取文档的时间。
 
 从开发者实际分析使用的场景，浏览器重定向、卸载页面的耗时对页面加载分析并无太大作用；通常建议使用 fetchStart 作为统计起始点。
@@ -143,8 +146,8 @@ responseEnd - responseStart
  domComplete - domInteractive
 
  > 在浏览器端的渲染过程，如大型框架，vue和react，它的模板其实都是在浏览器端进行渲染的，不是直出的html，而是要走框架中相关的框架代码才能去渲染出页面，这个渲染过程对于首屏就有较大的损耗，白屏的时间会有所增加。在必要的情况下可以在服务端进行整个html的渲染，从而将整个html直出到我们的浏览器端，而非在浏览器端进行渲染。
- ![渲染](https://mmbiz.qpic.cn/mmbiz_png/aVp1YC8UV0fULlqAmCyhMXIMclUIdrBu3M8TqiawZusYUP4ud3ajOPHb9CuicbO1CNN3S6YHBOytCVhwbxLFUNag/640?wx_fmt=png)
- 还有一个问题就是，在默认情况下，JavaScript 执行会“阻止解析器”，当浏览器遇到一个 script 外链标记时，DOM 构建将暂停，会将控制权移交给 JavaScript 运行时，等脚本下载执行完毕，然后再继续构建 DOM。而且内联脚本始终会阻止解析器，除非编写额外代码来推迟它们的执行。我们可以把 script 外链加入到页面底部，也可以使用 defer 或 async 延迟执行。defer 和 async 的区别就是 defer 是有序的，代码的执行按在html中的先后顺序，而 async 是无序的，只要下载完毕就会立即执行。或者使用异步的编程方法，比如settimeout，也可以使用多线webworker，它们不会阻碍 DOM 的渲染。
+ >![渲染](https://mmbiz.qpic.cn/mmbiz_png/aVp1YC8UV0fULlqAmCyhMXIMclUIdrBu3M8TqiawZusYUP4ud3ajOPHb9CuicbO1CNN3S6YHBOytCVhwbxLFUNag/640?wx_fmt=png)
+ >还有一个问题就是，在默认情况下，JavaScript 执行会“阻止解析器”，当浏览器遇到一个 script 外链标记时，DOM 构建将暂停，会将控制权移交给 JavaScript 运行时，等脚本下载执行完毕，然后再继续构建 DOM。而且内联脚本始终会阻止解析器，除非编写额外代码来推迟它们的执行。我们可以把 script 外链加入到页面底部，也可以使用 defer 或 async 延迟执行。defer 和 async 的区别就是 defer 是有序的，代码的执行按在html中的先后顺序，而 async 是无序的，只要下载完毕就会立即执行。或者使用异步的编程方法，比如settimeout，也可以使用多线webworker，它们不会阻碍 DOM 的渲染。
  > ```html
  > <script async type="text/javascript" src="app1.js"></script>
  > <script defer type="text/javascript" src="app2.js"></script>
@@ -212,6 +215,121 @@ times.blankTime = (t.domInteractive || t.domLoading) - t.fetchStart;
 times.domReadyTime = t.domContentLoadedEventEnd - t.fetchStart;
 ```
 
+#### 资源性能API
+
+performance.timing记录的是用于分析页面整体性能指标。如果要获取个别资源（例如JS、图片）的性能指标，就需要使用Resource Timing API。
+
+performance.getEntries()方法，包含了所有静态资源的数组列表；每一项是一个请求的相关参数有name，type，时间等等。下图是chrome显示腾讯网的相关资源列表。
+
+
+<p align="center">
+  <img src="https://mmbiz.qpic.cn/mmbiz_png/aVp1YC8UV0fULlqAmCyhMXIMclUIdrBuNdDOalicg9FDBnyMLWE6RKhtNe6ONGZZQwCqVdQlxBtcYAgeQ2ZEX2A/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1
+" alt="performance.getEntries()">
+</p>
+<p align="center">
+  <span>performance.getEntries()</span>
+</p>
+
+可以看到，与 performance.timing 对比： 没有与 DOM 相关的属性，新增了name、entryType、initiatorType和duration四个属性。它们是：
+
+- name表示：资源名称，也是资源的绝对路径，可以通过performance.getEntriesByName（name属性的值），来获取这个资源加载的具体属性。
+
+- entryType表示：资源类型 "resource"，还有“navigation”, “mark”, 和 “measure”另外3种。
+  - <p align="center">
+  <img src="https://mmbiz.qpic.cn/mmbiz_png/aVp1YC8UV0fULlqAmCyhMXIMclUIdrBuKeAn804ianOZ9Fb28GJLcjw4GIrSjbun7jLMHIQ6eiaicDCLhHrRJDIcQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+</p>
+- initiatorType表示：请求来源 "link"，即表示<link> 标签，还有“script”即 <script>，“img”即<img>标签，“css”比如background的url方式加载资源以及“redirect”即重定向 等。
+  - <p align="center">
+  <img src="https://mmbiz.qpic.cn/mmbiz_png/aVp1YC8UV0fULlqAmCyhMXIMclUIdrBukw2016y1SXKOanKNLFAg6CBJmBBeiaA4Ns59DiaibMFlE35wqiaOhFoWSQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+</p>
+- duration表示：加载时间，是一个毫秒数字。
+  - 受同源策略影响，跨域资源获取到的时间点，通常为0，如果需要更详细准确的时间点，可以单独请求资源通过performance.timing获得。或者资源服务器开启响应头Timing-Allow-Origin，添加指定来源站点，如下所示：
+    - ``` Timing-Allow-Origin: https://qq.com ```
+
+#### 方法集合
+
+除了performance.getEntries之外，performance还包含一系列有用的方法。如下图：
+
+<p align="center">
+  <img src="https://mmbiz.qpic.cn/mmbiz_png/aVp1YC8UV0fULlqAmCyhMXIMclUIdrBuh5jlGwHUGQJVQibU0DsvEwV0FoTBY2Pnicl2rjbS90lvzgNYRowpXKNA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+</p>
+
+##### performance.now()
+
+performance.now() 返回一个当前页面执行的时间的时间戳，用来精确计算程序执行时间。与 Date.now() 不同的是，它使用了一个浮点数，返回了以毫秒为单位，小数点精确到微秒级别的时间，更加精准。并且不会受系统程序执行阻塞的影响，performance.now() 的时间是以恒定速率递增的，不受系统时间的影响（系统时间可被人为或软件调整）。performance.timing.navigationStart + performance.now() 约等于 Date.now()。
+
+```js
+let t0 = window.performance.now();
+doSomething();
+let t1 = window.performance.now();
+console.log("doSomething函数执行了" + (t1 - t0) + "毫秒.")
+```
+
+通过这个方法，我们可以用来测试某一段代码执行了多少时间。
+
+##### performance.mark()
+
+mark方法用来自定义添加标记时间。使用方法如下：
+
+```js
+var nameStart = 'markStart';
+var nameEnd   = 'markEnd';
+// 函数执行前做个标记
+window.performance.mark(nameStart);
+for (var i = 0; i < n; i++) {
+    doSomething
+}
+// 函数执行后再做个标记
+window.performance.mark(nameEnd);
+// 然后测量这个两个标记间的时间距离，并保存起来
+var name = 'myMeasure';
+window.performance.measure(name, nameStart, nameEnd);
+```
+
+保存后的值可以通过 performance.getEntriesByname( 'myMeasure' )或者 performance.getEntriesByType（'measure'）查询。
+
+##### Performance.clearMeasures()
+从浏览器的性能输入缓冲区中移除自定义添加的 measure
+
+##### Performance.getEntriesByName()
+返回一个 PerformanceEntry 对象的列表，基于给定的 name 和 entry type
+
+##### Performance.getEntriesByType()
+返回一个 PerformanceEntry 对象的列表，基于给定的 entry type
+
+##### Performance.measure()
+在浏览器的指定 start mark 和 end mark 间的性能输入缓冲区中创建一个指定名称的时间戳，见上例
+
+##### Performance.toJSON() 
+是一个 JSON 格式转化器，返回 Performance 对象的 JSON 对象
+
+
+#### 资源缓冲区监控
+
+##### Performance.setResourceTimingBufferSize()
+
+设置当前页面可缓存的最大资源数据个数，entryType为resource的资源数据个数。超出时，会清空所有entryType为resource的资源数据。参数为整数(maxSize)。配合performance.onresourcetimingbufferfull事件可以有效监控资源缓冲区。当entryType为resource的资源数量超出设置值的时候会触发该事件。
+
+##### Performance.clearResourceTimings()
+
+从浏览器的性能数据缓冲区中移除所有的 entryType 是 "resource" 的 performance entries
+
+下面是mdn上关于这个属性的一个demo。这个demo的主要内容是当缓冲区内容满时，调用buffer_full函数。
+
+```js
+function buffer_full(event) {
+  console.log("WARNING: Resource Timing Buffer is FULL!");
+  performance.setResourceTimingBufferSize(200);
+}
+function init() {
+  // Set a callback if the resource buffer becomes filled
+  performance.onresourcetimingbufferfull = buffer_full;
+}
+<body onload="init()">
+```
+
+使用performance的这些属性和方法，能够准确的记录下我们想要的时间，再加上日志采集等功能的辅助，我们就能很容易的掌握自己网站的各项性能指标了。
+
 #### SPA盛行之际
 
 Navigation Timing API可以监控大部分前端页面的性能。但随着SPA模式的盛行，类似vue，reactjs等框架的普及，页面内容渲染的时机被改变了，W3C标准无法完全满足原来的监控意义。
@@ -264,3 +382,7 @@ function logData() {
 ##### 最终方案
 
 当浏览器支持sendBeacon方法，优先使用该方法，使用img方式降级上报。
+
+#### 小结
+
+Performance API 用来做前端性能监控非常有用，它提供了很多方便测试我们程序性能的接口。比如mark和measure。很多优秀的框架也用到了这个API进行测试。它里面就频繁用到了mark和measure来测试程序性能。所以想要开发高性能的web程序，了解Performace API还是非常重要的。
