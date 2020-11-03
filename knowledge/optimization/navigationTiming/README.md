@@ -16,6 +16,13 @@
 
 为了帮助开发者更好地衡量和改进前端页面性能，W3C性能小组引入了 Navigation Timing API ，实现了自动、精准的页面性能打点；开发者可以通过 window.performance 属性获取。
 
+<p align="center">
+  <img src="https://mmbiz.qpic.cn/mmbiz_png/aVp1YC8UV0fULlqAmCyhMXIMclUIdrBumozhq72qogNMhiaibbNqplxAJVWdkZLhjvpEJpUrlYafibnsQRD7kibwwg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="window.performance">
+</p>
+<p align="center">
+  <span>window.performance</span>
+</p>
+
 - performance.timing 接口（定义了从 navigationStart 至 loadEventEnd 的 21 个只读属性）
 - performance.navigation（定义了当前文档的导航信息，比如是重载还是向前向后等）
 
