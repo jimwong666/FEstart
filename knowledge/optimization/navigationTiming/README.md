@@ -27,19 +27,17 @@ if (performance) {
   <span>window.performance</span>
 </p>
 
-### 使用性能API（performance.timing方法）
+### 使用性能API（主要是performance.timing方法）
 
 - **performance.memory**：显示此刻内存占用情况，它是一个动态值
   - usedJSHeapSize：JS 对象（包括V8引擎内部对象）占用的内存数
   - totalJSHeapSize：可使用的内存
   - jsHeapSizeLimit：内存大小限制
-  > 
   > 通常，usedJSHeapSize不能大于totalJSHeapSize，如果大于，有可能出现了内存泄漏。
-  > 
 
-- **performance.navigation**：定义了当前文档的导航信息，比如是重载还是向前向后等
+- **performance.navigation**：定义了当前文档的导航信息，比如是重载还是前进、后退等
   - 0 表示 TYPE_NAVIGATENEXT 正常进入的页面（非刷新、非重定向等）
-  - 1 表示 TYPE_RELOAD 通过 window.location.reload() 刷新的页面
+  - 1 表示 TYPE_RELOAD 通过 window.location.reload()调用 或者点击刷新的页面
   - 2 表示 TYPE_BACK_FORWARD 通过浏览器的前进后退按钮进入的页面（历史记录）
   - 255 表示 TYPE_UNDEFINED 非以上方式进入的页面
 - **performance.onresourcetimingbufferfull**：属性是一个在resourcetimingbufferfull事件触发时会被调用的 event handler 。它的值是一个手动设置的回调函数，这个回调函数会在浏览器的资源时间性能缓冲区满时执行。
@@ -84,7 +82,7 @@ if (performance) {
   <span>Navigation Timing API</span>
 </p>
 
-#### 非页面性能统计
+#### 网络和后台响应性能统计
 
 ##### 重定向耗时
 
@@ -117,6 +115,7 @@ domainLookupEnd - domainLookupStart
 ```
 responseStart - navigationStart
 ```
+> 后台处理时间：responseStart - requestStart
 
 ##### TCP链接耗时
 
@@ -163,7 +162,7 @@ responseEnd - responseStart
 
 具备一定意义上的指标可以使用， <img src="https://www.zhihu.com/equation?tex=domContentLoadedEventEnd+-+fetchStart" alt="白屏时间"> ，甚至使用 <img src="https://www.zhihu.com/equation?tex=loadEventStart+-+fetchStart" alt="白屏时间"> ，此时页面DOM树已经解析完成并且显示内容。
 
-#### 资源性能API（performance.getEntries()方法）
+#### 资源性能API（主要是performance.getEntries()方法）
 
 performance.timing记录的是用于分析页面整体性能指标。如果要获取个别资源（例如JS、图片）的性能指标，就需要使用Resource Timing API。
 
