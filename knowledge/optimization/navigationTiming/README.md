@@ -14,7 +14,7 @@
 
 ![Understanding Memoization In JavaScript](https://pic1.zhimg.com/v2-514596bfb7c60cc8c2272f6d3c622331_1440w.jpg?source=172ae18b)
 
-> 我们开发过很多前端应用，可是对前端应用性能的了解却胜少
+> 我们开发过很多应用，可是对应用性能的了解却胜少
 
 #### 为什么要监控页面性能？
 
@@ -32,9 +32,6 @@ if (performance) {
     console.log(performance);
 }
 ```
-
-### 使用性能API（performance.timing方法）
-
 <p align="center">
   <img src="https://mmbiz.qpic.cn/mmbiz_png/aVp1YC8UV0fULlqAmCyhMXIMclUIdrBumozhq72qogNMhiaibbNqplxAJVWdkZLhjvpEJpUrlYafibnsQRD7kibwwg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="window.performance">
 </p>
@@ -42,13 +39,16 @@ if (performance) {
   <span>window.performance</span>
 </p>
 
+### 使用性能API（performance.timing方法）
+
 - **performance.memory**：显示此刻内存占用情况，它是一个动态值
   - usedJSHeapSize：JS 对象（包括V8引擎内部对象）占用的内存数
   - totalJSHeapSize：可使用的内存
   - jsHeapSizeLimit：内存大小限制
+> 
+> 通常，usedJSHeapSize不能大于totalJSHeapSize，如果大于，有可能出现了内存泄漏。
+> 
 
-  > 通常，usedJSHeapSize不能大于totalJSHeapSize，如果大于，有可能出现了内存泄漏。
-  
 - **performance.navigation**:定义了当前文档的导航信息，比如是重载还是向前向后等
   - 0 表示 TYPE_NAVIGATENEXT 正常进入的页面（非刷新、非重定向等）
   - 1 表示 TYPE_RELOAD 通过 window.location.reload() 刷新的页面
