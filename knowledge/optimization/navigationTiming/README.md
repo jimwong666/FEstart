@@ -239,12 +239,14 @@ performance.getEntries()方法，包含了所有静态资源的数组列表；�
   <img src="https://mmbiz.qpic.cn/mmbiz_png/aVp1YC8UV0fULlqAmCyhMXIMclUIdrBuKeAn804ianOZ9Fb28GJLcjw4GIrSjbun7jLMHIQ6eiaicDCLhHrRJDIcQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
 </p>
 - initiatorType表示：请求来源 "link"，即表示<link> 标签，还有“script”即 <script>，“img”即<img>标签，“css”比如background的url方式加载资源以及“redirect”即重定向 等。
-  - <p align="center">
+<p align="center">
   <img src="https://mmbiz.qpic.cn/mmbiz_png/aVp1YC8UV0fULlqAmCyhMXIMclUIdrBukw2016y1SXKOanKNLFAg6CBJmBBeiaA4Ns59DiaibMFlE35wqiaOhFoWSQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
 </p>
 - duration表示：加载时间，是一个毫秒数字。
   - 受同源策略影响，跨域资源获取到的时间点，通常为0，如果需要更详细准确的时间点，可以单独请求资源通过performance.timing获得。或者资源服务器开启响应头Timing-Allow-Origin，添加指定来源站点，如下所示：
-    - ``` Timing-Allow-Origin: https://qq.com ```
+  ``` 
+    Timing-Allow-Origin: https://qq.com 
+  ```
 
 #### 方法集合
 
