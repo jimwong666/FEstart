@@ -1,3 +1,15 @@
+
+
+///
+
+在这个信息大爆炸的时代，随着前端页面越来越迎合大众日益增长的视觉审美、交互体验，也为了在页面填充更多实用信息等等，前端的种种也就越来越庞大。导致前端越来越重要，越来越复杂，而后就会越来越脆弱~
+
+所以我们需要一个性能监控系统，持续监控和预警页面性能的状况，并且在发现瓶颈的时候指导优化工作。比如 [这个](https://yueying.effirst.com/?vf=zhihu)-阿里UC岳鹰全景监控平台 ，它是一个通用、低侵入性、自动上报的页面性能监控方案。主要采用的是Navigation Timing API以及sendBeacon等方法。
+
+今天我们了解一下其中的基本原理。
+
+
+
 # 前端页面性能监控
 
 ![Understanding Memoization In JavaScript](https://pic1.zhimg.com/v2-514596bfb7c60cc8c2272f6d3c622331_1440w.jpg?source=172ae18b)
@@ -6,15 +18,9 @@
 
 #### 为什么要监控页面性能？
 
-在这个信息大爆炸的时代，随着前端页面越来越迎合大众日益增长的视觉审美、交互体验，也为了在页面填充更多实用信息等等，前端的种种也就越来越庞大。导致前端越来越重要，越来越复杂，而后就会越来越脆弱~
+在同样的网络环境下，有两个同样能满足你的需求的网站，一个唰的一下就加载出来了，另一个白屏转圈转了半天内容才出来，如果让你选择，你会用哪一个？
 
-所以我们需要一个性能监控系统，持续监控和预警页面性能的状况，并且在发现瓶颈的时候指导优化工作。比如 [这个](https://yueying.effirst.com/?vf=zhihu)-阿里UC岳鹰全景监控平台 ，它是一个通用、低侵入性、自动上报的页面性能监控方案。主要采用的是Navigation Timing API以及sendBeacon等方法。
-
-今天我们了解一下其中的基本原理。
-
-#### 理解Navigation Timing API的性能指标
-
-为了帮助开发者更好地衡量和改进前端页面性能，W3C性能小组引入了 Navigation Timing API ，实现了自动、精准的页面性能打点；开发者可以通过 window.performance 属性获取。
+页面的性能问题是前端开发中一个重要环节，但一直以来我们没有比较好的手段，来检测页面的性能。直到W3C性能小组引入的新的API window.performance，目前IE9以上的浏览器都支持。它是一个浏览器中用于记录页面加载和解析过程中关键时间点的对象。放置在global环境下，通过JavaScript可以访问到它。
 
 ```js
 // 兼容写法
@@ -26,6 +32,8 @@ if (performance) {
     console.log(performance);
 }
 ```
+
+### 使用性能API（performance.timing方法）
 
 <p align="center">
   <img src="https://mmbiz.qpic.cn/mmbiz_png/aVp1YC8UV0fULlqAmCyhMXIMclUIdrBumozhq72qogNMhiaibbNqplxAJVWdkZLhjvpEJpUrlYafibnsQRD7kibwwg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="window.performance">
@@ -92,8 +100,6 @@ if (performance) {
   <span>Navigation Timing API</span>
 </p>
 
-【非页面性能】
-
 #### 重定向耗时
 
 redirectEnd - redirectStart
@@ -128,9 +134,6 @@ responseEnd - responseStart
 
 > 使用内容分发网络（CDN）和减少请求。使用CDN可以减少网络的请求时延，CDN的域名不要和主站的域名一样，这样会防止访问CDN时还携带主站cookie的问题，对于网络请求，可以使用fetch发送无cookie的请求，减少http包的大小。也可以使用本地缓存策略，尽量减少对服务器数据的重复获取。
 
-
-【页面性能】
-
 #### 确定统计起始点 （navigationStart vs fetchStart）
 
 页面性能统计的起始点时间，应该是用户输入网址回车后开始等待的时间。一个是通过navigationStart获取，相当于在URL输入栏回车或者页面按F5刷新的时间点；另外一个是通过 fetchStart，相当于浏览器准备好使用 HTTP 请求获取文档的时间。
@@ -146,7 +149,9 @@ responseEnd - responseStart
  domComplete - domInteractive
 
  > 在浏览器端的渲染过程，如大型框架，vue和react，它的模板其实都是在浏览器端进行渲染的，不是直出的html，而是要走框架中相关的框架代码才能去渲染出页面，这个渲染过程对于首屏就有较大的损耗，白屏的时间会有所增加。在必要的情况下可以在服务端进行整个html的渲染，从而将整个html直出到我们的浏览器端，而非在浏览器端进行渲染。
+ >
  >![渲染](https://mmbiz.qpic.cn/mmbiz_png/aVp1YC8UV0fULlqAmCyhMXIMclUIdrBu3M8TqiawZusYUP4ud3ajOPHb9CuicbO1CNN3S6YHBOytCVhwbxLFUNag/640?wx_fmt=png)
+ >
  >还有一个问题就是，在默认情况下，JavaScript 执行会“阻止解析器”，当浏览器遇到一个 script 外链标记时，DOM 构建将暂停，会将控制权移交给 JavaScript 运行时，等脚本下载执行完毕，然后再继续构建 DOM。而且内联脚本始终会阻止解析器，除非编写额外代码来推迟它们的执行。我们可以把 script 外链加入到页面底部，也可以使用 defer 或 async 延迟执行。defer 和 async 的区别就是 defer 是有序的，代码的执行按在html中的先后顺序，而 async 是无序的，只要下载完毕就会立即执行。或者使用异步的编程方法，比如settimeout，也可以使用多线webworker，它们不会阻碍 DOM 的渲染。
  > ```html
  > <script async type="text/javascript" src="app1.js"></script>
@@ -215,7 +220,7 @@ times.blankTime = (t.domInteractive || t.domLoading) - t.fetchStart;
 times.domReadyTime = t.domContentLoadedEventEnd - t.fetchStart;
 ```
 
-#### 资源性能API
+#### 资源性能API（performance.getEntries()方法）
 
 performance.timing记录的是用于分析页面整体性能指标。如果要获取个别资源（例如JS、图片）的性能指标，就需要使用Resource Timing API。
 
