@@ -171,7 +171,7 @@ performance.getEntries()方法，包含了所有静态资源的数组列表；�
 
 
 <p align="center">
-  <img src="https://mmbiz.qpic.cn/mmbiz_png/aVp1YC8UV0fULlqAmCyhMXIMclUIdrBuh5jlGwHUGQJVQibU0DsvEwV0FoTBY2Pnicl2rjbS90lvzgNYRowpXKNA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="performance.getEntries()">
+  <img src="https://mmbiz.qpic.cn/mmbiz_png/aVp1YC8UV0fULlqAmCyhMXIMclUIdrBuNdDOalicg9FDBnyMLWE6RKhtNe6ONGZZQwCqVdQlxBtcYAgeQ2ZEX2A/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="performance.getEntries()">
 </p>
 <p align="center">
   <span>performance.getEntries()</span>
