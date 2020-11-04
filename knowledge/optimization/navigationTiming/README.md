@@ -1,15 +1,3 @@
-
-
-///
-
-在这个信息大爆炸的时代，随着前端页面越来越迎合大众日益增长的视觉审美、交互体验，也为了在页面填充更多实用信息等等，前端的种种也就越来越庞大。导致前端越来越重要，越来越复杂，而后就会越来越脆弱~
-
-所以我们需要一个性能监控系统，持续监控和预警页面性能的状况，并且在发现瓶颈的时候指导优化工作。比如 [这个](https://yueying.effirst.com/?vf=zhihu)-阿里UC岳鹰全景监控平台 ，它是一个通用、低侵入性、自动上报的页面性能监控方案。主要采用的是Navigation Timing API以及sendBeacon等方法。
-
-今天我们了解一下其中的基本原理。
-
-
-
 # 前端页面性能监控
 
 ![Understanding Memoization In JavaScript](https://pic1.zhimg.com/v2-514596bfb7c60cc8c2272f6d3c622331_1440w.jpg?source=172ae18b)
@@ -95,16 +83,22 @@ if (performance) {
 <p align="center">
   <span>Navigation Timing API</span>
 </p>
+
 #### 非页面性能统计
+
 ##### 重定向耗时
 
+```
 redirectEnd - redirectStart
+```
 
 > **重定向优化**：重定向的类型分三种，301（永久重定向），302（临时重定向），304（Not Modified）。304是用来优化缓存，非常有用，而前两种应该尽可能的避免，凡是遇到需要重定向跳转代码的代码，可以把重定向之后的地址直接写到前端的html或JS中，可以减少客户端与服务端的通信过程，节省重定向耗时。
 
 ##### DNS查询耗时
 
+```
 domainLookupEnd - domainLookupStart
+```
 
 > **DNS优化**：一般来说，在前端优化中与 DNS 有关的有两点： 一个是减少DNS的请求次数，另一个就是进行DNS预获取（Prefetching ） 。典型的一次DNS解析需要耗费 20-120 毫秒（移动端会更慢），减少DNS解析的次数是个很好的优化方式，尽量把各种资源放在一个cdn域名上。DNS Prefetching 是让具有此属性的域名不需要用户点击链接就在后台解析，而域名解析和内容载入是串行的网络操作，所以这个方式能减少用户的等待时间，提升用户体验 。新版的浏览器会对页面中和当前域名（正在浏览网页的域名）不在同一个域的域名进行预获取，并且缓存结果，这就是隐式的 DNS Prefetch。如果想对页面中没有出现的域进行预获取，那么就要使用显示的 DNS Prefetch 了。下图是DNS Prefetch的方法：
 > ```html 
@@ -117,6 +111,12 @@ domainLookupEnd - domainLookupStart
 >  <link rel="dns-prefetch" href="//coral.qq.com" />
 >  <link rel="dns-prefetch" href="//pingjs.qq.com"  />
 > ```
+
+##### TTFB 读取页面第一个字节的时间
+
+```
+responseStart - navigationStart
+```
 
 ##### TCP链接耗时
 
@@ -148,14 +148,6 @@ responseEnd - responseStart
  domComplete - domInteractive
 
  > 在浏览器端的渲染过程，如大型框架，vue和react，它的模板其实都是在浏览器端进行渲染的，不是直出的html，而是要走框架中相关的框架代码才能去渲染出页面，这个渲染过程对于首屏就有较大的损耗，白屏的时间会有所增加。在必要的情况下可以在服务端进行整个html的渲染，从而将整个html直出到我们的浏览器端，而非在浏览器端进行渲染。
- >
- >![渲染](https://mmbiz.qpic.cn/mmbiz_png/aVp1YC8UV0fULlqAmCyhMXIMclUIdrBu3M8TqiawZusYUP4ud3ajOPHb9CuicbO1CNN3S6YHBOytCVhwbxLFUNag/640?wx_fmt=png)
- >
- >还有一个问题就是，在默认情况下，JavaScript 执行会“阻止解析器”，当浏览器遇到一个 script 外链标记时，DOM 构建将暂停，会将控制权移交给 JavaScript 运行时，等脚本下载执行完毕，然后再继续构建 DOM。而且内联脚本始终会阻止解析器，除非编写额外代码来推迟它们的执行。我们可以把 script 外链加入到页面底部，也可以使用 defer 或 async 延迟执行。defer 和 async 的区别就是 defer 是有序的，代码的执行按在html中的先后顺序，而 async 是无序的，只要下载完毕就会立即执行。或者使用异步的编程方法，比如settimeout，也可以使用多线webworker，它们不会阻碍 DOM 的渲染。
- > ```html
- > <script async type="text/javascript" src="app1.js"></script>
- > <script defer type="text/javascript" src="app2.js"></script>
- > ```
 
 ##### 白屏时间
 
@@ -171,54 +163,6 @@ responseEnd - responseStart
 
 具备一定意义上的指标可以使用， <img src="https://www.zhihu.com/equation?tex=domContentLoadedEventEnd+-+fetchStart" alt="白屏时间"> ，甚至使用 <img src="https://www.zhihu.com/equation?tex=loadEventStart+-+fetchStart" alt="白屏时间"> ，此时页面DOM树已经解析完成并且显示内容。
 
-以下给出统计页面性能指标的方法。
-
-```js
-let times = {};
-let t = window.performance.timing;
-
-// 优先使用 navigation v2  https://www.w3.org/TR/navigation-timing-2/
-if (typeof win.PerformanceNavigationTiming === 'function') {
-  try {
-    var nt2Timing = performance.getEntriesByType('navigation')[0]
-    if (nt2Timing) {
-      t = nt2Timing
-    }
-  } catch (err) {
-  }
-}
-
-//重定向时间
-times.redirectTime = t.redirectEnd - t.redirectStart;
-
-//dns查询耗时
-times.dnsTime = t.domainLookupEnd - t.domainLookupStart;
-
-//TTFB 读取页面第一个字节的时间
-times.ttfbTime = t.responseStart - t.navigationStart;
-
-//DNS 缓存时间
-times.appcacheTime = t.domainLookupStart - t.fetchStart;
-
-//卸载页面的时间
-times.unloadTime = t.unloadEventEnd - t.unloadEventStart;
-
-//tcp连接耗时
-times.tcpTime = t.connectEnd - t.connectStart;
-
-//request请求耗时
-times.reqTime = t.responseEnd - t.responseStart;
-
-//解析dom树耗时
-times.analysisTime = t.domComplete - t.domInteractive;
-
-//白屏时间 
-times.blankTime = (t.domInteractive || t.domLoading) - t.fetchStart;
-
-//domReadyTime
-times.domReadyTime = t.domContentLoadedEventEnd - t.fetchStart;
-```
-
 #### 资源性能API（performance.getEntries()方法）
 
 performance.timing记录的是用于分析页面整体性能指标。如果要获取个别资源（例如JS、图片）的性能指标，就需要使用Resource Timing API。
@@ -227,8 +171,7 @@ performance.getEntries()方法，包含了所有静态资源的数组列表；�
 
 
 <p align="center">
-  <img src="https://mmbiz.qpic.cn/mmbiz_png/aVp1YC8UV0fULlqAmCyhMXIMclUIdrBuNdDOalicg9FDBnyMLWE6RKhtNe6ONGZZQwCqVdQlxBtcYAgeQ2ZEX2A/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1
-" alt="performance.getEntries()">
+  <img src="https://mmbiz.qpic.cn/mmbiz_png/aVp1YC8UV0fULlqAmCyhMXIMclUIdrBuh5jlGwHUGQJVQibU0DsvEwV0FoTBY2Pnicl2rjbS90lvzgNYRowpXKNA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="performance.getEntries()">
 </p>
 <p align="center">
   <span>performance.getEntries()</span>
@@ -359,19 +302,6 @@ Navigation Timing API可以监控大部分前端页面的性能。但随着SPA�
 
 测量好时间后，就需要将数据发送给服务端。页面性能统计数据对丢失率要求比较低，且性能统计应该在尽量不影响主流程的逻辑和页面性能的前提下进行。
 
-##### 使用的img标签get请求
-
-- 不存在AJAX跨域问题，可做跨源的请求
-- 很古老的标签，没有浏览器兼容性问题
-
-```js
-var i = new Image();
-i.onload = i.onerror = i.onabort = function () {
-  i = i.onload = i.onerror = i.onabort = null;
-}
-i.src = url;
-```
-
 ##### navigator.sendBeacon
 
 大部分现代浏览器都支持 navigator.sendBeacon方法。这个方法可以用来发送一些统计和诊断的小量数据，特别适合上报统计的场景。
@@ -387,10 +317,6 @@ function logData() {
     navigator.sendBeacon("/log", analyticsData);
 }
 ```
-
-##### 最终方案
-
-当浏览器支持sendBeacon方法，优先使用该方法，使用img方式降级上报。
 
 #### 小结
 
