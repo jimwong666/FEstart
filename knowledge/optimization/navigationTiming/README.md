@@ -45,19 +45,18 @@ if (performance) {
   - usedJSHeapSize：JS 对象（包括V8引擎内部对象）占用的内存数
   - totalJSHeapSize：可使用的内存
   - jsHeapSizeLimit：内存大小限制
-> 
-> 通常，usedJSHeapSize不能大于totalJSHeapSize，如果大于，有可能出现了内存泄漏。
-> 
+  > 
+  > 通常，usedJSHeapSize不能大于totalJSHeapSize，如果大于，有可能出现了内存泄漏。
+  > 
 
-- **performance.navigation**:定义了当前文档的导航信息，比如是重载还是向前向后等
+- **performance.navigation**：定义了当前文档的导航信息，比如是重载还是向前向后等
   - 0 表示 TYPE_NAVIGATENEXT 正常进入的页面（非刷新、非重定向等）
   - 1 表示 TYPE_RELOAD 通过 window.location.reload() 刷新的页面
   - 2 表示 TYPE_BACK_FORWARD 通过浏览器的前进后退按钮进入的页面（历史记录）
   - 255 表示 TYPE_UNDEFINED 非以上方式进入的页面
 - **performance.onresourcetimingbufferfull**：属性是一个在resourcetimingbufferfull事件触发时会被调用的 event handler 。它的值是一个手动设置的回调函数，这个回调函数会在浏览器的资源时间性能缓冲区满时执行。
 - **performance.timeOrigin**是一系列时间点的基准点，精确到万分之一毫秒。
-- **performance.timing**：定义了从 navigationStart 至 loadEventEnd 的 21 个只读属性
-
+- **performance.timing**：定义了从 navigationStart 至 loadEventEnd 的 21 个只读属性，下面我们重点分析。
 
 下图是W3C第一版的 Navigation Timing 的处理模型。从当前浏览器窗口卸载旧页面开始，到新页面加载完成，整个过程一共被切分为 9 个小块：提示卸载旧文档、重定向/卸载、应用缓存、DNS 解析、TCP 握手、HTTP 请求处理、HTTP 响应处理、DOM 处理、文档装载完成。每个小块的首尾、中间做事件分界，取 Unix 时间戳，两两事件之间计算时间差，从而获取中间过程的耗时（精确到毫秒级别）。
 
@@ -67,9 +66,6 @@ if (performance) {
 <p align="center">
   <span>W3C Navigation Timing Level 1(w3.org)</span>
 </p>
-
-
-
 
 上图是 Level 1 的规范，2012 年底进入候选建议阶段，至今仍在日常使用中；但是在W3C的议程上，它已经功成身退，让位给了精度更高，功能更强大，层次更分明的 Level 2（处理模型如下图）。比如独立划分出来的 Resource Timing，使得我们可以获取具体资源的详细耗时信息。
 
@@ -99,14 +95,14 @@ if (performance) {
 <p align="center">
   <span>Navigation Timing API</span>
 </p>
-
-#### 重定向耗时
+#### 非页面性能统计
+##### 重定向耗时
 
 redirectEnd - redirectStart
 
 > **重定向优化**：重定向的类型分三种，301（永久重定向），302（临时重定向），304（Not Modified）。304是用来优化缓存，非常有用，而前两种应该尽可能的避免，凡是遇到需要重定向跳转代码的代码，可以把重定向之后的地址直接写到前端的html或JS中，可以减少客户端与服务端的通信过程，节省重定向耗时。
 
-#### DNS查询耗时
+##### DNS查询耗时
 
 domainLookupEnd - domainLookupStart
 
@@ -122,29 +118,32 @@ domainLookupEnd - domainLookupStart
 >  <link rel="dns-prefetch" href="//pingjs.qq.com"  />
 > ```
 
-#### TCP链接耗时
+##### TCP链接耗时
 
 connectEnd - connectStart
 
 > **TCP请求优化**：TCP的优化大都在服务器端，前端能做的就是尽量减少TCP的请求数，也就是减少HTTP的请求数量。http 1.0 默认使用短连接，也是TCP的短连接，也就是客户端和服务端每进行一次http操作，就建立一次连接，任务结束就中断连接。这个过程中有3次TCP请求握手和4次TCP请求释放。减少TCP请求的方式有两种，一种是资源合并，对于页面内的图片、css和js进行合并，减少请求量。另一种使用长链接，使用http1.1，在HTTP的响应头会加上 Connection:keep-alive，当一个网页打开完成之后，连接不会马上关闭，再次访问这个服务时，会继续使用这个长连接。这样就大大减少了TCP的握手次数和释放次数。或者使用Websocket进行通信，全程只需要建立一次TCP链接。
 
-#### HTTP请求耗时
+##### HTTP请求耗时
 
 responseEnd - responseStart
 
 > 使用内容分发网络（CDN）和减少请求。使用CDN可以减少网络的请求时延，CDN的域名不要和主站的域名一样，这样会防止访问CDN时还携带主站cookie的问题，对于网络请求，可以使用fetch发送无cookie的请求，减少http包的大小。也可以使用本地缓存策略，尽量减少对服务器数据的重复获取。
 
-#### 确定统计起始点 （navigationStart vs fetchStart）
+#### 页面性能统计
 
-页面性能统计的起始点时间，应该是用户输入网址回车后开始等待的时间。一个是通过navigationStart获取，相当于在URL输入栏回车或者页面按F5刷新的时间点；另外一个是通过 fetchStart，相当于浏览器准备好使用 HTTP 请求获取文档的时间。
+>  
+> ##### 确定页面性能统计起始点 （navigationStart vs fetchStart）
+> 上面说的都是还没到达前端页面的性能。现在流程到了前端页面了，那么页面性能统计的起始点时间是什么呢？其实就是用户输入网址回车后开始等待的时间。一个是通过navigationStart获取，相当于在URL输入栏回车或者页面按F5刷新的时间点；另外一个是通过 fetchStart，相当于浏览器准备好使用 HTTP 请求获取文档的时间。
+> 
+> 从开发者实际分析使用的场景，浏览器重定向、卸载页面的耗时对页面加载分析并无太大作用；通常建议使用 **fetchStart** 作为统计起始点。
+> 
 
-从开发者实际分析使用的场景，浏览器重定向、卸载页面的耗时对页面加载分析并无太大作用；通常建议使用 fetchStart 作为统计起始点。
-
-#### 首字节
+##### 首字节
 
 主文档返回第一个字节的时间，是页面加载性能比较重要的指标。对用户来说一般无感知，对于开发者来说，则代表访问网络后端的整体响应耗时。
 
-#### 解析dom树耗时
+##### 解析dom树耗时
 
  domComplete - domInteractive
 
@@ -158,7 +157,7 @@ responseEnd - responseStart
  > <script defer type="text/javascript" src="app2.js"></script>
  > ```
 
-#### 白屏时间
+##### 白屏时间
 
 用户看到页面展示出现一个元素的时间。很多人认为白屏时间是页面返回的首字节时间，但这样其实并不精确，因为头部资源还没加载完毕，页面也是白屏。
 
@@ -166,7 +165,7 @@ responseEnd - responseStart
 
 从W3C Navigation Timing Level 2 的方案设计，可以直接采用 <img src="https://www.zhihu.com/equation?tex=domInteractive+-+fetchStart" alt="Navigation Timing API"> ，此时页面资源加载完成，即将进入渲染环节。
 
-#### 首屏时间
+##### 首屏时间
 
 首屏时间是指页面第一屏所有资源完整展示的时间。这是一个对用户来说非常直接的体验指标，但是对于前端却是一个非常难以统计衡量的指标。
 
