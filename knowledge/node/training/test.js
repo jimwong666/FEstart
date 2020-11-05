@@ -5,11 +5,11 @@ const url = require('url');
 
 const server = http.createServer(function (req, res) {
     if(req.url=="/favicon.ico"){
-        // let faviconName = path.resolve(__dirname, "pic/time.jpg");
-        // console.log(faviconName);
-        // fs.readFile(faviconName, function(err, data){ // readFile读取文件
-        //     res.end(data);
-        // })
+        let faviconName = path.resolve(__dirname, "favicon.png");
+        console.log(faviconName);
+        fs.readFile(faviconName, function(err, data){ // readFile读取文件
+            res.end(data);
+        })
         return;
     };
     
@@ -17,7 +17,7 @@ const server = http.createServer(function (req, res) {
     switch(method){
         case "GET":
             let getDate = url.parse(req.url, true).query;
-            const fileName = path.resolve(__dirname, String(getDate.name));
+            const fileName = path.resolve(__dirname, "resources", String(getDate.name));
             const stream = fs.createReadStream(fileName); // stream读取文件
 
             stream.pipe(res);
@@ -42,4 +42,4 @@ const server = http.createServer(function (req, res) {
             break;
     }
 });
-server.listen(8009);
+server.listen(8010);
