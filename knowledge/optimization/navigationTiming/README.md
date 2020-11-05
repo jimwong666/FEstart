@@ -326,6 +326,13 @@ window.addEventListener('unload', logData, false);
 function logData() {
     navigator.sendBeacon("/log", analyticsData);
 }
+
+// 兼容写法
+var i = new Image();
+i.onload = i.onerror = i.onabort = function () {
+  i = i.onload = i.onerror = i.onabort = null;
+}
+i.src = url;
 ```
 
 #### 小结
