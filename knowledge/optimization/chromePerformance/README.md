@@ -20,4 +20,12 @@
 <p align="center">
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_1.png" alt="performanceTest">
 </p>
+### 测试性能瓶颈
 
+下面我们就来调整上述2个参数进行高负载模拟，当出现明显卡顿，我们便使用**performance**进行录制。
+
+像下面这样，先点击左上角**小圆点**进行录制，然后录制适当时间，点击**stop**关闭。
+
+<p align="center">
+  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_2.png" alt="performanceTest">
+</p>
