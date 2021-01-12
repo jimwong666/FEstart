@@ -106,9 +106,11 @@ FPS：指页面每秒帧数
 
 ### NET
 
-下面是NET，已用<span style="color: blue;">**蓝色部分**</span>标出，Net部分大致记录了页面的网络状况。
+下面是NET，已用<span style="color: blue;">**蓝色部分**</span>标出，展示资源占用网络情况，有两条蓝色的长条，深蓝代表优先级比较高的请求，浅蓝代表优先级比较低的请求，横杠越长，网络花费时间越长。
 
+------
 
+### 屏幕快照
 
 NET 下面是与时间对应的每帧的截图，鼠标放在上面会逐帧放大，可以通过上方的 checkbox 来控制是否显示。
 
@@ -118,7 +120,23 @@ NET 下面是与时间对应的每帧的截图，鼠标放在上面会逐帧放�
 
 **HEAP**表示内存占用情况，可以通过上方的 checkbox 来控制是否显示。
 
-再往下面看会发现有很多折叠菜单
+再往下面看会发现有很多折叠菜单，我们来逐个打开看看
+
+------
+
+### Network
+
+**Network**即对上面的**NET**部分的详细展示，此处展示的是资源加载顺序和耗费时间。有下面几种文件资源：
+
+- HTML：显示蓝色
+- JS：显示黄色
+- CSS：显示紫色
+- 媒体文件：显示绿色
+- 其他资源：显示灰色
+
+每个资源块都有一个像K线的外向，只不过K线是竖着的，它是横着的。
+
+- 左边横线：对应 NetWork 工具中 Request Sent 之前的所有的事情
 
 ------
 
@@ -128,15 +146,97 @@ NET 下面是与时间对应的每帧的截图，鼠标放在上面会逐帧放�
 
 也可以点击相应的帧，并在下方的 Summary Tab 页里面查看相关数据。
 
+------
 
+### Interactions
 
+这一块是查看并分析记录过程中用户的交互操作。如果没有交互操作，则不会展示这个部分，下图为示例：
 
+<p align="center">
+  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_7.png" alt="performanceTest">
+</p>
 
+------
 
+### Timings
 
+**Timings**展示的是一系列**关键时间节点**，其中包括DCL、FP、FCP、LCP、L等
 
+- DCL：HTML文档被完全加载和解析完成（DOMContentLoaded Event）
+- FP：首次绘制（First Paint）
+- FCP：首次有内容的渲染（First Contentful Paint）
+- LCP：最大内容的渲染（Largest Contentful Paint）
+- L：页面中所有资源加载完成（Onload Event）
+- FMP：首次有意义的绘制（First Meaningful Paint，可能已移除）
 
+------
 
+### Experience
 
+此部分展示的是**用户体验**相关的数据，比如当出现了可能会影响用户体验的操作时，时间轴上会有相应标红和提示。
 
+比如上图中就出现了 **Layout Shift** ，即出现了 **布局移动**，可能会影响用户体验。
+
+------
+
+### Main
+
+------
+
+### Raster
+
+**光栅格化**线程，查看光栅格活动信息
+
+------
+
+### GPU
+
+**GPU**进程，此部分用来查看GPU活动信息
+
+------
+
+### Chrome_ChildIOThread
+
+浏览器**IO子线程**，用来接收其他进程的IPC消息和派发消息到其他进程
+
+------
+
+### Compositor
+
+**排版**线程
+
+------
+
+### GPUMemoryThread
+
+**GPU内存**线程
+
+------
+
+### ThreadPoolForegoroundWorker
+
+**工作**线程
+
+------
+
+### 内存情况
+
+这是一种块单独的块，显示的是浏览器**内存**相关的数据。其中有5个指标：
+
+- JS Heap：js堆栈，可以结合之前我们讲过的 **performance.memory** API
+- Document：这个代表的是目前tab标签的内存有多少个Documents，包括当前页面、之前的页面、iframe和插件产生的页面。
+- Nodes：DOM节点数
+- Listeners：监听数
+- GPU memory：显存数
+
+------
+
+### 相关统计信息Tab页
+
+这部分**tab页**的信息基本都是上述图表信息的详情，比如点击 Main 里面的函数块，此处就会显示次函数的相关详情。总共包括4个Tab标签：
+
+- Summary：概览标签，统计每个阶段花费的时间等
+- Bottom-Up：按照事件花费的时间长短来排序
+- Call Tree：按照调用顺序来排序的
+- Event Log：按照事件发生的先后顺序排序，显示的事件的详细信息
 
