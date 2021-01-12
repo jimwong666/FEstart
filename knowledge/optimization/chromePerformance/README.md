@@ -20,7 +20,7 @@
 <p align="center">
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_1.png" alt="performanceTest">
 </p>
-此时，也可以勾选**小齿轮**左边的 Screenshots 和 Memony 选项，测试数据会多出**屏幕截图**和**内存使用情况**。
+此时，也可以勾选 **小齿轮** 左边的 Screenshots 和 Memony 选项，测试数据会多出 **屏幕截图** 和 **内存使用情况**
 
 ### 测试性能瓶颈
 
@@ -63,7 +63,7 @@ FPS：指页面每秒帧数
 
 当 FPS < 24 时，视觉上会感觉到明显卡顿和不适
 
-在上图中，<span style="color: yellow;">**黄色部分**</span>为**FPS**展示区域，我们可以看到未优化的图中有：
+在上图中，`<span style="color: yellow;">**黄色部分**</span>`为**FPS**展示区域，我们可以看到未优化的图中有：
 
 1. 上部分红色的条
 2. 下部分是绿色的块儿
