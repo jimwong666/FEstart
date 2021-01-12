@@ -4,7 +4,10 @@
 > 这次我们将更加聚焦于浏览器本身，看看它能让我们在优化页面方面获得什么样的有价值的信息
 > chrome 浏览器控制台中的**performance**标签，我们都知道是**性能监控**标签，但不是太了解，这次我们就来学习它
 
+
+
 ### 性能测试前准备
+
 > 首先我们打开chrome的隐私模式（无痕窗口），打开一个需要分析的目标页面（这里用的是谷歌性能测试页面），可以打开[谷歌性能测试地址](https://googlechrome.github.io/devtools-samples/jank/)，也可以打开这个[静态页面](https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/performanceTest.html)
 
 <p align="center">
@@ -21,6 +24,8 @@
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_1.png" alt="performanceTest">
 </p>
 此时，也可以勾选 **小齿轮** 左边的 Screenshots 和 Memony 选项，测试数据会多出 **屏幕截图** 和 **内存使用情况**
+
+
 
 ### 测试性能瓶颈
 
@@ -63,7 +68,7 @@ FPS：指页面每秒帧数
 
 当 FPS < 24 时，视觉上会感觉到明显卡顿和不适
 
-在上图中，`<span style="color: yellow;">**黄色部分**</span>`为**FPS**展示区域，我们可以看到未优化的图中有：
+在上图中，<span style="color: yellow;">**黄色部分**</span>为**FPS**展示区域，我们可以看到未优化的图中有：
 
 1. 上部分红色的条
 2. 下部分是绿色的块儿
@@ -77,9 +82,25 @@ FPS：指页面每秒帧数
 - 红色的条：表示帧数已经下降到影响用户体验的程度，这块有问题
 - 绿色的块：表示FPS数值，越高说明FPS越大，反之亦然
 
+#### 了解FPS快捷工具
+
+<p align="center">
+  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_5.png" alt="performanceTest">
+</p>
+
+打开 F12，然后点击**右上角三个点**，选择 **More tools**，再选择**Rendering**，此时会看到控制台底部多出了一个**Rendering** Tab 页，接着勾选 **Frame Rendering Stats**，这时我们的页面上就会出现一个与帧数和GPU相关的数据黑框，如下图：
+
+<p align="center">
+  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_6.png" alt="performanceTest">
+</p>
+
+
+
 ### CPU
 
 再往下看，<span style="color: orange;">**橙色部分**</span>指的是**CPU**的使用情况，我们可以看到其中的颜色包括黄色、蓝色、绿色、灰色、白色，其实就是对应着CPU干的不同的活，参考最底部Summary Tab页里面的**环形图**，即黄色是Scripting（JavaScript的执行）、蓝色是Rendering（样式计算与布局，即重排）、绿色是Painting（重绘）、灰色是System（其他）、白色是Idle（空闲时间）。
+
+
 
 ### NET
 
@@ -89,11 +110,15 @@ FPS：指页面每秒帧数
 
 NET 下面是与时间对应的每帧的截图，鼠标放在上面会逐帧放大，可以通过上方的 checkbox 来控制是否显示。
 
+
+
 ### HEAP
 
 **HEAP**表示内存占用情况，可以通过上方的 checkbox 来控制是否显示。
 
 再往下面看会发现有很多折叠菜单
+
+
 
 ### Frames
 
