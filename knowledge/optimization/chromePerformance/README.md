@@ -1,10 +1,10 @@
 # Chrome运行时性能瓶颈分析
 
-> 上次我们介绍了用 Performance API 来做从客户端到服务端再到客户端这个过程的前端性能监控，主要把控的是整个流程、基本面的性能状况
-> 这次我们将更加聚焦于浏览器本身，看看它能让我们在优化页面方面获得什么样的有价值的信息
-> chrome 浏览器控制台中的**performance**标签，我们都知道是**性能监控**标签，但不是太了解，这次我们就来学习它
-
-------
+> 上次我们介绍了用 Performance API 来做前端性能监控，主要把控的是整个流程、基本面的性能状况
+>
+> 这次我们将更加聚焦于浏览器，甚至代码本身，看看通过浏览器控制台中performance标签能让我们在优化页面方面获得什么样有价值的信息
+>
+> chrome浏览器版本：87.0.4280.141
 
 ### 性能测试前准备
 
@@ -14,37 +14,45 @@
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_0.png" alt="performanceTest">
 </p>
 
-页面上有蓝色小方块在运动，通过左边的按钮可以改变蓝色方块的数量，以达到页面消耗性能变化，这样更方便我们模拟高负载场景。当然还有其他功能的按钮。
+页面上有蓝色小方块在运动，通过左边的按钮可以改变蓝色方块的数量，以达到页面消耗性能的变化，这样更方便我们模拟高负载场景，除了有改变蓝色小方块数量的按钮，还有性能优化按钮和帮助按钮。
 
 当然，仅仅这样还不够极端模拟。
 
-我们按下F12打开**performance**标签，点开右边的**小齿轮**，像下面这样设置来限制cpu性能，选择降低4倍性能或6倍性能，让cpu出现性能瓶颈。
+我们按下F12打开**performance**标签，在开始之前我们先了解一下界面及功能
+
+<p align="center">
+  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_demo.png" alt="performanceTest">
+</p>
+
+点开右边的**小齿轮**，像下面这样设置来限制cpu性能，选择降低4倍性能或6倍性能，让cpu出现性能瓶颈（也可以勾选Enabled advanced paint instrumentation这个选项来进一步增加性能消耗，但是效果好像不明显）
 
 <p align="center">
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_1.png" alt="performanceTest">
 </p>
-此时，也可以勾选 **小齿轮** 左边的 Screenshots 和 Memony 选项，测试数据会多出 **屏幕截图** 和 **内存使用情况**
+再勾选 **小齿轮** 左边的 Screenshots 和 Memony 选项，这样性能测试的数据会多出 **屏幕快照** 和 **内存使用情况** 这两项
+
+下面我们就来调整上述2个参数（增加蓝色小方块数量和限制cpu性能）进行高负载模拟，此时画面出现了明显卡顿，下面我们进入测试环节
 
 ------
 
-### 测试性能瓶颈
+### 测试性能
 
-下面我们就来调整上述2个参数进行高负载模拟，当出现明显卡顿，我们便使用**performance**进行录制。
-
-像下面这样，先点击左上角**小圆点**进行录制，然后录制适当时间，点击**stop**关闭。
+像下面这样，先点击左上角**小圆点**进行录制，然后录制6秒左右，点击**stop**关闭。
 
 <p align="center">
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_2.png" alt="performanceTest">
 </p>
 
-你也可以点击页面上的**优化**按钮，会发现画面变得流畅了，这时再录制一下，参照对比。
+下图是卡顿时的性能分析：
 
 <p align="center">
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_3.png" alt="performanceTest">
 </p>
 <p align="center">
-  <span>优化前</span>
+  <span>卡顿时</span>
 </p>
+这时我们恢复正常状态，然后点击**优化**按钮，再进行录制，形成参照：
+
 
 <p align="center">
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_4.png" alt="performanceTest">
@@ -53,12 +61,18 @@
   <span>优化后</span>
 </p>
 
-我们大致看一下这个页面，其实就是两大块儿：
+我们大致看一下这个页面，看上去主要分为4大块儿：
 
-1. 上部分是各种随时间线变化的图表（FPS，CPU，NET 等信息）
-2. 下部分是 Tab 页切换的图表（统计图表、事件时长排序、事件调用排序、事件发生的先后顺序）
+1. 第一部分是各种随时间线变化的图表（FPS，CPU，NET 等信息）
+2. 第二部分是几个折叠菜单（Frames，Experience，Main等信息）
+3. 第三部分是方形折线图
+4. 第四部分是 Tab 页切换的图表
+
+下面我们对照图表，逐个讲解
 
 ------
+
+> 第一部分
 
 ### FPS
 
@@ -68,14 +82,14 @@ FPS：指页面每秒帧数
 
 当 FPS < 24 时，视觉上会感觉到明显卡顿和不适
 
-在上图中，<span style="color: yellow;">**黄色部分**</span>为**FPS**展示区域，我们可以看到未优化的图中有：
+在上图中，我们可以看到未优化的图中有：
 
 1. 上部分红色的条
 2. 下部分是绿色的块儿
 
 而对比一下优化后的图，会发现：
 
-1. 上部分红色的条变少了，甚至消失了
+1. 上部分红色的条消失了
 2. 下部分绿色的块儿变高了
 
 所以：
@@ -84,45 +98,49 @@ FPS：指页面每秒帧数
 
 
 
-#### 了解FPS快捷工具
+##### 了解FPS快捷工具
 
 <p align="center">
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_5.png" alt="performanceTest">
 </p>
 
-打开 F12，然后点击**右上角三个点**，选择 **More tools**，再选择**Rendering**，此时会看到控制台底部多出了一个**Rendering** Tab 页，接着勾选 **Frame Rendering Stats**，这时我们的页面上就会出现一个与帧数和GPU相关的数据黑框，如下图：
+在控制台界面我们点击**右上角三个点**，选择 **More tools**，再选择**Rendering**，此时会看到控制台底部多出了一个**Rendering** Tab 页，接着勾选 **Frame Rendering Stats**，这时我们的页面上就会出现一个与帧数和GPU相关的数据黑框，如下图：
 
 <p align="center">
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_6.png" alt="performanceTest">
 </p>
+这个黑框可以我们方便的观察到页面帧数的实时情况
+
 
 ------
 
 ### CPU
 
-再往下看，<span style="color: orange;">**橙色部分**</span>指的是**CPU**的使用情况，我们可以看到其中的颜色包括黄色、蓝色、绿色、灰色、白色，其实就是对应着CPU干的不同的活，参考最底部Summary Tab页里面的**环形图**，即黄色是Scripting（JavaScript的执行）、蓝色是Rendering（样式计算与布局，即重排）、绿色是Painting（重绘）、灰色是System（其他）、白色是Idle（空闲时间）。
+再往下是**CPU**的使用情况，我们可以看到**波浪图**，其中的颜色包括黄色、蓝色、绿色、灰色、白色，其实就是对应着CPU干的不同的活，参考最底部**Summary** Tab页里面的**环形图**，即黄色是Scripting（JavaScript的执行）、蓝色是Rendering（样式计算与布局，即重排）、绿色是Painting（重绘）、灰色是System（其他）、白色是Idle（空闲时间）。
 
 ------
 
 ### NET
 
-下面是NET，已用<span style="color: blue;">**蓝色部分**</span>标出，展示资源占用网络情况，有两条蓝色的长条，深蓝代表优先级比较高的请求，浅蓝代表优先级比较低的请求，横杠越长，网络花费时间越长。
+下面是NET，展示了资源占用网络情况，有两条蓝色的长条，深蓝代表优先级比较高的请求，浅蓝代表优先级比较低的请求，横条越长，网络花费时间越长。
 
 ------
 
 ### 屏幕快照
 
-NET 下面是与时间对应的每帧的截图，鼠标放在上面会逐帧放大，可以通过上方的 checkbox 来控制是否显示。
+屏幕快照是与时间对应的每帧的截图，鼠标放在上面会逐帧放大，可以通过上方的 checkbox 来控制是否显示。
 
 ------
 
 ### HEAP
 
-**HEAP**表示内存占用情况，可以通过上方的 checkbox 来控制是否显示。
+**HEAP**展示了内存占用情况的方形折线图，可以通过上方的 checkbox 来控制是否显示。
 
 再往下面看会发现有很多折叠菜单，我们来逐个打开看看
 
 ------
+
+> 第二部分
 
 ### Network
 
@@ -134,9 +152,12 @@ NET 下面是与时间对应的每帧的截图，鼠标放在上面会逐帧放�
 - 媒体文件：显示绿色
 - 其他资源：显示灰色
 
-每个资源块都有一个像K线的外向，只不过K线是竖着的，它是横着的。
+每个**资源条**都有一个像K线的外型，只不过K线是竖着的，它是横着的。你在控制台的Network标签栏一一对照他们的含义：
 
 - 左边横线：对应 NetWork 工具中 Request Sent 之前的所有的事情
+- 浅色的条：对应 NetWork 工具中Request Sent 和 Waiting
+- 深色的条：对应 NetWork 工具中 Content Download
+- 右边横线：表示等待主进程所花费的时间，在 NetWork 工具中没有显示出来
 
 ------
 
@@ -150,7 +171,7 @@ NET 下面是与时间对应的每帧的截图，鼠标放在上面会逐帧放�
 
 ### Interactions
 
-这一块是查看并分析记录过程中用户的交互操作。如果没有交互操作，则不会展示这个部分，下图为示例：
+这一块是查看过程中用户的交互操作，比如点击鼠标、输入文字、动画等。如果没有交互操作，则不会展示这个部分，下图为示例：
 
 <p align="center">
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_7.png" alt="performanceTest">
@@ -160,7 +181,7 @@ NET 下面是与时间对应的每帧的截图，鼠标放在上面会逐帧放�
 
 ### Timings
 
-**Timings**展示的是一系列**关键时间节点**，其中包括DCL、FP、FCP、LCP、L等
+**Timings**展示的是一系列**关键时间节点**，其中包括DCL、FP、FCP、LCP、L等，参考 **performance.timing** API
 
 - DCL：HTML文档被完全加载和解析完成（DOMContentLoaded Event）
 - FP：首次绘制（First Paint）
@@ -181,29 +202,87 @@ NET 下面是与时间对应的每帧的截图，鼠标放在上面会逐帧放�
 
 ### Main
 
+此部分记录了**主线程**的执行记录，可以看到某个任务执行的具体情况，此部分的图表也称为**火焰图**（倒着看）。
+
+我们点开**Main**折叠栏（内部的颜色好像是随机的），可以看到从左至右都是一段一段的，每段的**顶层**都是 **TASK**，这应该是就是表示待主线程处理的任务。并且下一层都是 **事件类型**，类型有所不同（有DOMContentLoaded、Timer Fired、XHR等等），也称为**根活动**。再下一层为 **Function Call** 等等，越往下层事件越具体，具体看示例。
+
+> **根活动**指的是浏览器触发的一系列流程。例如，当你点击页面内容，浏览器触发一个Event作为根活动，该Event可能回调一个事件处理事件。在Main面板中的火焰图中，根活动展示在上部，在 **Call Tree** 和 **Event Log** 面板中，根活动展示在顶层。
+
+点击某一块，你可以在下方的信息 Tab 页中观察此 TASK 的相关信息。
+
+下面列出一些 **根活动** 事件类型：
+
+##### Loading事件
+
+|       事件       |                             描述                             |
+| :--------------: | :----------------------------------------------------------: |
+|    Parse HTML    |                      浏览器执行HTML解析                      |
+|  Finish Loading  |                       网络请求完毕事件                       |
+|   Receive Data   | 请求的响应数据到达事件，如果响应数据很大（拆包），可能会多次触发该事件 |
+| Receive Response |                     响应头报文到达时触发                     |
+|   Send Request   |                      发送网络请求时触发                      |
+
+##### Scripting事件
+
+|          事件           |                        描述                         |
+| :---------------------: | :-------------------------------------------------: |
+|  Animation Frame Fired  |     一个定义好的动画帧发生并开始回调处理时触发      |
+| Cancel Animation Frame  |                取消一个动画帧时触发                 |
+|        GC Event         |                   垃圾回收时触发                    |
+|    DOMContentLoaded     |        当页面中的DOM内容加载并解析完毕时触发        |
+|     Evaluate Script     |                  一个js脚本被评估                   |
+|          Event          |                       js事件                        |
+|      Function Call      |          只有当浏览器进入到js引擎中时触发           |
+|      Install Timer      | 创建计时器（调用setTimeout()和setInterval()）时触发 |
+| Request Animation Frame |         requestAnimationFrame() 调用了新帧          |
+|      Remove Timer       |               当清除一个计时器时触发                |
+|          Time           |               调用console.time()触发                |
+|        Time End         |              调用console.timeEnd()触发              |
+|       Timer Fired       |                定时器激活回调后触发                 |
+| XHR Ready State Change  |           当一个异步请求为就绪状态后触发            |
+|        XHR Load         |            当一个异步请求完成加载后触发             |
+
+##### Rendering事件
+
+|       事件        |              描述               |
+| :---------------: | :-----------------------------: |
+| Invalidate layout | 当DOM更改导致页面布局失效时触发 |
+|      Layout       |     页面布局计算执行时触发      |
+| Recalculate style |  Chrome重新计算元素样式时触发   |
+|      Scroll       |      内嵌的视窗滚动时触发       |
+
+##### Painting事件
+
+|       事件       |                 描述                 |
+| :--------------: | :----------------------------------: |
+| Composite Layers | Chrome的渲染引擎完成图片层合并时触发 |
+|   Image Decode   |      一个图片资源完成解码后触发      |
+|   Image Resize   |       一个图片被修改尺寸后触发       |
+|      Paint       | 合并后的层被绘制到对应显示区域后触发 |
+
 ------
 
 ### Raster
 
-**光栅格化**线程，查看光栅格活动信息
+**光栅格化**线程池，查看光栅格活动信息，用来让 GPU 执行光栅化的任务
 
 ------
 
 ### GPU
 
-**GPU**进程，此部分用来查看GPU活动信息
+**GPU**进程主线程的执行过程记录，查看GPU活动信息，如 可以直观看到何时启动GPU加速
+
+------
+
+### Compositor
+
+**合成排版**线程的执行记录，用来记录**HTML绘制**阶段 (Paint)结束后的图层合成操作
 
 ------
 
 ### Chrome_ChildIOThread
 
 浏览器**IO子线程**，用来接收其他进程的IPC消息和派发消息到其他进程
-
-------
-
-### Compositor
-
-**排版**线程
 
 ------
 
@@ -219,11 +298,13 @@ NET 下面是与时间对应的每帧的截图，鼠标放在上面会逐帧放�
 
 ------
 
-### 内存情况
+> 第三部分
 
-这是一种块单独的块，显示的是浏览器**内存**相关的数据。其中有5个指标：
+### 内存使用情况
 
-- JS Heap：js堆栈，可以结合之前我们讲过的 **performance.memory** API
+这一部分显示的是浏览器**内存**相关的数据。其中有5个指标：
+
+- JS Heap：即js堆栈，可以结合之前我们讲过的 **performance.memory** API。比如曲线一直在增长，则说明存在内存泄露，如果相当长的一段时间，内存曲线都是没有下降的，这里是有发生内存泄露的可能的。
 - Document：这个代表的是目前tab标签的内存有多少个Documents，包括当前页面、之前的页面、iframe和插件产生的页面。
 - Nodes：DOM节点数
 - Listeners：监听数
@@ -231,11 +312,13 @@ NET 下面是与时间对应的每帧的截图，鼠标放在上面会逐帧放�
 
 ------
 
+> 第四部分
+
 ### 相关统计信息Tab页
 
 这部分**tab页**的信息基本都是上述图表信息的详情，比如点击 Main 里面的函数块，此处就会显示次函数的相关详情。总共包括4个Tab标签：
 
-- Summary：概览标签，统计每个阶段花费的时间等
+- Summary：概览标签，统计每个阶段或函数等所花费的时间等信息
 - Bottom-Up：按照事件花费的时间长短来排序
 - Call Tree：按照调用顺序来排序的
 - Event Log：按照事件发生的先后顺序排序，显示的事件的详细信息
