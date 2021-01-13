@@ -206,9 +206,11 @@ FPS：指页面每秒帧数
 
 > 因为浏览器的单个页面，就是打开的一个tab标签，他是单线程，即全部的程序都是跑在这个主线程的，所以你可以在这里看到所有的事件。
 
-我们点开**Main**折叠栏（内部的颜色好像是随机的），可以看到从左至右都是一段一段的，每段的**顶层**都是 **TASK**，这就是表示主线程处理的任务。并且下一层都是 **事件类型**，类型有所不同（有DOMContentLoaded、Timer Fired、XHR等等），也称为**根活动**。再下一层为 **Function Call** 等等，越往下层越具体，具体看示例。
+我们点开**Main**折叠栏（内部的颜色好像是随机的），x轴表示时间，y轴表示调用的任务，从左至右都是一段一段的，每段的**顶层**都是 **Task**，task下还包含依次调用的任务，这就是表示主线程处理的任务，而且每Task都对应着**一帧**。
 
-点击某一块，你可以在下方的信息 Tab 页中观察此 TASK 的相关信息。并且如果哪一块的性能不好，那一块的右上角会有一个红色三角形。
+Task下一层都是 **事件类型**，类型有所不同（有DOMContentLoaded、Timer Fired、XHR等等），也称为**根活动**。再下一层为 **Function Call** 等等，越往下层越具体，具体看示例。
+
+点击某一块，你可以在下方的信息 Tab 页中观察此 Task 的相关信息。并且如果哪一块的性能不好，那一块的右上角会有一个红色三角形。
 
 > **根活动**指的是浏览器触发的一系列流程。例如，当你点击页面内容，浏览器触发一个Event作为根活动，该Event可能回调一个事件处理事件。在Main面板中的火焰图中，根活动展示在上部，在 **Call Tree** 和 **Event Log** 面板中，根活动展示在顶层。
 
@@ -334,3 +336,74 @@ FPS：指页面每秒帧数
 - Event Log：按照事件发生的先后顺序排序，显示的事件的详细信息
 - Paint Profiler：当勾选了 Enabled advanced paint instrumentation 时，会多出来这个标签，描述当浏览器渲染图像时发生的一些情况
 
+### 最后一行
+
+我们会发现最先面一行有一个 **Total Blocking Time（TBT）**，即 总阻塞时长。
+
+> 总阻塞时间（TBT）是衡量[负载响应能力](https://web.dev/user-centric-performance-metrics/#types-of-metrics)的重要[实验室指标](https://web.dev/user-centric-performance-metrics/#in-the-lab)，因为它有助于量化页面在变为可靠交互之前处于非交互状态的严重程度-低TBT有助于确保页面 [可用](https://web.dev/user-centric-performance-metrics/#questions)。
+
+“总阻塞时长”（TBT）度量标准度量了“[首次有内容的渲染时间（FCP）”](https://web.dev/fcp/)与[“可交互时间”（TTI）](https://web.dev/tti/) 之间的 [时间](https://web.dev/tti/) ，在该[时间](https://web.dev/tti/)中，主线程被阻止响应输入。
+
+## 分析瓶颈
+
+这里我们主要会从 **Main** 部分入手，来分析性能瓶颈，可能不全，欢迎大家补充。
+
+还记得上面我们说的在 **Main** 中函数等方块右上角的红色三角形嘛？我们根据它来识别问题
+
+我们点开一个带红色三角的 Task，如下图：
+
+<p align="center">
+  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_8.png" alt="performanceTest">
+</p>
+
+发现这一帧经历了250ms左右，相当于4FPS（最佳性能为16.6ms左右一帧，即60FPS），发现掉帧严重，此时我们看summary，发现有警告信息，并且列出了这个 Task 所消耗的时间比例：
+
+<p align="center">
+  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_9.png" alt="performanceTest">
+</p>
+
+我们继续往下看，点击它的子块 **Animation Frame Fired**，观察发现警告信息有了变化，并且还指出代码的位置：
+
+<p align="center">
+  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_10.png" alt="performanceTest">
+</p>
+
+我们点击给出的代码位置：
+
+<p align="center">
+  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_11.png" alt="performanceTest">
+</p>
+
+发现给位置并不清晰，不知道代码进行优化。这是我么再往下找，发现块越来越小，这是我们利用好滚轮进行放大，发现最后一行有许多紫色的块，而且都有三角形，我们点击个：
+
+<p align="center">
+  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_12.png" alt="performanceTest">
+</p>
+
+发现了 “**警告：强制回流可能是性能瓶颈**” 这条提示信息，我们还是点开相应的代码位置：
+
+<p align="center">
+  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_13.png" alt="performanceTest">
+</p>
+
+发现“**if (m.offsetTop === 0)**”这个if判断语句出了问题，真正的问题就在于 **offsetTop ** 的获取上。
+
+此代码的问题在于，在每个动画帧中，它都会先更改每个方块的样式（第70行），然后再查询页面上每个方块的位置。由于样式发生了变化，浏览器不会使用之前已经得知并缓存的样式数据信息，而需要重新计算获取新布局方块的样式数据信息，以计算其位置所在。这就导致了性能损耗。
+
+我们在不改变额外设置的情况下，点击 **优化** 按钮，在进行一次录制，数据如下：
+
+<p align="center">
+  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_14.png" alt="performanceTest">
+</p>
+
+虽然由于性能限制，还是没达到流畅，但是应经好了非常多了。其实奥秘就在于优化后部分的代码：
+
+<p align="center">
+  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_15.png" alt="performanceTest">
+</p>
+
+优化后的代码事先声明了 pos 变量用来存储样式数据（由于目前为止并未更改过样式，所以样式的信息对于浏览器来说是已知的，所以获取样式数据效率会很高），然后在84行改变了css 之后，后面就没有进行再次的css样式的获取了。
+
+这篇文章应该跟 EventLoop、浏览器渲染机制等等一起结合讲的，里面内容很多，对基于chrome网页应用的性能优化很有帮助，但时间有限，有空我或者大家可以再分享分享。
+
+### Thanks~!
