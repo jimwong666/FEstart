@@ -24,7 +24,7 @@
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_demo.png" alt="performanceTest">
 </p>
 
-点开右边的**小齿轮**，像下面这样设置来限制cpu性能，选择降低4倍性能或6倍性能，让cpu出现性能瓶颈（也可以勾选Enabled advanced paint instrumentation这个选项来进一步增加性能消耗，但是效果好像不明显）
+点开右边的**小齿轮**，像下面这样设置来限制cpu性能，选择降低4倍性能或6倍性能，让cpu出现性能瓶颈（也可以勾选Enabled advanced paint instrumentation这个选项来进一步？增加性能消耗，但是效果好像不明显，可能有误。另外此选项打开后最底部tabs标签页将会多出来一个tab，用来展示浏览器渲染图像时发生的情况）
 
 <p align="center">
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_1.png" alt="performanceTest">
@@ -188,7 +188,7 @@ FPS：指页面每秒帧数
 - FCP：首次有内容的渲染（First Contentful Paint）
 - LCP：最大内容的渲染（Largest Contentful Paint）
 - L：页面中所有资源加载完成（Onload Event）
-- FMP：首次有意义的绘制（First Meaningful Paint，可能已移除）
+- FMP：首次有意义的绘制（First Meaningful Paint）
 
 ------
 
@@ -204,11 +204,13 @@ FPS：指页面每秒帧数
 
 此部分记录了**主线程**的执行记录，可以看到某个任务执行的具体情况，此部分的图表也称为**火焰图**（倒着看）。
 
-我们点开**Main**折叠栏（内部的颜色好像是随机的），可以看到从左至右都是一段一段的，每段的**顶层**都是 **TASK**，这应该是就是表示待主线程处理的任务。并且下一层都是 **事件类型**，类型有所不同（有DOMContentLoaded、Timer Fired、XHR等等），也称为**根活动**。再下一层为 **Function Call** 等等，越往下层事件越具体，具体看示例。
+> 因为浏览器的单个页面，就是打开的一个tab标签，他是单线程，即全部的程序都是跑在这个主线程的，所以你可以在这里看到所有的事件。
+
+我们点开**Main**折叠栏（内部的颜色好像是随机的），可以看到从左至右都是一段一段的，每段的**顶层**都是 **TASK**，这就是表示主线程处理的任务。并且下一层都是 **事件类型**，类型有所不同（有DOMContentLoaded、Timer Fired、XHR等等），也称为**根活动**。再下一层为 **Function Call** 等等，越往下层越具体，具体看示例。
+
+点击某一块，你可以在下方的信息 Tab 页中观察此 TASK 的相关信息。并且如果哪一块的性能不好，那一块的右上角会有一个红色三角形。
 
 > **根活动**指的是浏览器触发的一系列流程。例如，当你点击页面内容，浏览器触发一个Event作为根活动，该Event可能回调一个事件处理事件。在Main面板中的火焰图中，根活动展示在上部，在 **Call Tree** 和 **Event Log** 面板中，根活动展示在顶层。
-
-点击某一块，你可以在下方的信息 Tab 页中观察此 TASK 的相关信息。
 
 下面列出一些 **根活动** 事件类型：
 
@@ -264,19 +266,27 @@ FPS：指页面每秒帧数
 
 ### Raster
 
-**光栅格化**线程池，查看光栅格活动信息，用来让 GPU 执行光栅化的任务
+**光栅格化**线程池，查看光栅格活动信息
 
-------
+**“光栅格化”**或者叫**“光栅化”**代表与**页面绘制**有关的所有活动。毕竟，任何HTML页面最终展示在我们眼前都是叠加的“图像”。浏览器将DOM和CSS转换为图像在屏幕上显示。因此，即使页面上没有任何图像，你仍然会在“光栅格化”中看到至少一个光栅格化线程，这表示HTML页面信息转化为了显示器上的像素点了。
 
-### GPU
-
-**GPU**进程主线程的执行过程记录，查看GPU活动信息，如 可以直观看到何时启动GPU加速
+> **rasterization**（栅格化）是三维物体在二维平面上成像的一个过程，即将三维物体投影到二维影像上，解决了一个三维物体在不同角度看“长”什么样的问题。**rasterization**有两种实现算法，一种投影法：即从物方出发将物方三角面投影到影像上，一种光线法，即从像方出发，从像方发射光线与物方三角面相交，前者算法效率较高，但精度不如后者，后者反之。
 
 ------
 
 ### Compositor
 
 **合成排版**线程的执行记录，用来记录**HTML绘制**阶段 (Paint)结束后的图层合成操作
+
+**合成**是一种将页面分成若干层，然后分别对它们进行光栅化，最后在一个单独的线程 - 合成线程（compositor thread）里面合并成一个页面的技术。
+
+> Chromium 目前实际支持三种不同的光栅化和合成的组合方式：软件光栅化 + 软件合成，软件光栅化 + gpu 合成，gpu 光栅化 + gpu 合成。在移动平台上，大部分设备和移动版网页使用的都是 gpu 光栅化 + gpu 合成的渲染方式，理论上性能也最佳。
+
+------
+
+### GPU
+
+**GPU**进程主线程的执行过程记录，查看GPU活动信息，如 可以直观看到何时启动GPU加速
 
 ------
 
@@ -322,4 +332,5 @@ FPS：指页面每秒帧数
 - Bottom-Up：按照事件花费的时间长短来排序
 - Call Tree：按照调用顺序来排序的
 - Event Log：按照事件发生的先后顺序排序，显示的事件的详细信息
+- Paint Profiler：当勾选了 Enabled advanced paint instrumentation 时，会多出来这个标签，描述当浏览器渲染图像时发生的一些情况
 
