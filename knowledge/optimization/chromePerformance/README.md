@@ -29,7 +29,7 @@
 <p align="center">
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_1.png" alt="performanceTest">
 </p>
-再勾选 **小齿轮** 左边的 Screenshots 和 Memony 选项，这样性能测试的数据会多出 **屏幕快照** 和 **内存使用情况** 这两项
+再勾选**小齿轮**左边的 Screenshots 和 Memony 选项，这样性能测试的数据会多出**屏幕快照**和**内存使用情况**这两项。
 
 下面我们就来调整上述2个参数（增加蓝色小方块数量和限制cpu性能）进行高负载模拟，此时画面出现了明显卡顿，下面我们进入测试环节
 
@@ -43,25 +43,26 @@
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_2.png" alt="performanceTest">
 </p>
 
-下图是卡顿时的性能分析：
+下图是卡顿时的性能分析图表：
 
 <p align="center">
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_3.png" alt="performanceTest">
 </p>
 <p align="center">
-  <span>卡顿时</span>
+  <span>卡顿情况</span>
 </p>
-这时我们恢复正常状态，然后点击**优化**按钮，再进行录制，形成参照：
 
+这时我们刷新恢复正常状态，然后再进行录制，形成参照：
 
 <p align="center">
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/optimization/chromePerformance/img/performanceTest_4.png" alt="performanceTest">
 </p>
 <p align="center">
-  <span>优化后</span>
+  <span>默认情况/span>
 </p>
 
-我们大致看一下这个页面，看上去主要分为4大块儿：
+
+我们大致看一下这两个截图，图表信息看上去主要分为4个部分：
 
 1. 第一部分是各种随时间线变化的图表（FPS，CPU，NET 等信息）
 2. 第二部分是几个折叠菜单（Frames，Experience，Main等信息）
@@ -116,7 +117,9 @@ FPS：指页面每秒帧数
 
 ### CPU
 
-再往下是**CPU**的使用情况，我们可以看到**波浪图**，其中的颜色包括黄色、蓝色、绿色、灰色、白色，其实就是对应着CPU干的不同的活，参考最底部**Summary** Tab页里面的**环形图**，即黄色是Scripting（JavaScript的执行）、蓝色是Rendering（样式计算与布局，即重排）、绿色是Painting（重绘）、灰色是System（其他）、白色是Idle（空闲时间）。
+再往下是**CPU**的使用情况，我们可以看到**波浪图**，其中的颜色包括黄色、蓝色、绿色、灰色、白色，其实就是对应着CPU干的不同的活。
+
+通过波浪图再参考最底部**Summary** Tab页里面的**环形图**，即蓝色是Loading（网络请求和HTML解析事件）、黄色是Scripting（JavaScript的执行时间）、紫色是Rendering（样式计算与布局，即重排）、绿色是Painting（绘制，即重绘）、灰色是System（系统等其他时间）、白色是Idle（空闲时间）。
 
 ------
 
@@ -124,11 +127,13 @@ FPS：指页面每秒帧数
 
 下面是NET，展示了资源占用网络情况，有两条蓝色的长条，深蓝代表优先级比较高的请求，浅蓝代表优先级比较低的请求，横条越长，网络花费时间越长。
 
+具体时间清考第二部分查看 Network 部分。
+
 ------
 
 ### 屏幕快照
 
-屏幕快照是与时间对应的每帧的截图，鼠标放在上面会逐帧放大，可以通过上方的 checkbox 来控制是否显示。
+屏幕快照是与时间对应的每帧的截图，鼠标放在第一部分上面会逐帧放大，可以通过上方的 checkbox 来控制是否显示。
 
 ------
 
@@ -152,12 +157,12 @@ FPS：指页面每秒帧数
 - 媒体文件：显示绿色
 - 其他资源：显示灰色
 
-每个**资源条**都有一个像K线的外型，只不过K线是竖着的，它是横着的。你在控制台的Network标签栏一一对照他们的含义：
+每个**资源条**都有一个像K线的外型，只不过K线是竖着的，它是横着的。你可以在控制台的Network标签栏 Timing 下一一对照他们的含义：
 
-- 左边横线：对应 NetWork 工具中 Request Sent 之前的所有的事情
-- 浅色的条：对应 NetWork 工具中Request Sent 和 Waiting
-- 深色的条：对应 NetWork 工具中 Content Download
-- 右边横线：表示等待主进程所花费的时间，在 NetWork 工具中没有显示出来
+- 左边横线：对应 Timing 下的 Request Sent 之前的所有的事情
+- 浅色的条：对应 Timing 下的 Request Sent 和 Waiting（TTFB）
+- 深色的条：对应 Timing 下的 Content Download
+- 右边横线：表示等待主进程所花费的时间，在 Timing 下没有显示出来
 
 ------
 
@@ -334,6 +339,7 @@ Task下一层都是 **事件类型**，类型有所不同（有DOMContentLoaded�
 - Bottom-Up：按照事件花费的时间长短来排序
 - Call Tree：按照调用顺序来排序的
 - Event Log：按照事件发生的先后顺序排序，显示的事件的详细信息
+- Layers：会看到用于 Compositor 合并的“图层”，创建这些图层有很多原因（Canvas，Video，Iframe，opacity，transform，position: fixed/sticky等等），并且也有相关的优化
 - Paint Profiler：当勾选了 Enabled advanced paint instrumentation 时，会多出来这个标签，描述当浏览器渲染图像时发生的一些情况
 
 ### 最后一行
@@ -404,14 +410,15 @@ Task下一层都是 **事件类型**，类型有所不同（有DOMContentLoaded�
 
 优化后的代码事先声明了 pos 变量用来存储样式数据（由于目前为止并未更改过样式，所以样式的信息对于浏览器来说是已知的，所以获取样式数据效率会很高），然后在84行改变了css 之后，后面就没有进行再次的css样式的获取了。
 
-其实，这只是可能会影响页面性能的一个小原因，我们平常遇到的问题可能个复杂：
+其实，上述我只介绍了可能会影响页面性能的一个小小的原因，我们平常遇到的问题可能会更多样更复杂：
 
 - js运行时机不当，可能会影响页面的动画、相应等等。这时我们就可以用 requestAnimationFrame
 - 需要长时间运行的js影响性能。我们可以将需要大量计算的工作转移到后台，或者用web worker等
 - css嵌套过多选择器，导致影响性能。我们就尽量减少选择器的数量，并尽量写具体的类名等
-- 较多的动效影响性能。这是我们讲这些动效尽量放在一个单独的“层”里面，使用 transform 等属性，条用GPU渲染。并尽量减少gif的使用
-- 等等
+- 较多的动效影响性能。这是我们讲这些动效尽量放在一个单独的“层”里面，使用 transform 等属性，调用GPU渲染
+- 又有可能“图层”较多，也影响性能
+- 减少gif图使用等等...
 
-这篇文章应该跟 EventLoop、浏览器渲染机制等等一起结合讲的，里面内容很多，对基于chrome网页应用的性能优化很有帮助，但时间有限，有空我或者大家可以再分享分享。
+这篇文章其实可以跟 EventLoop、浏览器渲染机制、页面性能优化等等结合起来一起讲的，里面内容很多，对基于chrome网页应用的性能优化很有帮助，但时间有限，有空我或者大家可以再分享分享相关知识。
 
 ### Thanks~!
