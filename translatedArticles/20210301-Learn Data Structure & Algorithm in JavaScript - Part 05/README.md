@@ -365,9 +365,132 @@ JavaScript本身并不像下面那样提供多维数组
 
 <p align="center">
 <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--yCnwdAUp--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/hr6qv04q2cljfuvycynj.png" alt="学习JavaScript中的数据结构和算法">
-<div align="center">Figure 5-1. Multidimensional array</div>
+<div align="center">图5-1 多维数组</div>
 </p>
 
+请参见图5-1，与 Java 和 C++ 不同，JavaScript没有多维数组（😿）
+
+<p align="center">
+<img src="https://res.cloudinary.com/practicaldev/image/fetch/s--ayVWJP3v--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/turke7pcq7u3yioe8lmg.png" alt="学习JavaScript中的数据结构和算法">
+<div align="center">图5-2 锯齿状阵列</div>
+</p>
+
+相反，js有锯齿状数组！（😹）如图5-2所示，锯齿状数组是其元素为数组的数
+
+<p align="center">
+<img src="https://res.cloudinary.com/practicaldev/image/fetch/s--O1UvOj_j--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/00yfxdj7b6xevsadwqnl.png" alt="学习JavaScript中的数据结构和算法">
+<div align="center">图5-3 三乘三矩阵</div>
+</p>
+
+这是一个创建锯齿状数组的函数，如图5-3所示：
+
+```js
+function Matrix(rows, columns) {
+    var jaggedarray = new Array(rows);
+    for (var i = 0; i < columns; i += 1) {
+        jaggedarray[i] = new Array(rows);
+    }
+    return jaggedarray;
+}
+Matrix(3, 3)
+```
+
+通过定义元素数组，您可以创建一个多维数组，其中每个元素也是另一个数组。因此，我们可以说JavaScript的多维数组是数组的数组
+
+<p align="center">
+<img src="https://res.cloudinary.com/practicaldev/image/fetch/s--O1UvOj_j--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/00yfxdj7b6xevsadwqnl.png" alt="学习JavaScript中的数据结构和算法">
+<div align="center">图5-4 三乘三的数字矩阵</div>
+</p>
+
+要访问锯齿状数组中的元素，请指定行和列（请参见图5-4）：
+
+```js
+var matrix3by3 = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+
+/* Access column */
+console.log("Column 1:"+matrix3by3[0]) // [1,2,3]
+console.log("Column 2:"+matrix3by3[1]) // [4,5,6]
+console.log("Column 3:"+matrix3by3[2]) // [7,8,9]
+
+/* Access row 1, 2 and 3 in column 1 */
+console.log("Column 1 Row 1:"+matrix3by3[0][0]) // 1
+console.log("Column 1 Row 2:"+matrix3by3[0][1]) // 2
+console.log("Column 1 Row 3:"+matrix3by3[0][2]) // 3
+
+/* Access row 1, 2 and 3 in column 2 */
+console.log("Column 2 Row 1:"+matrix3by3[1][0]) // 4
+console.log("Column 2 Row 2:"+matrix3by3[1][1]) // 5
+console.log("Column 2 Row 3:"+matrix3by3[1][2]) // 6
+
+/* Access row 1, 2 and 3 in column 3 */
+console.log("Column 3 Row 1:"+matrix3by3[2][0]) // 7
+console.log("Column 3 Row 2:"+matrix3by3[2][1]) // 8
+console.log("Column 3 Row 3:"+matrix3by3[2][2]) // 9
+```
+
+## 总结（📚）
+
+<p align="center">
+<img src="https://res.cloudinary.com/practicaldev/image/fetch/s--3A3qwr6O--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_66%2Cw_880/https://i.pinimg.com/originals/b3/12/b7/b312b7395f5aefa1ba8405b43fc71979.gif" alt="学习JavaScript中的数据结构和算法">
+</p>
+
+本部分介绍了各种数组函数，分别总结于表5-1：
+
+| Function | Usage |
+| :-----| :---- |
+| push(element) | 在数组的结尾添加一个元素 |
+| pop() | 移除数组末尾的子后一个元素 |
+| shift()| 移除数组第一个元素 |
+| slice(beginIndex, endIndex)| 返回数组的起始索引到结束索引的内容 |
+| splice(beginIndex, endIndex)| 返回从beginIndex到endIndex的数组的一部分，并通过删除这些元素来修改原始数组 |
+| concat(arr)| 在数组末尾将新元素（来自arr）添加到数组中 |
+<div align="center">表5-1 数组函数总结</div>
+
+数组元素的迭代可以使用表5-2中所示的循环机制：
+
+| Function | Usage |
+| :-----| :---- |
+| for (var prop in arr) | 根据数组元素的索引进行迭代 |
+| for (var elem of arr) | 根据数组元素的值进行迭代 |
+<div align="center">表5-2 遍历器总结</div>
+
+最后，回想一下JavaScript是利用锯齿状数组（数组的数组）来获得多维数组（😊）
+
+## 挑战（😤🔥👊）
+
+<p align="center">
+<img src="https://res.cloudinary.com/practicaldev/image/fetch/s--Ynx8UU4x--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_66%2Cw_880/https://thumbs.gfycat.com/ApprehensiveCanineIbadanmalimbe-size_restricted.gif" alt="学习JavaScript中的数据结构和算法">
+</p>
+
+在等待第6部分时，有一些时间来解决这个难题。但是，这里有示例代码和解释，您可以自己解决，除了下面提供的代码和解释之外，还有您自己的代码，我不想看到您答案或解释（或者，如果您想显示正确的话，只需确保在评论中分享即可：（😅）
+
+**在最多可增加一个的数组中查找两个数组元素**
+**问题：**给定数组arr，找到并返回该数组的两个索引，这些索引加起来等于权重；如果没有任何组合加起来，则返回-1
+**说明：**例如，在类似[1,2,3,4,5]的数组中，哪些数字加起来等于9？
+(译者：先排序，然后双指针)
+
+**查找相同大小的两个排序数组的中位数**
+**问题：**回想一下，一组偶数中的中位数是两个中间数的平均值。如果数组已排序，这很简单。
+**说明：**[1,2,3,4]的中位数为（2 + 3）/ 2 = 2.5
+
+**查找K排序数组中的公共元素**
+<p align="center">
+<img src="https://res.cloudinary.com/practicaldev/image/fetch/s--22oGk5sG--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/kqywae290zddyw2sckfi.png" alt="学习JavaScript中的数据结构和算法">
+<div align="center">图5-5 三个变量</div>
+</p>
+
+**问题：**在具有三个数组的此示例中，k = 3。
+**扩展：**为此，只需遍历每个数组并计算每个元素的实例数即可。但是，不要跟踪重复的（在一次数组迭代中应将5和5.5计数一次）。为此，请在递增之前检查最后一个元素是否相同。仅在排序后才有效。
+
+**螺旋绘制**
+
+<p align="center">
+<img src="https://res.cloudinary.com/practicaldev/image/fetch/s--l1L20s4v--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/t8ydsphvy2i5qmixc673.png" alt="学习JavaScript中的数据结构和算法">
+<div align="center">图5-6 螺旋绘制</div>
+</p>
+
+**问题：**让我们用矩阵创建一个示例问题。给定矩阵，以螺旋顺序打印元素，如图5-5所示。
+**说明：**起初这看起来像一项艰巨的任务。但是，该问题可以分解为五个主要部分。从左到右打印，从上到下打印，从右到左打印，从下到上打印，这四个操作都受到限制
 
 
 
