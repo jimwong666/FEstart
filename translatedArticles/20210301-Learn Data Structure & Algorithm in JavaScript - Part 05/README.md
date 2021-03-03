@@ -365,7 +365,9 @@ JavaScript本身并不像下面那样提供多维数组
 
 <p align="center">
 <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--yCnwdAUp--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/hr6qv04q2cljfuvycynj.png" alt="学习JavaScript中的数据结构和算法">
+<div align="center">Figure 5-1. Multidimensional array</div>
 </p>
+
 
 
 
