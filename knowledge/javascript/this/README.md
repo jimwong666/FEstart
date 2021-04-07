@@ -37,10 +37,33 @@
 > func() < obj.func() < func.call(obj) < new func()
 > 
 
+<hr />
+
+##### 回调函数中的this：
+
+```js
+class Cat {
+  sayThis() {
+    console.log(this); // 这里的 `this` 指向谁？
+  }
+
+  exec(cb) {
+    cb(); // 回调函数
+  }
+
+  render() {
+    this.exec(this.sayThis)
+  }
+}
+
+let tom = new Cat();
+tom.render(); // 输出结果是什么？
+```
+> 一般可理解为：回调函数中的this指向undefined
 
 <hr />
 
-##### 但是下面有个例外（ES6）：
+##### ES6中的this：
 
 ```js
   // 总结：ES6中的箭头函数，this取决于**函数是在哪被定义的**
@@ -58,7 +81,7 @@
 
 * 箭头函数没有自己的 ```this```（并且这一点无法改变），所有的箭头函数的 ```this``` 都指向包含它的作用域的 ```this```。
 
-
+<hr />
 
 ### 20200513
 
