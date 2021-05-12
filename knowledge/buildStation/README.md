@@ -1,4 +1,29 @@
-# GCP（Google Cloud Platform）入门
+## CentOS 安装node环境
+- 源码安装包：
+  ```
+	yum install wget
+	wget https://nodejs.org/dist/v12.22.1/node-v12.22.1-linux-x64.tar.xz
+	xz -d node-v12.22.1-linux-x64.tar.xz
+	tar -xf node-v12.22.1-linux-x64.tar
+
+	ln -sf /home/node-v12.22.1-linux-x64/bin/npm /usr/bin/npm
+	ln -sf /home/node-v12.22.1-linux-x64/bin/node /usr/bin/node
+  ```
+- yum方式安装：
+  ```
+	curl --silent --location https://rpm.nodesource.com/setup_12.x | sudo bash
+	yum -y install nodejs
+  ```
+- nvm方式安装：
+  ```
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.0/install.sh | bash
+	%or%
+	wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.35.0/install.sh | bash
+	
+	source ~/.bashrc
+  ```
+
+## GCP（Google Cloud Platform）入门
 日期：2021/2/2
 
 ## 创建实例
