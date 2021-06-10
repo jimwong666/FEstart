@@ -2,7 +2,7 @@
 > react 用过一段时间的人都知道，我们可以写类组件，也可以写函数组件。函数组件写起来简单，好维护，但是唯一的缺点是没有自己的 state。
 > 那有什么样的一种方法，既能利用 react 函数组件的简单，也可以使用 state 呢，这个就是 hooks 诞生的原因。用 react 官方的话说，就是："组件不要变成复杂的容器，最好只是数据流的管道。开发者根据需要，组合管道即可。**组件的最佳写法应该是函数，而不是类。**"
 
-## [Hook解决的问题](https://zhuanlan.zhihu.com/p/137183261 "参考")
+## [Hook解决的问题](https://zhuanlan.zhihu.com/p/137183261 "Hook解决的问题")
 - Component非UI逻辑复用困难
 - 组件的生命周期函数不适合side effect逻辑的管理
 - 不友好的Class Component
@@ -17,7 +17,7 @@
    1. React的函数式组件内调用Hooks
    2. 自定义Hook中调用其他Hooks 这样你可以确保组件中所有的状态逻辑，都能够在代码中清晰可见，提升代码可读性
 
-## Hook概览
+## [Hook概览](https://zhuanlan.zhihu.com/p/137183261 "Hook概览")
 - 基础的 Hook
   - useState
   - useEffect
