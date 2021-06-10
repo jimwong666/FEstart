@@ -2,7 +2,7 @@
 > react 用过一段时间的人都知道，我们可以写类组件，也可以写函数组件。函数组件写起来简单，好维护，但是唯一的缺点是没有自己的 state。
 > 那有什么样的一种方法，既能利用 react 函数组件的简单，也可以使用 state 呢，这个就是 hooks 诞生的原因。用 react 官方的话说，就是："组件不要变成复杂的容器，最好只是数据流的管道。开发者根据需要，组合管道即可。**组件的最佳写法应该是函数，而不是类。**"
 
-## Hook解决的问题 [参考](https://zhuanlan.zhihu.com/p/137183261 "参考")
+## [Hook解决的问题](https://zhuanlan.zhihu.com/p/137183261 "参考")
 - Component非UI逻辑复用困难
 - 组件的生命周期函数不适合side effect逻辑的管理
 - 不友好的Class Component
@@ -34,7 +34,7 @@
 
 ## Hook API
 
-#### useState
+### useState
 
 ```jsx
 	[val, setVal] = useState(initVal);
@@ -99,7 +99,7 @@ useState是React提供的一个Hook。可以在函数式组件中，使用该方
 	}
 ```
 
-#### useEffect
+### useEffect
 
 ```jsx
 	useEffect(effectFunction: Function, dependency?: any[]);
@@ -173,7 +173,7 @@ useEffect 方法有以下几种形态：
 	}
 ```
 
-#### useContext
+### useContext
 
 ```jsx
 	useContext(MyContext);
@@ -224,7 +224,7 @@ useContext 的目的在于实现父组件与子组件之间的数据传递。相
 	}
 ```
 
-#### useReducer
+### useReducer
 
 ```jsx
 	const [state, dispatch] = useReducer(reducer, initialArg, init?);
@@ -302,7 +302,7 @@ useReducer 从字面意思来说它是 redux 的替代方案，但是真正替�
 	}
 ```
 
-#### useCallback
+### useCallback
 
 ```jsx
 	useCallback(
@@ -318,7 +318,7 @@ useReducer 从字面意思来说它是 redux 的替代方案，但是真正替�
 
 useCallback(fn, deps) 相当于 useMemo(() => fn, deps)。
 
-#### useMemo
+### useMemo
 
 ```jsx
 	useMemo(() => computeExpensiveValue(a, b), [a, b]);
@@ -334,7 +334,7 @@ useCallback(fn, deps) 相当于 useMemo(() => fn, deps)。
 
 你可以把 useMemo 作为性能优化的手段，但不要把它当成语义上的保证。将来，React 可能会选择“遗忘”以前的一些 memoized 值，并在下次渲染时重新计算它们，比如为离屏组件释放内存。先编写在没有 useMemo 的情况下也可以执行的代码 —— 之后再在你的代码中添加 useMemo，以达到优化性能的目的。
 
-#### useRef
+### useRef
 
 ```jsx
 	useRef(initialValue);
@@ -342,7 +342,7 @@ useCallback(fn, deps) 相当于 useMemo(() => fn, deps)。
 
 useRef 返回一个可变的 ref 对象，其 .current 属性被初始化为传入的参数（initialValue）。返回的 ref 对象在组件的整个生命周期内保持不变。
 
-#### useImperativeHandle
+### useImperativeHandle
 
 ```jsx
 	useImperativeHandle(ref, createHandle, [deps])
@@ -350,11 +350,11 @@ useRef 返回一个可变的 ref 对象，其 .current 属性被初始化为传�
 
 useImperativeHandle 可以让你在使用 ref 时自定义暴露给父组件的实例值。在大多数情况下，应当避免使用 ref 这样的命令式代码。
 
-#### useLayoutEffect
+### useLayoutEffect
 
 其函数签名与 useEffect 相同，但它会在所有的 DOM 变更之后同步调用 effect。可以使用它来读取 DOM 布局并同步触发重渲染。在浏览器执行绘制之前，useLayoutEffect 内部的更新计划将被同步刷新。
 
-#### useDebugValue
+### useDebugValue
 
 ```jsx
 	useDebugValue(value)
@@ -362,7 +362,7 @@ useImperativeHandle 可以让你在使用 ref 时自定义暴露给父组件的�
 
 useDebugValue 可用于在 React 开发者工具中显示自定义 hook 的标签。
 
-#### 自定义 Hook
+### 自定义 Hook
 
 自定义 Hook 其实就是一个hook集合体函数，其名称以 “use” 开头（即：只要是use开头的函数都会默认是钩子函数），函数内部可以调用其他的 Hook，这样可以将组件的状态逻辑抽离出来，方便进行复用。
 
