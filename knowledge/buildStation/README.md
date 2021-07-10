@@ -57,3 +57,10 @@
 - 输入一下命令 **ln -sf /home/node-v14.15.4-linux-x64/bin/npm /usr/bin/npm**，和 **ln -sf /home/node-v14.15.4-linux-x64/bin/node /usr/bin/node**
 - yum install git
 - 下面就交个你们了~
+
+## 一些问题
+1. 用 VScode插件 连接数据库时会报错。原因是 mysql8.0 更改了密码默认的认证插件为 Caching_sha2_password，原来是 mysql_native_password，更改密码为 mysql_native_password 认证就可以了。
+```sql
+USE user;
+ALTER user'root'@'%' IDENTIFIED WITH mysql_native_password BY 'your password';
+```
