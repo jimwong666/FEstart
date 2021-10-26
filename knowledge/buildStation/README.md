@@ -64,3 +64,7 @@
 USE user;
 ALTER user'root'@'%' IDENTIFIED WITH mysql_native_password BY 'your password';
 ```
+2. 当从 github clone 项目一直失败时，可以把 https://... 换成 git://...
+
+
+
