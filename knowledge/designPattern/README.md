@@ -1,6 +1,27 @@
 ## 设计模式
 
 ### 单例模式
+```ts
+class Single {
+	// 直接私有，这样外面就不能new了
+	private constructor(){}
+	// 第一种方法（直接定义静态属性拥有承载实例，外部直接调用这个静态方法即这个单例）
+	// 缺点：耗内存
+	// static Instance= new Single();
+	// 第二种方法（直接调方法执行返回单例，不执行不返回）
+	private static Instance: Single;
+	static getInstance() {
+		if(!Single.Instance) {
+			Single.Instance = new Single();
+		}
+		return Single.Instance;
+	}
+}
+// 第一种方法
+// Single.Instance;
+// 第二种方法
+Single.getInstance();
+```
 
 ### 代理模式
 
