@@ -35,7 +35,7 @@
 
 ###### 产物
 一般会生成三个文件夹， dist, lib, es
-> 对应到 package.json 文件里面的入口文件字段是 "main": "lib/index.js" 和 "module": "es/index.js" 
+> 对应到 package.json 文件里面的入口文件字段是 "main": "lib/index.js" 和 "module": "es/index.js"
 
 ###### peerDependencies
 **peerDependencies** 用于指定你正在开发的包所依赖的包，但是这个包我自己不安装，因为我知道你用我你肯定会安装它。这个属性在npm2和npm3上的表现不同。
@@ -44,7 +44,7 @@
 - 幽灵依赖（Phantom dependencies），即某个包没有在 **package.json** 中被依赖，但是用户却能够引用到这个包
 - NPM分身（NPM doppelgangers），这个问题其实也可以说是 hoist 导致的，这个问题可能会导致有大量的依赖的被重复安装
 
-所以上述急待你就引起了 **磁盘空间浪费**、**安装耗时**、**包的结构混乱**等等 问题
+所以上述急待你就引起了 **磁盘空间浪费**、**安装耗时**、**包的结构混乱**、**安全问题**等等 问题
 
 ## Lerna
 
@@ -56,10 +56,33 @@
 
 > yarn workspace 好想也能达到这个目的（暂时还未使用过yarn...）
 
-当然 Lerna 的能力不止这些，大家有空可以深入了解一下
+当然 Lerna 的能力不止这些，它的绝活在 monorepo 方面，大家有空可以深入了解一下~
 
 ## pnpm
 
-> pnpm(performant npm)，即：高性能的npm。它由 npm/yarn 衍生而来，但却解决了 npm/yarn 内部潜在的 bug，并且极大了地优化了性能，扩展了使用场景
+> pnpm(performant npm)，即：高性能的npm。它由 npm/yarn 衍生而来，是 npm/yarn 的替代品，但却解决了 npm/yarn 内部潜在的 bug，并且极大了地优化了性能，扩展了使用场景
 
-### 什么是 pnpm
+
+### 为什么是 pnpm
+- 速度快
+- 高效利用磁盘空间
+- 支持 monorepo
+- 安全性高
+
+### pnpm 怎么做到的
+
+这里假设我们只安装 express，做2组参照：
+- 左边用 npm 安装，右边用 pnpm 安装
+
+
+
+pnpm 的用户可能会发现它 node_modules 并**不是扁平化结构**，而是目录树的结构，类似 **npm 2.x** 版本中的结构
+
+
+## 总结和展望
+
+> 目前 issue 和 社区 都有声音支持 Lerna 和 pnpm 进行整合，如果成功了将大大提升前端管理项目和使用 npm 的“幸福度”，希望这一天的早日到来~
+
+我们从 npm 说到 Lerna 再到 pnpm，归根结底是前端的发展遇到了瓶颈和障碍，这是好事，说明前端领域依然蓬勃~
+
+谢谢大家倾听，3Q~
