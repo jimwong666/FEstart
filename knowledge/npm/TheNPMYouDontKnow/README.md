@@ -17,10 +17,17 @@
      - 依赖包会安装全局目录中
 
 ###### 安装的目录结构
-  1. 【**2.X**】版本时 npm 包的目录结构
-     - 嵌套安装
-  2. 【**3.X**】版本时 npm 包的目录结构
-     - 扁平安装（没有完全平铺）
+<p align="center">
+  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/npm/TheNPMYouDontKnow/imgs/npm2vs3.png" alt="npm2 VS npm3">
+</p>
+<p align="center">
+  <span>npm2 VS npm3</span>
+</p>
+
+1. 【**2.X**】版本时 npm 包的目录结构
+   - 嵌套安装
+2. 【**3.X**】版本时 npm 包的目录结构
+   - 扁平安装（没有完全平铺）
 
 ###### 包的查找方式
   - 首先在 **package.json** 所在的目录查找 **node_modules**，然后一直往父目录查找 **node_modules** 文件夹，如果还没有，再到 **全局目录** 去查找 **node_modules**
@@ -62,8 +69,18 @@
 
 > pnpm(performant npm)，即：高性能的npm。它由 npm/yarn 衍生而来，是 npm/yarn 的替代品，但却解决了 npm/yarn 内部潜在的 bug，并且极大了地优化了性能，扩展了使用场景
 
+<p align="center">
+  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/npm/TheNPMYouDontKnow/imgs/performant.jpg" alt="速度快，性能好">
+</p>
+<p align="center">
+  <span>速度快，性能好</span>
+</p>
 
 ### 为什么是 pnpm
+<p align="center">
+  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/npm/TheNPMYouDontKnow/imgs/why.png" alt="pnpm">
+</p>
+
 - 速度快
 - 高效利用磁盘空间
 - 支持 monorepo
@@ -72,7 +89,12 @@
 ### pnpm 怎么做到的
 
 这里假设我们只安装 express，做2组参照：
-- 左边用 npm 安装，右边用 pnpm 安装
+<p align="center">
+  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/npm/TheNPMYouDontKnow/imgs/compare.png" alt="npm对比pnpm">
+</p>
+<p align="center">
+  <span>npm对比pnpm</span>
+</p>
 
 
 
