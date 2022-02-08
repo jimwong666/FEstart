@@ -96,9 +96,16 @@
   <span>npm对比pnpm</span>
 </p>
 
+我们再点开 **.pnpm** 目录
+<p align="center">
+  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/npm/TheNPMYouDontKnow/imgs/.pnpm.png" alt="npm对比pnpm">
+</p>
+<p align="center">
+  <span>.pnpm目录</span>
+</p>
+**.pnpm** 以平铺的形式储存着所有的包，正常的包都可以在 ``` .pnpm/<organization-name>+<package-name>@<version>/node_modules/<name> ``` 这种命名模式的文件夹中被找到（peerDep例外）
 
-
-pnpm 的用户可能会发现它 node_modules 并**不是扁平化结构**，而是目录树的结构，类似 **npm 2.x** 版本中的结构
+此时我们会发现pnpm安装的 node_modules 并**不是扁平化结构**，而是目录树的结构，类似 **npm 2.x** 版本中的结构
 
 
 ## 总结和展望
