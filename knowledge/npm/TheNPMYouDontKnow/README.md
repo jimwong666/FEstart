@@ -38,7 +38,7 @@
 开发的工具库有 father、 roll.js 等等
 
 ###### 调试
-本地调试，npm link(即利用了**软链**，可以再了解一下**硬链**)
+本地调试，npm link(即利用了**软链**，可以再了解一下**硬链**，[参考文章](https://www.ruanyifeng.com/blog/2011/12/inode.html))
 
 ###### 产物
 一般会生成三个文件夹， dist, lib, es
@@ -69,6 +69,14 @@
 
 > pnpm(performant npm)，即：高性能的npm。它由 npm/yarn 衍生而来，是 npm/yarn 的替代品，但却解决了 npm/yarn 内部潜在的 bug，并且极大了地优化了性能，扩展了使用场景
 
+
+<p align="center">
+  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/npm/TheNPMYouDontKnow/imgs/fast.jpg" alt="无阻塞，速度快">
+</p>
+<p align="center">
+  <span>无阻塞，速度快</span>
+</p>
+
 <p align="center">
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/npm/TheNPMYouDontKnow/imgs/performant.jpg" alt="速度快，性能好">
 </p>
@@ -89,6 +97,7 @@
 ### pnpm 怎么做到的
 
 这里假设我们只安装 express，做2组参照：
+
 <p align="center">
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/npm/TheNPMYouDontKnow/imgs/compare.png" alt="npm对比pnpm">
 </p>
@@ -96,17 +105,32 @@
   <span>npm对比pnpm</span>
 </p>
 
+我们会发现pnpm安装的 node_modules 并**不是扁平化结构**，而是目录树的结构，类似 **npm 2.x** 版本中的结构
+
 我们再点开 **.pnpm** 目录
+
 <p align="center">
   <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/npm/TheNPMYouDontKnow/imgs/.pnpm.png" alt="npm对比pnpm">
 </p>
 <p align="center">
   <span>.pnpm目录</span>
 </p>
-**.pnpm** 以平铺的形式储存着所有的包，正常的包都可以在 ``` .pnpm/<organization-name>+<package-name>@<version>/node_modules/<name> ``` 这种命名模式的文件夹中被找到（peerDep例外）
 
-此时我们会发现pnpm安装的 node_modules 并**不是扁平化结构**，而是目录树的结构，类似 **npm 2.x** 版本中的结构
+**.pnpm** 以平铺的形式储存着所有的包，正常的包都可以在下面这种命名模式的文件夹中被找到（peerDep例外）
+```
+.pnpm/<organization-name>+<package-name>@<version>/node_modules/<name>
 
+// 组织名(若无会省略)+包名@版本号/node_modules/名称(项目名称)
+```
+我们称 **.pnmp** 为 **虚拟存储** 目录，该目录通过 **<package-name>@<version>** 来实现相同模块不同版本之间隔离和复用，由于它只会根据项目中的依赖生成，并不存在提升，所以它不会存在之前提到的 **幽灵依赖** 问题！
+
+##### 依赖包的存储与链接
+
+那么它如何跟文件资源进行关联的呢？又如何被项目中使用呢？
+
+1. pnpm install 之后，首先 pnpm 首先会并行下载各个包并放到库存中（无阻塞，速度快），即放在 .pnpm-store 文件夹中（windows下会设置到当前盘的根目录下）
+2. 然后创建 **虚拟存储**（.pnpm）目录，并创建各个依赖包，他们都会 **硬链接** 到 .pnpm-store 文件夹下（这样就达到了节约硬盘资源的目的），如果他们内部有互相引用，则使用 **软链接**（他们的相互内部依赖也是用到了 node_modules 包的查找方式）
+3. 最后根据 **package.json** 的依赖项生成对应的依赖包（提高了安全性），依赖包 软链接 到 **虚拟存储**（.pnpm）目录中对应的版本
 
 ## 总结和展望
 
