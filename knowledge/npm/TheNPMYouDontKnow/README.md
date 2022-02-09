@@ -71,7 +71,7 @@
 
 
 <p align="center">
-  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/npm/TheNPMYouDontKnow/imgs/fast.jpg" alt="无阻塞，速度快">
+  <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/npm/TheNPMYouDontKnow/imgs/fast.png" alt="无阻塞，速度快">
 </p>
 <p align="center">
   <span>无阻塞，速度快</span>
