@@ -11,8 +11,8 @@
 #### ① 通过npm安装依赖包
 ###### 安装方式
   1. 项目内安装
-     - 安装**生产** 的依赖；对应 package.json里面的 dependencies 字段，命令是 `npm install XXX -S` 或者 `npm install XXX --save`
-     - 安装**开发** 的依赖；对应 package.json里面的 devDependencies 字段，命令是 `npm install XXX -D` 或者 `npm install XXX --save-dev`
+     - 安装 **生产** 的依赖；对应 package.json里面的 dependencies 字段，命令是 `npm install XXX -S` 或者 `npm install XXX --save`
+     - 安装 **开发** 的依赖；对应 package.json里面的 devDependencies 字段，命令是 `npm install XXX -D` 或者 `npm install XXX --save-dev`
   2. 全局安装
      - 依赖包会安装全局目录中，命令是 `npm install XXX -g`
 
