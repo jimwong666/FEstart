@@ -61,7 +61,7 @@
 
 工作区间内包之间相互引用，无需 npm link (直接 import 或者可以 npm i 进行安装)
 
-> yarn workspace 好想也能达到这个目的（暂时还未使用过yarn...）
+> yarn workspace 好想也能达到这个目的
 
 当然 Lerna 的能力不止这些，它的绝活在 monorepo 方面，大家有空可以深入了解一下~
 
