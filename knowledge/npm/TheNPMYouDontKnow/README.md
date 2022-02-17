@@ -8,7 +8,7 @@
 > npm已经成了 Node.js 包的标准发布平台，用于 Node.js 包的发布、传播、依赖控制。npm 提供了命令行工具，使你可以方便地下载、安装、升级、删除包，也可以让你作为开发者发布并维护包
 
 ### npm介绍
-#### ① 供用户使用
+#### ① 通过npm安装包
 ###### 安装方式
   1. 项目内安装
      - **dependencies** 的依赖；命令是 `npm install XXX -S` 或者 `npm install XXX --save`
@@ -32,7 +32,7 @@
 ###### 包的查找方式
   - 首先在 **package.json** 所在的目录查找 **node_modules**，然后一直往父目录查找 **node_modules** 文件夹，如果还没有，再到 **全局目录** 去查找 **node_modules**
 
-#### ② 供开发者开发插件
+#### ② 通过npm发布包
 
 ###### 开发
 开发的工具库有 father、 roll.js 等等
