@@ -66,7 +66,7 @@ IIFE 即 立即执行函数，其实平常很多人都用过 IIFE，也知道它
 最开始，我们对于模块区分的概念，可能是从文件的区分开始的，在一个简易的项目中，编程的习惯是通过一个 HTML 文件加上若干个 JavaScript 文件来区分不同的模块，就像这样：
 
 <p align="center">
-    <img src="https://github.com/jimwong666/FEstart/blob/master/FEknowledge/FE_Modular/images/iife_0.jpg" alt="IIFE">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/javascript/Modular/images/iife_0.jpg" alt="IIFE">
 </p>
 
 我们可以通过这样一个简单的项目来说明，来看看每个文件里面的内容：
@@ -108,7 +108,7 @@ IIFE 即 立即执行函数，其实平常很多人都用过 IIFE，也知道它
 它们都绑定在全局的 window / Global(node 环境下的全局变量) 对象上，尝试去打印验证一下：
 
 <p align="center">
-    <img src="https://github.com/jimwong666/FEstart/blob/master/FEknowledge/FE_Modular/images/iife_1.png" alt="IIFE">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/javascript/Modular/images/iife_1.png" alt="IIFE">
 </p>
 
 你可能没有意识到这会导致什么严重的结果，我们试着在 footer.js 中对 **header** 变量进行赋值操作，让我们在末尾加上这样一行代码：
@@ -120,7 +120,7 @@ IIFE 即 立即执行函数，其实平常很多人都用过 IIFE，也知道它
 打印后你就会发现，window.header 的已经被更改了:
 
 <p align="center">
-    <img src="https://github.com/jimwong666/FEstart/blob/master/FEknowledge/FE_Modular/images/iife_2.jpg" alt="IIFE">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/javascript/Modular/images/iife_2.jpg" alt="IIFE">
 </p>
 
 试想一下如果这是在一个团队中，哦豁，完球了！
@@ -145,7 +145,7 @@ IIFE 即 立即执行函数，其实平常很多人都用过 IIFE，也知道它
 为了确保我们定义在函数 main 的内容会被执行，所以我们必须在这里执行 main() 本身，现在我们在 window 里面找不到 main_message 和 main_error 了，因为它们被隐藏在了 main 中，但是 main 仍旧污染了我们的 window（main仍然挂在window对象下啊！）：
 
 <p align="center">
-    <img src="https://github.com/jimwong666/FEstart/blob/master/FEknowledge/FE_Modular/images/iife_3.jpg" alt="IIFE">
+    <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/javascript/Modular/images/iife_3.jpg" alt="IIFE">
 </p>
 
 这个方案还不够完美，怎么改进呢？
@@ -190,7 +190,7 @@ CommonJS 在 [Wikipedia](https://en.wikipedia.org/wiki/CommonJS "Wikipedia") 中
 通过上面这些描述，相信你已经知道 CommonJS 是诞生于怎样的背景，但是这里所说的 **CommonJS 是一套通用的规范，与之对应的有非常多不同的实现**：
 
 <p align="center">
-    <img src="https://github.com/jimwong666/FEstart/blob/master/FEknowledge/FE_Modular/images/commonjs_0.jpg" alt="CommonJS"> 
+    <img src="https://github.com/jimwong666/FEstart/blob/master/knowledge/javascript/Modular/images/commonjs_0.jpg" alt="CommonJS"> 
 </p>
 
 但这其中**最受关注**的是其中 [Node.js 的实现部分](https://nodejs.org/docs/latest/api/modules.html  'CommonJS的node.js的实现')。下面我们来看看。
