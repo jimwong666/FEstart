@@ -1,5 +1,5 @@
 - [前言](#前言)
-- [前端模块化](#前端模块化)
+- [前端模块化发展](#前端模块化发展)
 - [IIFE](#iife)
     - [IIFE的优点](#iife的优点)
 - [CommonJS](#commonjs)
@@ -28,12 +28,16 @@
   import xxx form 'xxx';
 ```
 
-大家都知道这是引入模块，是前端的模块化。但同样都是引入模块，require 和 import 有啥不一样？
+还有用过 webpack 或者 rollup.js 等工具的同学们应该对 amd、cjs、es、iife、umd 等这些词语有过了解
+
+
+大家都知道上述这些是对应着前端的模块化规范。但这些规范有什么不一样？
+
 
 那么今天我们一起来学习一下！
 
 
-# 前端模块化
+# 前端模块化发展
 
 在JavaScript发展初期。
 
@@ -327,11 +331,11 @@ exports 其实是 module.exports 的一个拷贝副本。作为一个拷贝副�
 **3. 这样的方式有什么弊端？**
 
 * CommonJS 这一标准的是为了让 JavaScript 在多个环境下实现模块化。它服务于node.js，所以需要依赖 Node.js 的环境变量：module，exports，require，global。这样的话浏览器根本没法用...
-* 就算浏览器能用。但是你看到代码 ``exports = someFunc;  module.exports = someFunc;`` 了吗？我们上面也说了``exports`` 与 ``module.exports`` 都是复制的``someFunc``，所以在我们还没有完成复制的时候，就无法使用被引用的模块中的方法和属性。这种同步的方式也不适合浏览器啊！
+* 就算浏览器能用。但是你看到代码 ``exports = someFunc;  module.exports = someFunc;`` 了吗？我们上面也说了``exports`` 与 ``module.exports`` 都是复制的``someFunc``，所以在我们还没有完成复制的时候，就无法使用被引用的模块中的方法和属性。这种同步的方式也不适合浏览器~
 
 > **插一句：**
 > 
-> 幸运的时我们发现，前端代码中是见过require("xxx")的，这是为什么？？？
+> 很多小可爱发现，前端代码中是见过 ```require("xxx")``` 的，这是为什么？？？
 >
 > 因为后来出现了 Browserify 这样的实现，可以将 commonjs 的代码转换成浏览器能识别的代码。有兴趣的同学可以读读阮一峰老师的 [这篇文章](http://www.ruanyifeng.com/blog/2015/05/commonjs-in-browser.html "Browserify")。
 >
@@ -520,7 +524,7 @@ ECMAScript6 标准增加了 JavaScript 语言层面的模块体系定义，作�
 
 # 总结
 
-```commonjs 和 ES6``` 模块规范的实现还是要借助 ```webpack``` 等这样的编译工具编译成浏览器能识别的代码来实现生产应用的；
+```commonjs 和 ES6``` 模块规范的实现还是要借助 ```webpack``` 等这样的编译工具编译成浏览器能识别的代码来实现生产应用的。
 而 ```AMD 和 CMD``` 规范是一种在线 "编译" 模块的方案，相当于在页面上加载一个 CMD/AMD 解释器。这样浏览器就认识了 define、exports、module 这些东西。也就实现了模块化。
 
 这篇文章大致的介绍了 前端模块化的发展 历程，大家感兴趣的话课后 可以自己动手结合代码实践跑一下
