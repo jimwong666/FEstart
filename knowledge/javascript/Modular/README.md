@@ -322,7 +322,7 @@ require 相当于把被引用的 module 拷贝了一份到当前的 代码 中
 
 > **插一句：**
 > 
-> 这里就有小可爱会问了，你不是说```commonjs```用在```node```端的吗？怎么我在前端代码中也用 ```require("xxx")``` 呢？？？
+> 这里可能会有同学问，你不是说```commonjs```用在```node```端的吗？怎么我在前端代码中也用 ```require("xxx")``` 呢？？？
 >
 > 因为后来出现了 Browserify 这样的实现，可以将 commonjs 的代码转换成浏览器能识别的代码。有兴趣的同学可以读读阮一峰老师的 [这篇文章](http://www.ruanyifeng.com/blog/2015/05/commonjs-in-browser.html "Browserify")。
 >
