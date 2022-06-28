@@ -22,6 +22,7 @@
 	
 	source ~/.bashrc
   ```
+  具体nvm版本、node版本可以自己选择
 
 ## GCP（Google Cloud Platform）入门
 日期：2021/2/2
