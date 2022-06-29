@@ -60,7 +60,7 @@ systemctl enable mysqld.service
 8. 登录：mysql -u root -p，设置密码（注意Mysql8密码设置规则必须是大小写字母+特殊符号+数字的类型）：ALTER USER 'root'@'localhost' IDENTIFIED BY 'new password';
 9. 开启远程访问权限：
    1.  GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '密码' WITH GRANT OPTION; 然后 FLUSH PRIVILEGES;（%代表所有Ip,此处也可以输入Ip来指定Ip）
-   2.  或者也可以通过修改表来实现远程：use mysql; 然后 update user set host = '%' where user = 'root'; 最后 select host, user from user;
+   2.  或者也可以通过修改表来实现远程：use mysql; 然后 update user set host = '%' where user = 'root'; 最后 use mysql;     select host, user from user;  查看root是不是%，然后 flush privileges 命令，立即生效
 10. 设置数据库字符集（如果需要的话）
 11. 设置自动重启 systemctl enable mysqld 和 systemctl daemon-reload，然后重启服务 systemctl restart mysqld
 12. 完成，进数据库用 status 查看数据库状态，防火墙相关本章没涉及到，应为我的centeos是关着的...
