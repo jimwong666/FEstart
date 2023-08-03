@@ -166,9 +166,9 @@ JavaScript 单线程中的**任务**（tesk）可以分为**同步任务**和**�
 
 JavaScript 的任务不仅仅分为同步任务和异步任务，同时从另一个维度，也分为了**宏任务**(MacroTask)和**微任务**(MicroTask)。
 
-先说说 宏任务，它包括：script(整体代码), setTimeout, setInterval, setImmediate, I/O, UI rendering等等。
+先说说 宏任务，它包括：script(整体代码), setTimeout、setInterval、new Promise、setImmediate、I/O、UI rendering等等。
 
-再说说 微任务，其实很少，只要记住几个：Process.nextTick、Promise.then catch finally(注意不是 Promise)、MutationObserver。
+再说说 微任务，其实很少，只要记住几个：Process.nextTick、Promise.then/catch/finally(注意不是new Promise)、async/await、MutationObserver。
 
 
 顺序：先执行**宏任务**（其实第一个任务中js会把 script代码块 当成一个宏任务从头到尾执行一次，所以宏任务中有 script整体代码。其实也及时 前面说的“同步代码”）。如果在宏任务执行期间遇到**微任务**，那么它会被放在一个单独的**微任务队列**，等待本次宏任务执行完毕后再执行这个微任务队列。如果在宏任务执行期间遇到其他的**宏任务**，那么遇到的这些宏任务就会由**事件触发线程**或者和**定时器触发线程**一起负责，达到某个条件后将它放入到任务队列（task queue）进行排队等待（！！所以setTimeout和setInterval的定时还准确吗？）主线程（main thread）空闲时依次执行它们。然后这样往复循环~
